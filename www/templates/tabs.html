@@ -1,0 +1,23 @@
+
+<ion-tabs class="tabs-icon-top tabs-color-active-balanced" ng-class="{'tabs-item-hide':$root.hideTabs}">
+
+  <!-- home Tab -->
+  <ion-tab title="首页" icon-off="ion-ios-navigate-outline" icon-on="ion-ios-navigate" href="#/tab/home" class="">
+    <ion-nav-view name="tab-home"></ion-nav-view>
+  </ion-tab>
+
+  <!-- category Tab -->
+  <ion-tab title="分类" icon-off="ion-ios-grid-view-outline" icon-on="ion-ios-grid-view" href="#/tab/category">
+    <ion-nav-view name="tab-category"></ion-nav-view>
+  </ion-tab>
+
+  <!-- position Tab -->
+  <ion-tab title="职位" icon-off="ion-ios-paper-outline" icon-on="ion-ios-paper" href="#/tab/position">
+    <ion-nav-view name="tab-position"></ion-nav-view>
+  </ion-tab>
+
+  <!-- user Tab -->
+  <ion-tab title="我的" icon-off="ion-ios-person-outline" icon-on="ion-ios-person" href="#/tab/user">
+    <ion-nav-view name="tab-user"></ion-nav-view>
+  </ion-tab>
+</ion-tabs>

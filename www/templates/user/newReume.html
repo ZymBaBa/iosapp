@@ -1,0 +1,55 @@
+<ion-view title="新增简历" hide-tabs="true" class="newReume">
+  <ion-nav-buttons side="right">
+    <a class="button light-bg">保存</a>
+  </ion-nav-buttons>
+  <ion-content class="reume_Countent">
+    <ion-list>
+      <ion-item class="item-divider"></ion-item>
+      <ion-item>
+        <span class="stable">姓名：</span>
+        <span ng-bind="user.name"></span>
+      </ion-item>
+      <ion-item>
+        <span class="stable">年龄：</span>
+        <span ng-bind="user.age+'岁'"></span>
+      </ion-item>
+      <ion-item>
+        <span class="stable">性别：</span>
+        <span>男</span>
+      </ion-item>
+      <ion-item>
+        <span class="stable">籍贯：</span>
+        <span>浙江嘉兴</span>
+      </ion-item>
+      <ion-item>
+        <span class="stable">出生年月：</span>
+        <span>1994-01-01</span>
+      </ion-item>
+      <ion-item>
+        <span class="stable">联系方式：</span>
+        <span>13988888888</span>
+      </ion-item>
+      <ion-item class="item-divider"></ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">身高：</span>
+        <input type="text" placeholder="请输入您的身高，单位为CM">
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">体重：</span>
+        <input type="text" placeholder="请输入您的身高，单位为KG">
+      </ion-item>
+      <ion-item class="item-divider"></ion-item>
+      <ion-item class="item-input">
+        <textarea placeholder="请简单的做下自我介绍，让用人单位能够了解下您。"></textarea>
+      </ion-item>
+      <ion-item class="item-divider"></ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">个人风采</span>
+      </ion-item>
+      <ion-item class="item-divider"></ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
+
+
+

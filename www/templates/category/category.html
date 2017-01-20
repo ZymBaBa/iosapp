@@ -1,0 +1,21 @@
+<ion-view view-title="分类">
+  <ion-content class="category">
+    <ion-refresher pulling-text="更新数据..." spinner="ripple" on-refresh="doRefresh();"></ion-refresher>
+    <ion-list>
+      <div ng-repeat="group in CateLists">
+        <!--<ion-item class="item-stable" ng-bind="group.name"></ion-item>-->
+        <ion-item class="item-stable "
+                  ng-click="toggleGroup(group)"
+                  ng-class="{active: isGroupShown(group)}" >
+          <i class="icon" ng-class="isGroupShown(group)? 'ion-minus' : 'ion-plus'"></i>
+          {{group.name}}
+        </ion-item>
+        <ion-item class="item-accordion"
+                  ng-repeat="item in PostLists |filter:group.name"
+                  ng-show="isGroupShown(group)" href="#/tab/Classification/{{item.id}}">
+          {{item.name}}
+        </ion-item>
+      </div>
+    </ion-list>
+  </ion-content>
+</ion-view>

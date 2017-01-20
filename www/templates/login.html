@@ -1,0 +1,177 @@
+<ion-view  hide-tabs="true">
+  <ion-nav-title>用户登录</ion-nav-title>
+  <ion-nav-buttons side="left">
+    <button class="button button-icon ion-android-close" ng-click="$ionicGoBack();"></button>
+  </ion-nav-buttons>
+  <ion-content class="modelContent" scrollbar-x="false">
+    <form name="lgForm" ng-submit="signIn();">
+      <ion-list class="text-left">
+        <ion-item class="item-divider"></ion-item>
+        <ion-item class="item-input">
+          <i class="icon ion-person placeholder-icon"></i>
+          <input type="tel" autocomplete="off" ng-required="true" name="realName" ng-model="user.username"
+                 placeholder="请输入手机号">
+        </ion-item>
+        <ion-item class="item-input">
+          <i class="icon ion-android-lock placeholder-icon"></i>
+          <input type="password" autocomplete="off" ng-required="true" name="realPassword" ng-model="user.password"
+                 placeholder="请输入密码">
+        </ion-item>
+      </ion-list>
+      <div class="row">
+        <div class="col">
+          <p class="text-center" ng-bind=""></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-80 col-offset-10">
+          <button type="submit" class="button  button-full button-balanced" ng-disabled='lgForm.$invalid'>
+            登录
+          </button>
+          <button class="button button-full button-calm" ng-click="openRegister();">注册</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-20 col-offset-66 text-center">
+          <p ng-click="openForget();">忘记密码</p>
+        </div>
+      </div>
+    </form>
+  </ion-content>
+  <!-- 用户注册 -->
+  <script id="register-modal.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-header-bar class="bar-dark">
+        <a class="button button-icon ion-ios-arrow-left" ng-click="closeRegister();"></a>
+        <h1 class="title" ng-bind="unTitle"></h1>
+      </ion-header-bar>
+      <ion-content class="modelContent" scrollbar-x="false">
+        <form name="myForm">
+          <ion-list class="text-left">
+            <ion-item class="item-divider"></ion-item>
+            <ion-item class="item-input">
+              <i class="icon ion-person placeholder-icon"></i>
+              <input type="text" autocomplete="off" ng-required="true" name="realName" ng-model="loginData.userName" ng-minlength="3" ng-maxlength="6"
+                     placeholder="请输入您的用户名,3-6个字符">
+            </ion-item>
+            <ion-item class="item-input">
+              <i class="icon ion-android-lock placeholder-icon"></i>
+              <input type="password" autocomplete="off" ng-required="true" name="newPassword"
+                     ng-model="loginData.password"
+                     ng-maxlength="20" ng-minlength="6"  placeholder="建议至少二种字符组合，6-20个字符">
+            </ion-item>
+            <ion-item class="item-input">
+              <i class="icon ion-android-lock placeholder-icon"></i>
+              <input type="password" autocomplete="off" ng-required="true" name="echoPassword"
+                     ng-model="data.password"
+                     ng-maxlength="20" ng-minlength="6" minlength="6" maxlength="20" placeholder="请再次输入密码">
+            </ion-item>
+            <ion-item class="item-input item-button-right">
+              <i class="icon ion-iphone placeholder-icon"></i>
+              <input type="tel" autocomplete="off" ng-minlength="11" ng-maxlength="11" ng-required="true"
+                     name="telPhone" ng-model="loginData.cellPhone"
+                     placeholder="请输入您手机号">
+              <a class="button balanced-bg light" ng-click="minute('REG',loginData.cellPhone); " style="font-size: 14px"
+                 ng-disabled="data.isDisable"
+                 ng-class="{true:'stable-bg dark',false:'balanced-bg light'}[data.isDisable]">{{data.telName}}</a>
+            </ion-item>
+            <ion-item class="item-input">
+              <i class="icon ion-android-apps placeholder-icon"></i>
+              <input type="tel" autocomplete="off" ng-required="true" name="realCode" ng-model="loginData.smsCode"
+                     ng-minlength="6" ng-maxlength="6" placeholder="请输入6位验证码">
+            </ion-item>
+          </ion-list>
+          <div class="row">
+            <div class="col text-center">
+              <p class="assertive" ng-show="myForm.realName.$dirty && myForm.realName.$error.minlength || myForm.realName.$error.maxlength">
+                用户名长度应为3-6个字符，请检查您的用户名设置！
+              </p>
+              <p class="assertive" ng-show="myForm.newPassword.$dirty && myForm.newPassword.$error.minlength || myForm.newPassword.$error.maxlength">
+                密码长度应为6-20个字符，请检查您密码设置！
+              </p>
+              <p class="assertive" ng-show="myForm.echoPassword.$dirty && loginData.password !== data.password">
+                两次密码输入不一至，请检查您的密码设置！
+              </p>
+              <p class="assertive" ng-show="myForm.telPhone.$dirty && myForm.telPhone.$error.minlength ||myForm.telPhone.$error.maxlength">
+                您输入的手机号码长度有误，请检查后重新输入！
+              </p>
+              <p class="assertive" ng-show="myForm.realCode.$dirty && myForm.realCode.$error.minlength || myForm.realCode.$error.maxlength">
+                验证码长度有误，请检查验证码长度！
+              </p>
+            </div>
+          </div>
+        </form>
+        <div class="row">
+          <div class="col col-80 col-offset-10">
+            <button class="button  button-full button-balanced" ng-disabled='myForm.$invalid' ng-click="SubmitLogin();">
+              注册
+            </button>
+          </div>
+
+        </div>
+      </ion-content>
+    </ion-modal-view>
+  </script>
+  <!-- 忘记密码 -->
+  <script id="forget-modal.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-header-bar class="bar-dark">
+        <a class="button button-icon ion-ios-arrow-left" ng-click="closeForget();"></a>
+        <h1 class="title" ng-bind="fgTitle"></h1>
+      </ion-header-bar>
+      <ion-content class="modelContent" scrollbar-x="false">
+        <form name="fgForm">
+          <ion-list class="text-left">
+            <ion-item class="item-divider"></ion-item>
+            <ion-item class="item-input item-button-right">
+              <i class="icon ion-iphone placeholder-icon"></i>
+              <input type="tel" autocomplete="off" ng-minlength="11" ng-maxlength="11" ng-required="true"
+                     name="fgPhone" ng-model="fgData.cellPhone"
+                     placeholder="请输入您手机号">
+              <a class="button balanced-bg light" ng-click="minute('FORGET',fgData.cellPhone); " style="font-size: 14px"
+                 ng-disabled="data.isDisable"
+                 ng-class="{true:'stable-bg dark',false:'balanced-bg light'}[data.isDisable]">{{data.telName}}</a>
+            </ion-item>
+            <ion-item class="item-input">
+              <i class="icon ion-android-apps placeholder-icon"></i>
+              <input type="tel" autocomplete="off" ng-required="true"  name="fgRealCode" ng-model="fgData.smsCode"
+                     ng-minlength="6" maxlength="6" placeholder="请输入6位验证码">
+            </ion-item>
+            <ion-item class="item-input">
+              <i class="icon ion-android-lock placeholder-icon"></i>
+              <input type="password" autocomplete="off" ng-required="true" name="newPassword"
+                     ng-model="fgData.password"
+                     ng-maxlength="20" ng-minlength="6" minlength="6" maxlength="20" placeholder="设置新密码，建议至少二种字符组合，6-20个字符">
+            </ion-item>
+            <ion-item class="item-input">
+              <i class="icon ion-android-lock placeholder-icon"></i>
+              <input type="password" autocomplete="off" ng-required="true" name="echoPassword"
+                     ng-model="data.password"
+                     ng-maxlength="20" ng-minlength="6" minlength="6" maxlength="20" placeholder="请再次输入新密码">
+            </ion-item>
+          </ion-list>
+          <div class="row">
+            <div class="col text-center">
+              <p class="assertive" ng-show="fgForm.echoPassword.$dirty && fgData.password !== data.password">
+                两次密码输入不一至，请检查您的密码设置！
+              </p>
+              <p class="assertive" ng-show="fgForm.fgPhone.$dirty && myForm.fgPhone.$error.minlength ||fgForm.fgPhone.$error.maxlength">
+                您输入的手机号码长度有误，请检查后重新输入！
+              </p>
+              <p class="assertive" ng-show="fgForm.fgRealCode.$dirty && fgForm.fgRealCode.$error.minlength || fgForm.fgRealCode.$error.maxlength">
+                验证码长度有误，请检查验证码长度！
+              </p>
+            </div>
+          </div>
+        </form>
+        <div class="row">
+          <div class="col col-80 col-offset-10">
+            <button class="button  button-full button-balanced" ng-disabled='fgForm.$invalid' ng-click="postFg();">
+              修改密码
+            </button>
+          </div>
+        </div>
+      </ion-content>
+    </ion-modal-view>
+  </script>
+</ion-view>

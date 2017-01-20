@@ -1,0 +1,26 @@
+1、密码找回   完成
+2、注册      完成
+3、登录      完成
+4、岗位申请   完成
+5、帮我找工作  完成
+6、关于我们
+7、城市列表   完成
+8、搜索
+10、拍照
+11、定位      完成
+12、用户协议界面
+1.1前 完成优化
+1.2-1.10完成数据绑定
+
+
+cordova plugin add cordova-plugin-geolocation 地理位置
+cordova plugin add cordova-plugin-camera 相机
+cordova plugin add cordova-plugin-file   文件
+cordova plugin add cordova-plugin-file-transfer  文件上传
+cordova plugin add cordova-plugin-image-picker 多图选择上传插件
+
+
+身份证认证之后的locatStonage数据更新
+
+1、列表页需要处理简介；
+2、城市、坐标获取的内容；

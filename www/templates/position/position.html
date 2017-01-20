@@ -1,0 +1,17 @@
+<ion-view>
+  <ion-nav-title>
+    申请管理
+  </ion-nav-title>
+  <ion-tabs class="tabs-striped tabs-top tabs-light tabs-color-active-balanced" >
+    <ion-tab title="申请中" ui-sref="job-apply">
+      <ion-nav-view name="job-apply"></ion-nav-view>
+    </ion-tab>
+    <ion-tab title="待面试" ui-sref="job-invite">
+      <ion-nav-view name="job-invite"></ion-nav-view>
+    </ion-tab>
+    <ion-tab title="被拒绝" ui-sref="job-refuse">
+      <ion-nav-view name="job-refuse"></ion-nav-view>
+    </ion-tab>
+  </ion-tabs>
+  <ion-nav-view></ion-nav-view>
+</ion-view>

@@ -1,0 +1,114 @@
+<ion-view hide-tabs="true">
+  <ion-nav-title>
+    岗位详细
+  </ion-nav-title>
+  <ion-content class="postDetail">
+    <ion-list>
+      <ion-item>
+        <div class="row">
+          <div class="col">
+            <h2 class="dark" ng-bind="item.title"></h2>
+          </div>
+        </div>
+        <div class="row jobList">
+          <div class="col"><p><b class="textFont" ng-bind="item.positionModel.name"></b></p></div>
+          <div class="col"><p><b class="textFont" ng-bind="item.salary"></b><span ng-bind="item.salaryTypeName"></span></p></div>
+          <div class="col"><p><b ng-bind="item.settlementTypeName"></b></p></div>
+          <!--<div class="col" ><p style="color: #b2b2b2">30天后停招</p></div>-->
+          <div class="col"></div>
+        </div>
+        </ion-item>
+      <ion-item class="item-divider item-borderless"></ion-item>
+    </ion-list>
+    <ion-list class="jobcount">
+      <ion-item class="item-borderless">
+        <span class="lang"></span>
+        <span>招聘资料</span>
+      </ion-item>
+      <ion-item class="item-borderless">
+        <span class="stable">招聘人数：</span>
+        <span class="dark" ng-bind="item.count"></span>
+      </ion-item>
+      <ion-item>
+        <span class="stable">性别要求：</span>
+        <span class="dark" ng-bind="item.sexName"></span>
+      </ion-item>
+    <ion-item>
+        <span class="stable">工作时间：</span>
+        <span class="dark" ng-bind="jobDate.startDate+' 至 '+jobDate.endDate"></span>
+      </ion-item>
+    <ion-item>
+        <span class="stable">所在城市：</span>
+        <span class="dark" ng-bind="item.cityModel.name"></span>
+    </ion-item>
+    <ion-item>
+        <span class="stable">工作地点：</span>
+        <span class="dark" ng-bind="item.jobAddress"></span>
+      </ion-item>
+    </ion-list>
+    <ion-list class="jobcount">
+      <ion-item class="item-divider item-borderless"></ion-item>
+      <ion-item class="item-borderless">
+        <span class="lang"></span>
+        <span class="dark">岗位描述</span>
+      </ion-item>
+      <ion-item class="item-borderless">
+        <div class="contentText">
+          <h3 ng-bind-html="item.description"></h3>
+        </div>
+      </ion-item>
+    </ion-list>
+    <ion-list class="jobcount">
+      <ion-item class="item-divider item-borderless"></ion-item>
+      <ion-item class="item-borderless">
+        <span class="lang"></span>
+        <span class="dark">公司介绍</span>
+      </ion-item>
+      <ion-item class="item-borderless">
+        <span class="stable">招聘单位：</span>
+        <span class="dark" ng-bind="item.enterpriseUserModel.name"></span>
+      </ion-item>
+      <ion-item class="item-borderless">
+        <span class="stable">所属行业：</span>
+        <span class="dark">餐饮</span>
+      </ion-item>
+      <ion-item class="item-borderless">
+        <span class="stable">联系人：</span>
+        <span class="dark" ng-bind="item.enterpriseUserModel.contractPerson"></span>
+      </ion-item>
+      <ion-item class="item-borderless">
+        <span class="stable">联系电话：</span>
+        <span class="dark" ng-bind="item.contractPhone"></span>
+      </ion-item>
+      <ion-item class="item-borderless">
+        <span class="stable">投递回复：</span>
+        <span class="dark" ng-bind="item.enterpriseUserModel.responseRate"></span>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+  <ion-footer-bar class="balanced-bg" ng-click="openApply();">
+      <div class="col text-center light" style="font-size: 1.2rem" >
+        申请职位
+      </div>
+    </a>
+  </ion-footer-bar>
+  <script id="applying.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-header-bar class="bar-dark">
+        <a class="button button-icon ion-ios-arrow-left" ng-click="closeApply();"></a>
+        <h1 class="title" ng-bind="applyTitle"></h1>
+        <a class="button">发送</a>
+      </ion-header-bar>
+      <ion-content class="modelContent" scrollbar-x="false">
+        <ion-list>
+          <ion-checkbox ng-repeat="item in devList"
+                        ng-model="item.checked"
+                        ng-checked="item.checked" class="checkbox-dark">
+          <h2 ng-bind="item.text"></h2>
+            <p>2016-06-07至2016-06-12</p>
+          </ion-checkbox>
+        </ion-list>
+      </ion-content>
+    </ion-modal-view>
+  </script>
+</ion-view>

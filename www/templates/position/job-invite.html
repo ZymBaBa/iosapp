@@ -1,0 +1,45 @@
+<ion-view class="jobApply">
+  <ion-nav-title>
+    申请管理
+  </ion-nav-title>
+  <ion-content>
+    <ion-refresher pulling-text="更新数据..." spinner="ripple" on-refresh="doRefresh();"></ion-refresher>
+    <div class="card" ng-repeat="item in items |filter:{interviewStatus:'1'}">
+      <ion-list>
+        <ion-item class="head item-divider">
+          <div class="row">
+            <div class="col col-80">
+              <p ng-bind="item.name"></p>
+            </div>
+            <div class="col text-right" ng-click="openPopover($event,item);">
+              <i class="icon ion-android-menu"></i>
+            </div>
+          </div>
+        </ion-item>
+        <ion-item class="body">
+          <div class="row responsive-sm">
+            <div class="col">
+              <p><span class="stable">公司名称：</span><span ng-bind="item.firm"></span></p>
+              <p><span class="stable">兼职薪酬：</span><span class="balanced" ng-bind="item.Pay+'元/'+item.way"></span></p>
+              <p><span class="stable">结算方式：</span><span class="balanced" ng-bind="item.balance"></span></p>
+              <p><span class="stable">面试人员：</span><span  ng-bind="item.touchName"></span></p>
+              <p><span class="stable">联系电话：</span><span  ng-bind="item.touchPhone"></span></p>
+              <p><span class="stable">面式地点：</span><span ng-bind="item.interViewAdd"></span></p>
+              <p><span class="stable">面试时间：</span><span ng-bind="item.interviewTime"></span></p>
+            </div>
+          </div>
+        </ion-item>
+      </ion-list>
+    </div>
+  </ion-content>
+  <script id="jobInvite-popover.html" type="text/ng-template">
+    <ion-popover-view class="Confirm">
+      <ion-list class="text-center">
+        <ion-item ng-click="showConfirm();" style="color:#a2a2a2">拒绝邀请</ion-item>
+        <ion-item ng-click="showConfirm();" class="balanced">接受邀请</ion-item>
+        <ion-item ng-click="dialPhone(userList.touchName,userList.touchPhone);" class="balanced">拨打电话</ion-item>
+      </ion-list>
+    </ion-popover-view>
+  </script>
+</ion-view>
+

@@ -1,0 +1,19 @@
+<ion-view view-title="兼职收藏" hide-tabs="true" class="collection">
+  <ion-content>
+    <ion-list show-delete="flag.showDelete" show-reorder="flag.showReorder" can-swipe="true">
+      <ion-item collection-repeat="item in items">
+        <div class="row">
+          <div class="col"><h2 ng-bind="item.job"></h2></div>
+          <div class="col"><p ng-bind="item.Pay+'/'+item.balance"></p></div>
+        </div>
+        <ion-option-button class="button-assertive icon ion-android-star"></ion-option-button>
+      </ion-item>
+    </ion-list>
+    <ion-list>
+      <ion-item class="item-divider text-center item-borderless" style="font-size: 0.5rem;color: #b2b2b2" ng-if="more==false">没有更多了....</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
+
+
+

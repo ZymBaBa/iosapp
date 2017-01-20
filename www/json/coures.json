@@ -1,0 +1,34 @@
+{
+  "rows": [
+    {
+      "id":1,
+      "name": "前端实习工程师",
+      "firm":"嘉兴禾码科技服务有限公司",
+      "workTimeStart": "2016.7.8",
+      "workTimeClear":"2016.9.9",
+      "workSite":"嘉兴市海盐塘路464号",
+      "job":"前端工程师",
+      "Pay":"15",
+      "way":"时薪",
+      "evaluateState":0,
+      "evaluate":"是一个好宝宝",
+      "touchName":"周佳缘",
+      "touchPhone":"13967314931"
+    },
+    {
+      "id":2,
+      "name": "前端实习工程师",
+      "firm":"嘉兴禾码科技服务有限公司",
+      "workTimeStart": "2016.7.8",
+      "workTimeClear":"2016.9.9",
+      "workSite":"嘉兴市海盐塘路464号",
+      "job":"前端工程师",
+      "Pay":"15",
+      "way":"时薪",
+      "evaluateState":1,
+      "evaluate":"是一个好宝宝是一个好宝宝是一个好宝宝是一个好宝宝是一个好宝宝是一个好宝宝是一个好宝宝是一个好宝宝是一个好宝宝是一个好宝宝是一个好宝宝是一个好宝宝",
+      "touchName":"周佳缘",
+      "touchPhone":"13967314931"
+    }
+  ]
+}

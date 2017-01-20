@@ -1,0 +1,152 @@
+<ion-view title="优职">
+  <ion-nav-buttons side="left">
+    <a class="button button-clear icon-right ion-android-arrow-dropdown" ng-click="openCity();" ng-bind="cityName.name"></a>
+  </ion-nav-buttons>
+  <ion-content>
+    <div class="home-count">
+      <div class="card">
+        <div class="row text-center">
+          <div class="col col-50 ch-h-right">
+            <div class="dark">
+              <h2 class="title balanced">50,000.00</h2>
+              <p>兼职求职需求</p>
+            </div>
+          </div>
+          <div class="col col-50">
+            <div class="dark">
+              <h2 class="title balanced">50,000.00</h2>
+              <p>企业招聘需求</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="home-button">
+      <div class="row">
+        <div class="col">
+          <button class="button button-block button-balanced" ng-click="openSorts();">
+            <h4 class="title light">帮我找兼职</h4>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          {{GpsPosition}}
+        </div>
+      </div>
+    </div>
+    <div>
+      <ion-item class="item-divider text-center">
+        <h5 class="title">附近的兼职</h5>
+      </ion-item>
+    </div>
+    <ion-refresher pulling-text="更新数据..." spinner="ripple" on-refresh="doRefresh();"></ion-refresher>
+    <div class="home-list">
+      <ion-list ng-show="items.length==0">
+        <ion-item class="item-divider">
+          暂无数据
+        </ion-item>
+      </ion-list>
+      <ion-list ng-show="items.length!==0">
+        <ion-item collection-repeat="item in items" href="#/tab/postDetail/{{item.id}}">
+          <div class="row">
+            <div class="col col-80">
+              <h2 class="title" ng-bind="item.title"></h2>
+              <p ng-bind-html="item.description"></p>
+              <h3 class="balanced" ng-bind="item.positionModel.name+'-'+item.salary+item.salaryTypeName"></h3>
+            </div>
+            <!--<div class="col text-center">-->
+              <!--<span class="balanced" ng-bind="item.distance+'m'"></span>-->
+            <!--</div>-->
+          </div>
+        </ion-item>
+      </ion-list>
+    </div>
+    <ion-infinite-scroll on-infinite="load_more();" spinner="ripple" class="positive"
+                         distance="20%"></ion-infinite-scroll>
+  </ion-content>
+  <!--分类选择-->
+  <script id="sorts-modal.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-header-bar class="bar-dark">
+        <a class="button button-icon ion-ios-arrow-left" ng-click="closeSorts();"></a>
+        <h1 class="title" ng-bind="Title.sorts"></h1>
+        <a class="button" ng-click="openSend();">下一步</a>
+      </ion-header-bar>
+      <ion-content class="modelContent" scrollbar-x="false">
+        <div ng-repeat="r in jobs">
+          <ion-list>
+            <ion-item class="item-divider item-borderless" ng-bind="r.name" style="color: #b2b2b2;font-size: 0.85rem"></ion-item>
+            <ion-radio  ng-repeat="y in r.list" ng-value="y.name" ng-model="ret.choice">
+              {{y.name}}
+            </ion-radio>
+          </ion-list>
+        </div>
+      </ion-content>
+    </ion-modal-view>
+  </script>
+  <!--薪酬、兼职经验选择-->
+  <script id="send-modal.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-header-bar class="bar-dark">
+        <a class="button button-icon ion-ios-arrow-left" ng-click="closeSend();"></a>
+        <h1 class="title" ng-bind="Title.send"></h1>
+        <a class="button" ng-click="openSend();">发送</a>
+      </ion-header-bar>
+      <ion-content>
+        <ion-list>
+          <ion-item class="item-divider item-borderless" style="color: #b2b2b2;font-size: 0.85rem">薪酬要求</ion-item>
+          <ion-item class="item-input">
+            <i class="icon ion-cash placeholder-icon"></i>
+            <input type="tel" autocomplete="off" ng-required="true" name="realPassword" ng-model="data.monery" maxlength="2"
+                   placeholder="请输入您的薪酬要求，以小时为单位">
+          </ion-item>
+        </ion-list>
+        <ion-list>
+          <ion-item class="item-divider item-borderless"  style="color: #b2b2b2;font-size: 0.85em">兼职经验(多选)</ion-item>
+          <ion-checkbox ng-repeat="item in devList"
+                        ng-model="item.checked"
+                        ng-checked="item.checked" class="checkbox-dark">
+            <h2 ng-bind="item.text"></h2>
+            <p>2016-06-07至2016-06-12</p>
+          </ion-checkbox>
+        </ion-list>
+      </ion-content>
+    </ion-modal-view>
+  </script>
+  <!--城市选择-->
+  <script id="city-modal.html" type="text/ng-template">
+    <ion-modal-view class="city-home">
+      <ion-header-bar class="bar-dark">
+        <a class="button button-icon ion-android-close" ng-click="closeCity();"></a>
+        <h1 class="title" ng-bind="Title.city"></h1>
+      </ion-header-bar>
+      <ion-content padding="true">
+      <h6>定位城市</h6>
+      <div class="row">
+        <div class="col">
+          <button class="button button-light" ng-bind="cityName.name"></button>
+        </div>
+      </div>
+      <h6>最近访问的城市</h6>
+        <div class="row">
+          <div class="col">
+            <button class="button button-light">嘉兴</button>
+          </div>
+        </div>
+        <div>
+        </div>
+        <ion-list>
+          <div ng-repeat="x in provinces">
+            <ion-item class="item-divider item-borderless" ng-bind="x.name"></ion-item>
+            <ion-radio  ng-repeat="y in cities |filter:x.code" ng-value="y.name">
+              {{y.name}}
+            </ion-radio>
+          </div>
+        </ion-list>
+      </ion-content>
+    </ion-modal-view>
+  </script>
+</ion-view>
+
+
