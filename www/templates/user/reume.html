@@ -1,11 +1,15 @@
 <ion-view title="我的简历" hide-tabs="true">
   <ion-nav-buttons side="right">
-    <a class="button" ng-click="openNr()">新增</a>
+    <a class="button" ng-click="openNr()" ng-hide="resumeList.certifyStatus=='NOT'">新增</a>
   </ion-nav-buttons>
   <ion-content class="reume_Countent">
-    <div style="padding-top:280px" class="text-center" padding>
+    <div style="padding-top:250px" class="text-center" padding ng-hide="resumeList.certifyStatus=='NOT'">
       从"右上角"新增简历，每位求职者只允许有一份简历<br/>
       兼职经验可以在求职时选择性进行发送
+    </div>
+    <div style="padding-top:250px" class="text-center" padding ng-show="resumeList.certifyStatus=='NOT'">
+      添加简历前，请先进行实名身份认证<br/>
+      我的--安全中心--实名认证
     </div>
   </ion-content>
 
@@ -14,7 +18,7 @@
       <ion-header-bar class="bar-dark">
         <a class="button button-icon ion-ios-arrow-left" ng-click="closeNr();"></a>
         <h1 class="title" ng-bind="nRTitle"></h1>
-        <a class="button">保存</a>
+        <a class="button" ng-click="preserveNr();">保存</a>
       </ion-header-bar>
       <ion-content class="newReume">
         <ion-list>
@@ -42,15 +46,15 @@
           <ion-item class="item-divider"></ion-item>
           <ion-item class="item-input">
             <span class="input-label">身高：</span>
-            <input type="text" placeholder="请输入您的身高，单位为CM">
+            <input type="tel" ng-model="userData.height" placeholder="请输入您的身高，单位为CM" maxlength="3">
           </ion-item>
           <ion-item class="item-input">
             <span class="input-label">体重：</span>
-            <input type="text" placeholder="请输入您的身高，单位为KG">
+            <input type="tel" ng-model="userData.weight" placeholder="请输入您的体重，单位为KG" maxlength="3">
           </ion-item>
           <ion-item class="item-divider"></ion-item>
           <ion-item class="item-input">
-            <textarea placeholder="请简单的做下自我介绍，让用人单位能够了解下您。"></textarea>
+            <textarea ng-model="userData.description" placeholder="请简单的做下自我介绍，让用人单位能够了解下您。"></textarea>
           </ion-item>
           <ion-item class="item-divider"></ion-item>
           <ion-item class="item-divider">
@@ -69,7 +73,7 @@
         </div>
       </ion-content>
     </ion-modal-view>
-</script>
+  </script>
 </ion-view>
 
 

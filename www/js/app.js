@@ -255,14 +255,14 @@ angular.module('starter',
         views: {
           'tab-user': {
             templateUrl: 'templates/user/reume.html',
-            controller: 'ReumeCtrl'
+            controller: 'ResumeCtrl'
           }
         }
       })
       .state('newreume', {
         url: '/newreume',
         templateUrl: 'templates/user/newReume.html',
-        controller: 'ReumeCtrl'
+        controller: 'ResumeCtrl'
       })
       // .state('tab.newreume', {
       //   url: '/newreume',

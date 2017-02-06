@@ -1,10 +1,10 @@
 <ion-view  hide-tabs="true">
   <ion-nav-title>用户登录</ion-nav-title>
   <ion-nav-buttons side="left">
-    <button class="button button-icon ion-android-close" ng-click="$ionicGoBack();"></button>
+    <button class="button button-icon ion-android-close" ng-click="goHome();"></button>
   </ion-nav-buttons>
   <ion-content class="modelContent" scrollbar-x="false">
-    <form name="lgForm" ng-submit="signIn();">
+    <form name="lgForm">
       <ion-list class="text-left">
         <ion-item class="item-divider"></ion-item>
         <ion-item class="item-input">
@@ -25,7 +25,7 @@
       </div>
       <div class="row">
         <div class="col col-80 col-offset-10">
-          <button type="submit" class="button  button-full button-balanced" ng-disabled='lgForm.$invalid'>
+          <button  class="button  button-full button-balanced" ng-disabled='lgForm.$invalid' ng-click="signIn();">
             登录
           </button>
           <button class="button button-full button-calm" ng-click="openRegister();">注册</button>

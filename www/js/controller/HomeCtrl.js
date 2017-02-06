@@ -1,17 +1,11 @@
 angular.module('starter.HomeCtrl', [])
 
-  .controller('HomeCtrl', ['$scope', '$resource', '$ionicLoading', '$timeout', 'homeFactory', '$ionicModal', '$rootScope', '$state','$sce', 'GpsService', 'YW', function ($scope, $resource, $ionicLoading, $timeout, homeFactory, $ionicModal, $rootScope, $state,$sce, GpsService, YW) {
+  .controller('HomeCtrl', ['$scope', '$resource', '$ionicLoading', '$timeout', 'homeFactory', '$ionicModal', '$rootScope', '$state', '$sce', 'GpsService', 'YW', function ($scope, $resource, $ionicLoading, $timeout, homeFactory, $ionicModal, $rootScope, $state, $sce, GpsService, YW) {
     //显示载入信息
     $ionicLoading.show({
       template: '数据载入中，请稍等......',
       noBackdrop: true,
       delay: 300
-    });
-    //用户打开页面获取相应坐标
-    GpsService.setGps();
-    $rootScope.$on('getGps.update', function () {
-      $rootScope.GpsPosition = GpsService.getGps();
-      console.log($rootScope.GpsPosition);
     });
     /*
      * 1、getCity 根据坐标请求城市信息
@@ -19,7 +13,6 @@ angular.module('starter.HomeCtrl', [])
      * */
     var Url = YW.api;
     var getData = $resource(Url, {}, {
-      //根据坐标获取城市
       getCity: {
         url: Url + 'district/load',
         method: 'GET',
@@ -29,41 +22,46 @@ angular.module('starter.HomeCtrl', [])
       getCityObj: {
         url: Url + 'recruit/list',
         method: 'GET',
-        params: {id: '@id', locationLng: '@locationLng', locationLat: '@locationLat'}
+        params: {city: '@city', locationLng: '@locationLng', locationLat: '@locationLat'},
+        isArray: false
       }
     });
-    //根据坐标获取城市信息
-    var cityobj=false;
-    $timeout(function () {
+    //获取当前城市招聘信息函数
+    var cityJobs=function (success) {
+      var getDataObj = {
+        city: $rootScope.cityName.code,
+        locationLng: $rootScope.GpsPosition.lng,
+        locationLat: $rootScope.GpsPosition.lat
+      };
+      if(success){
+        getData.getCityObj(getDataObj,function (resp) {
+          $scope.items=resp.rows;
+        })
+      }
+    };
+    //用户打开页面获取相应坐标,并且根据坐标获取相应的城市招聘信息
+    GpsService.setGps();
+    $rootScope.$on('getGps.update', function () {
+      $rootScope.GpsPosition = GpsService.getGps();
+      console.log($rootScope.GpsPosition);
       getData.getCity({
-        locationLng: '120.574089',
-        locationLat: '27.656134'
-        // locationLng: $rootScope.GpsPosition.lng,
-        // locationLat: $rootScope.GpsPosition.lat
+        locationLng: $rootScope.GpsPosition.lng,
+        locationLat: $rootScope.GpsPosition.lat
       }, function (resp) {
         $rootScope.cityName = resp.result;
-        console.log($rootScope.cityName);
-        cityobj=true;
-        var getDataObj={
-          id:'330330',
-          locationLng: '120.574089',
-          locationLat: '27.656134'
-          // id:$rootScope.cityName.code,
-          //   locationLng: $rootScope.GpsPosition.lng,
-          //   locationLat: $rootScope.GpsPosition.lat
-        };
-        console.log(getDataObj);
-        if(cityobj){
-          getData.getCityObj(
-            getDataObj,
-            function (resp) {
-              $scope.items = resp.rows;
-              console.log($scope.items);
-            });
-          $ionicLoading.hide()
-        }
+        cityJobs(resp.success);
+        // var getDataObj = {
+        //   city: $rootScope.cityName.code,
+        //   locationLng: $rootScope.GpsPosition.lng,
+        //   locationLat: $rootScope.GpsPosition.lat
+        // };
+        // if(resp.success){
+        //   getData.getCityObj(getDataObj,function (resp) {
+        //     $scope.items=resp.rows;
+        //   })
+        // }
       });
-    }, 1500);
+    });
     //下拉更新
     $scope.doRefresh = function () {
       //这里写下拉更新请求的代码

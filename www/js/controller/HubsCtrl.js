@@ -196,6 +196,7 @@ angular.module('starter.hubs', [])
         console.log(resp);
         if (resp.success) {
           PromptService.PromptMsg(resp.msg);
+          Storage.user.certifyStatus="SUCCESS";
           $timeout(function () {
             $scope.closeRn()
           }, 2000)

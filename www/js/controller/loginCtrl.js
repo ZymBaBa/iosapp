@@ -17,6 +17,9 @@ angular.module('starter.login', [])
         postFg:{url:url+'forget',method:'POST',isArray:false}
       }
     );
+    $scope.goHome=function () {
+      $state.go("tab.home")
+    };
     //公共的数据
     $scope.data = {
       telName: '获取验证码',
@@ -84,6 +87,7 @@ angular.module('starter.login', [])
     });
     $scope.openRegister = function () {
       $scope.register.show();
+      Storage.remove(YW.userKey);
     };
     $scope.closeRegister = function () {
       $scope.register.hide()
