@@ -1,9 +1,10 @@
 <ion-view title="我的简历" hide-tabs="true">
   <ion-nav-buttons side="right">
-    <a class="button" ng-click="openNr()" ng-hide="resumeList.certifyStatus=='NOT'">新增</a>
+    <a class="button" ng-click="openNr()" ng-show="resumeModify.success===false">新增</a>
+    <a class="button" ng-click="openNr()" ng-show="resumeModify.success===true">编辑</a>
   </ion-nav-buttons>
-  <ion-content class="reume_Countent">
-    <div style="padding-top:250px" class="text-center" padding ng-hide="resumeList.certifyStatus=='NOT'">
+  <ion-content class="reume_Countent" ng-show="resumeModify.success===false || resumeList.certifyStatus=='NOT'">
+    <div style="padding-top:250px" class="text-center" padding ng-show="resumeModify.success===false">
       从"右上角"新增简历，每位求职者只允许有一份简历<br/>
       兼职经验可以在求职时选择性进行发送
     </div>
@@ -12,12 +13,48 @@
       我的--安全中心--实名认证
     </div>
   </ion-content>
-
+  <ion-content class="newReume" ng-show="resumeModify.success===true || resumeList.certifyStatus=='NOT'">
+    <!--这里写用户的信息-->
+    <ion-list>
+      <ion-item class="item-divider"></ion-item>
+      <ion-item>
+        <span class="stable">姓名：</span>
+        <span ng-bind="modifyList.appUserModel.name"></span>
+      </ion-item>
+      <ion-item>
+        <span class="stable">年龄：</span>
+        <span ng-bind="modifyList.appUserModel.age+'岁'"></span>
+      </ion-item>
+      <ion-item>
+        <span class="stable">性别：</span>
+        <span ng-bind="modifyList.appUserModel.sexName"></span>
+      </ion-item>
+      <ion-item>
+        <span class="stable">出生年月：</span>
+        <span ng-bind="modifyList.appUserModel.birthday"></span>
+      </ion-item>
+      <ion-item class="item-divider"></ion-item>
+      <ion-item>
+        <span class="stable">身高：</span>
+        <span ng-bind="modifyData.height"></span>
+      </ion-item>
+      <ion-item>
+        <span class="stable">体重：</span>
+        <span ng-bind="modifyData.weight"></span>
+      </ion-item>
+      <ion-item class="item-divider">个人介绍</ion-item>
+      <ion-item>
+        <span ng-bind="modifyData.description"></span>
+      </ion-item>
+      <ion-item class="item-divider">个人风采</ion-item>
+    </ion-list>
+  </ion-content>
   <script id="newReume-modal.html" type="text/ng-template">
     <ion-modal-view>
       <ion-header-bar class="bar-dark">
         <a class="button button-icon ion-ios-arrow-left" ng-click="closeNr();"></a>
-        <h1 class="title" ng-bind="nRTitle"></h1>
+        <h1 class="title" ng-bind="nRTitle.resume" ng-show="resumeModify.success===false"></h1>
+        <h1 class="title" ng-bind="nRTitle.modify" ng-show="resumeModify.success===true"></h1>
         <a class="button" ng-click="preserveNr();">保存</a>
       </ion-header-bar>
       <ion-content class="newReume">
@@ -25,36 +62,39 @@
           <ion-item class="item-divider"></ion-item>
           <ion-item>
             <span class="stable">姓名：</span>
-            <span ng-bind="user.name"></span>
+            <span ng-bind="resumeList.name"></span>
           </ion-item>
           <ion-item>
             <span class="stable">年龄：</span>
-            <span ng-bind="user.age+'岁'"></span>
+            <span ng-bind="resumeList.age+'岁'"></span>
           </ion-item>
           <ion-item>
             <span class="stable">性别：</span>
-            <span ng-bind="user.sexName"></span>
+            <span ng-bind="resumeList.sexName"></span>
           </ion-item>
           <ion-item>
             <span class="stable">出生年月：</span>
-            <span ng-bind="user.birthday"></span>
+            <span ng-bind="resumeList.birthday"></span>
           </ion-item>
           <ion-item>
             <span class="stable">联系方式：</span>
-            <span ng-bind="user.userModel.cellPhone"></span>
+            <span ng-bind="resumeList.userModel.cellPhone"></span>
           </ion-item>
           <ion-item class="item-divider"></ion-item>
           <ion-item class="item-input">
             <span class="input-label">身高：</span>
-            <input type="tel" ng-model="userData.height" placeholder="请输入您的身高，单位为CM" maxlength="3">
+            <input type="tel" ng-model="userData.height" placeholder="请输入您的身高，单位为CM" maxlength="3" ng-show="resumeModify.success===false">
+            <input type="tel" ng-model="modifyData.height" placeholder="请输入您的身高，单位为CM" maxlength="3" ng-show="resumeModify.success===true">
           </ion-item>
           <ion-item class="item-input">
             <span class="input-label">体重：</span>
-            <input type="tel" ng-model="userData.weight" placeholder="请输入您的体重，单位为KG" maxlength="3">
+            <input type="tel" ng-model="userData.weight" placeholder="请输入您的体重，单位为KG" maxlength="3" ng-show="resumeModify.success===false">
+            <input type="tel" ng-model="modifyData.weight" placeholder="请输入您的体重，单位为KG" maxlength="3" ng-show="resumeModify.success===true">
           </ion-item>
           <ion-item class="item-divider"></ion-item>
           <ion-item class="item-input">
-            <textarea ng-model="userData.description" placeholder="请简单的做下自我介绍，让用人单位能够了解下您。"></textarea>
+            <textarea ng-model="userData.description" placeholder="请简单的做下自我介绍，让用人单位能够了解下您。" ng-show="resumeModify.success===false"></textarea>
+            <textarea ng-model="modifyData.description" placeholder="现在是编辑了" ng-show="resumeModify.success===true"></textarea>
           </ion-item>
           <ion-item class="item-divider"></ion-item>
           <ion-item class="item-divider">

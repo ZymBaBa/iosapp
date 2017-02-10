@@ -1,6 +1,6 @@
 angular.module('starter.JobInvite', [])
 
-.controller('JobInvite', ['$scope','$resource','$ionicPopover','$ionicLoading','$timeout','$ionicPopup',function($scope,$resource, $ionicPopover,$ionicLoading,$timeout,$ionicPopup) {
+.controller('JobInvite', ['$scope','$resource','$ionicPopover','$ionicLoading','$timeout','$ionicPopup','PromptService','YW',function($scope,$resource, $ionicPopover,$ionicLoading,$timeout,$ionicPopup,PromptService,YW) {
   var url = 'json/jobapply.json';
   var getUlr = $resource(url);
 

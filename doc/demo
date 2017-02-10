@@ -24,3 +24,10 @@ cordova plugin add cordova-plugin-image-picker 多图选择上传插件
 
 1、列表页需要处理简介；
 2、城市、坐标获取的内容；
+
+
+
+
+
+
+1、postDetailCtrl.js中至少$scope.addApply传兼职编号的代码；
