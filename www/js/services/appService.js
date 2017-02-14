@@ -1,5 +1,5 @@
 angular.module('starter.PromptService', [])
-  //GPS服务
+//GPS服务
   .factory('GpsService', ['$cordovaGeolocation', '$rootScope', function ($cordovaGeolocation, $rootScope) {
     var postGps = {
       lat: '',
@@ -53,6 +53,30 @@ angular.module('starter.PromptService', [])
       }
     };
   })
+  //获取不同状态的职位申请列表
+  .factory('placeService', ['YW', '$resource', '$rootScope', function (YW, $resource, $rootScope) {
+    var apiUrl=YW.api;
+    var getList=$resource(apiUrl,{},{
+      getApply: {
+        url: Url + 'interviewApply/list',
+        method: 'GET',
+        params: {status: '@status'},
+        isArray: false
+      }
+    });
+    $rootScope.placeItem=[];
+    return{
+      placeGET:function (type) {
+        getList.getApply(url,{status:type},function (resp) {
+          $rootScope.placeItem=resp.rows;
+          $rootScope.$broadcast('apply.user');
+        })
+      },
+      placeList:function () {
+        return $rootScope.placeItem;
+      }
+    }
+  }])
   //用户登录
   .factory('User', ['YW', '$resource', 'Storage', '$rootScope', function (YW, $resource, Storage, $rootScope) {
     var apiUrl = YW.api;

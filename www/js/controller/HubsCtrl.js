@@ -67,7 +67,7 @@ angular.module('starter.hubs', [])
 
 
 
-
+    //页面加载时执行的代码
     $scope.$on('$ionicView.beforeEnter', function () {
       $scope.localUser = Storage.get(YW.userKey);
       console.log($scope.localUser);

@@ -55,9 +55,12 @@ angular.module('starter.HomeCtrl', [])
         //   locationLng: $rootScope.GpsPosition.lng,
         //   locationLat: $rootScope.GpsPosition.lat
         // };
+        // console.log(getDataObj);
         // if(resp.success){
         //   getData.getCityObj(getDataObj,function (resp) {
+        //     console.log(resp);
         //     $scope.items=resp.rows;
+        //     console.log($scope.items)
         //   })
         // }
       });

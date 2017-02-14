@@ -1,7 +1,8 @@
 angular.module('starter.JobApply', [])
-  .controller('JobApply', ['$scope', '$resource', '$ionicPopover', '$ionicLoading', '$timeout', '$ionicPopup','PromptService','YW', function ($scope, $resource, $ionicPopover, $ionicLoading, $timeout, $ionicPopup,PromptService,YW) {
+  .controller('JobApply', ['$scope', '$resource', '$ionicPopover', '$ionicLoading', '$timeout', '$ionicPopup', 'PromptService','placeService','YW', function ($scope, $resource, $ionicPopover, $ionicLoading, $timeout, $ionicPopup, PromptService,placeService, YW) {
     var url = 'json/jobapply.json';
     var getUlr = $resource(url);
+   
 
     $ionicLoading.show({
       template: '数据载入中，请稍等......',
@@ -15,7 +16,10 @@ angular.module('starter.JobApply', [])
       });
       $ionicLoading.hide()
     }, 1000);
-
+//页面加载时执行的代码
+    $scope.$on('$ionicView.beforeEnter', function () {
+      console.log('这是岗位申请中的代码段；')
+    });
 //下拉更新
     $scope.doRefresh = function () {
       //your code
@@ -38,20 +42,19 @@ angular.module('starter.JobApply', [])
       $scope.popover.hide();
       var clearPopup = $ionicPopup.confirm({
         title: "撤消申请",
-        template: "<p class='text-center'>撤消 " + "<span class='assertive'>" + $scope.jobList.name + "</span> 申请</p>",
+        template: "<p class='text-center'>撤消" + "<span class='assertive'>" + $scope.jobList.name + "</span>申请</p>",
         okText: "撤消",
         okType: "button-light",
         cancelText: '取消',
         cancelType: "button-balanced"
       });
       clearPopup.then(function (res) {
-          if(res)
-          {
-            //这里写取消申请的代码
-            console.log('你确认了；')
-          }else{
-            // console.log('你取消了；')
-          }
+        if (res) {
+          //这里写确认（取消申请）代码；
+          console.log('你确认了；')
+        } else {
+          //这里写取消的代码；
+        }
       })
     };
   }]);
