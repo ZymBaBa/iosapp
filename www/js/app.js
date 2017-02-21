@@ -8,6 +8,7 @@ angular.module('starter',
     'starter.UserCtrl',
     'starter.JobApply',
     'starter.JobInvite',
+    'starter.JobEntry',
     'starter.JobRefuse',
     'starter.NewsCategoryCtrl',
     'starter.hubs',
@@ -216,6 +217,16 @@ angular.module('starter',
           'job-invite': {
             templateUrl: 'templates/position/job-invite.html',
             controller: 'JobInvite'
+          }
+        }
+      })
+      .state('job-entry', {
+        url: '/job-entry',
+        parent: 'tab.position',
+        views: {
+          'job-entry': {
+            templateUrl: 'templates/position/job-entry.html',
+            controller: 'JobEntry'
           }
         }
       })

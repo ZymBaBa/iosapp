@@ -2,11 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ea8b688d-f668-483b-80d8-5fa19aaccb2c" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/js/controller/JobEntryCtrl.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/templates/position/job-entry.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/HomeCtrl.js" afterPath="$PROJECT_DIR$/www/js/controller/HomeCtrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/HubsCtrl.js" afterPath="$PROJECT_DIR$/www/js/controller/HubsCtrl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/css/style.css" afterPath="$PROJECT_DIR$/www/css/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/index.html" afterPath="$PROJECT_DIR$/www/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/app.js" afterPath="$PROJECT_DIR$/www/js/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/config.js" afterPath="$PROJECT_DIR$/www/js/config.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/JobApplyCtrl.js" afterPath="$PROJECT_DIR$/www/js/controller/JobApplyCtrl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/JobInviteCtrl.js" afterPath="$PROJECT_DIR$/www/js/controller/JobInviteCtrl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/postDetailCtrl.js" afterPath="$PROJECT_DIR$/www/js/controller/postDetailCtrl.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/services/appService.js" afterPath="$PROJECT_DIR$/www/js/services/appService.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/position/job-apply.html" afterPath="$PROJECT_DIR$/www/templates/position/job-apply.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/position/job-invite.html" afterPath="$PROJECT_DIR$/www/templates/position/job-invite.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/position/job-refuse.html" afterPath="$PROJECT_DIR$/www/templates/position/job-refuse.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/position/position.html" afterPath="$PROJECT_DIR$/www/templates/position/position.html" />
     </list>
     <ignored path="iosapp.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,41 +39,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="JobApplyCtrl.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/www/js/controller/JobApplyCtrl.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="84">
-              <caret line="4" column="3" selection-start-line="4" selection-start-column="3" selection-end-line="4" selection-end-column="3" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/js/app.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="579">
-              <caret line="48" column="5" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="appService.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/js/services/appService.js">
+      <file leaf-file-name="job-entry.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/www/templates/position/job-entry.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="147">
-              <caret line="58" column="37" selection-start-line="58" selection-start-column="37" selection-end-line="58" selection-end-column="37" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HomeCtrl.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/js/controller/HomeCtrl.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="27" column="7" selection-start-line="27" selection-start-column="7" selection-end-line="27" selection-end-column="7" />
+              <caret line="7" column="25" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -85,12 +65,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/www/templates/position/job-apply.html" />
-        <option value="$PROJECT_DIR$/www/templates/position/job-invite.html" />
-        <option value="$PROJECT_DIR$/www/templates/position/job-refuse.html" />
-        <option value="$PROJECT_DIR$/www/templates/position/position.html" />
-        <option value="$PROJECT_DIR$/www/js/controller/AboutCtrl.js" />
-        <option value="$PROJECT_DIR$/www/js/controller/ReumeCtrl.js" />
         <option value="$PROJECT_DIR$/www/templates/user/re-map.html" />
         <option value="$PROJECT_DIR$/www/templates/category/Newscategory.html" />
         <option value="$PROJECT_DIR$/www/js/controller/NewsCategoryCtrl.js" />
@@ -116,26 +90,32 @@
         <option value="$PROJECT_DIR$/www/templates/public/Classification.html" />
         <option value="$PROJECT_DIR$/www/templates/user/newReume.html" />
         <option value="$PROJECT_DIR$/www/templates/user/user.html" />
-        <option value="$PROJECT_DIR$/www/index.html" />
         <option value="$PROJECT_DIR$/www/templates/user/hubs.html" />
         <option value="$PROJECT_DIR$/config.xml" />
-        <option value="$PROJECT_DIR$/www/css/style.css" />
         <option value="$PROJECT_DIR$/www/templates/home/home.html" />
-        <option value="$PROJECT_DIR$/www/js/config.js" />
-        <option value="$PROJECT_DIR$/www/js/app.js" />
         <option value="$PROJECT_DIR$/www/js/controller/loginCtrl.js" />
         <option value="$PROJECT_DIR$/www/templates/login.html" />
         <option value="$PROJECT_DIR$/www/templates/user/reume.html" />
         <option value="$PROJECT_DIR$/www/js/controller/UserCtrl.js" />
         <option value="$PROJECT_DIR$/www/templates/public/postDetail.html" />
         <option value="$PROJECT_DIR$/doc/demo" />
-        <option value="$PROJECT_DIR$/www/js/controller/postDetailCtrl.js" />
-        <option value="$PROJECT_DIR$/www/js/controller/JobInviteCtrl.js" />
         <option value="$PROJECT_DIR$/www/js/controller/JobRefuseCtrl.js" />
         <option value="$PROJECT_DIR$/www/js/controller/HubsCtrl.js" />
         <option value="$PROJECT_DIR$/www/js/controller/HomeCtrl.js" />
+        <option value="$PROJECT_DIR$/www/js/controller/postDetailCtrl.js" />
+        <option value="$PROJECT_DIR$/www/templates/position/job-refuse.html" />
+        <option value="$PROJECT_DIR$/www/templates/position/position.html" />
+        <option value="$PROJECT_DIR$/www/index.html" />
+        <option value="$PROJECT_DIR$/www/css/style.css" />
         <option value="$PROJECT_DIR$/www/js/services/appService.js" />
+        <option value="$PROJECT_DIR$/www/templates/position/job-invite.html" />
+        <option value="$PROJECT_DIR$/www/js/app.js" />
         <option value="$PROJECT_DIR$/www/js/controller/JobApplyCtrl.js" />
+        <option value="$PROJECT_DIR$/www/templates/position/job-entry.html" />
+        <option value="$PROJECT_DIR$/www/templates/position/job-apply.html" />
+        <option value="$PROJECT_DIR$/www/js/config.js" />
+        <option value="$PROJECT_DIR$/www/js/controller/JobEntryCtrl.js" />
+        <option value="$PROJECT_DIR$/www/js/controller/JobInviteCtrl.js" />
       </list>
     </option>
   </component>
@@ -154,9 +134,8 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="40" />
     <option name="width" value="1680" />
-    <option name="height" value="971" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -416,6 +395,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="www" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="iosapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="iosapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="doc" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -438,17 +435,17 @@
     <property name="FullScreen" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/www/js/controller" />
+      <recent name="$PROJECT_DIR$/www/templates/position" />
+      <recent name="$PROJECT_DIR$/www/img" />
+      <recent name="$PROJECT_DIR$/www/js" />
+      <recent name="$PROJECT_DIR$/www/lib/ionic/js" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/www/lib/ionic/js" />
       <recent name="$PROJECT_DIR$/www/js/controller" />
       <recent name="$PROJECT_DIR$/www/json" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/www/img" />
-      <recent name="$PROJECT_DIR$/www/js" />
-      <recent name="$PROJECT_DIR$/www/lib/ionic/js" />
-      <recent name="$PROJECT_DIR$/www/js/controller" />
-      <recent name="$PROJECT_DIR$/www/js/services" />
     </key>
   </component>
   <component name="RunManager">
@@ -635,14 +632,22 @@
       <workItem from="1486782454230" duration="1705000" />
       <workItem from="1486864947649" duration="444000" />
       <workItem from="1486865703592" duration="5404000" />
+      <workItem from="1487470820942" duration="2409000" />
+      <workItem from="1487550591705" duration="1998000" />
+      <workItem from="1487552820128" duration="3439000" />
+      <workItem from="1487567964628" duration="15928000" />
+      <workItem from="1487594307512" duration="3145000" />
+      <workItem from="1487642856501" duration="276000" />
+      <workItem from="1487643626874" duration="17267000" />
+      <workItem from="1487673088809" duration="2697000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="384038000" />
+    <option name="totallyTimeSpent" value="431197000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="40" width="1680" height="971" extended-state="0" />
+    <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -696,19 +701,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="3" />
+      <option name="time" value="11" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/www/templates/public/postlist.html" />
-    <entry file="file://$PROJECT_DIR$/www/json/homeList.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/templates/category/Classification.html" />
     <entry file="file://$PROJECT_DIR$/www/lib/ionic/js/ng-cordova.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -803,20 +800,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="602">
-          <caret line="234" column="17" selection-start-line="234" selection-start-column="17" selection-end-line="234" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
-          <caret line="35" column="17" selection-start-line="35" selection-start-column="17" selection-end-line="35" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/lib/ionic/js/ionic-angular.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="433">
@@ -894,46 +877,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controller/postDetailCtrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2121">
-          <caret line="101" column="6" selection-start-line="101" selection-start-column="6" selection-end-line="101" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/position/position.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/position/job-refuse.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/position/job-apply.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="756">
-          <caret line="36" column="34" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/position/job-invite.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="798">
-          <caret line="38" column="33" selection-start-line="38" selection-start-column="33" selection-end-line="38" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/js/controller/NewsCategoryCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
           <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -941,47 +888,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="504">
           <caret line="89" column="33" selection-start-line="89" selection-start-column="33" selection-end-line="89" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controller/JobRefuseCtrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controller/JobInviteCtrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="18" column="6" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="6" />
-          <folding>
-            <marker date="1486719229000" expanded="true" signature="1173:1186" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controller/CategoryCtrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="25" column="31" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controller/ClassificationCtrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="13" column="64" selection-start-line="13" selection-start-column="64" selection-end-line="13" selection-end-column="64" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controller/CollectionCtrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -998,54 +904,164 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-630">
           <caret line="1" column="31" selection-start-line="1" selection-start-column="31" selection-end-line="1" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controller/CategoryCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="25" column="31" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="31" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controller/CollectionCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controller/ClassificationCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="15" column="11" selection-start-line="15" selection-start-column="11" selection-end-line="15" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controller/HomeCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="63">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controller/JobRefuseCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controller/postDetailCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="957">
+          <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/position/job-refuse.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="945">
+          <caret line="45" column="42" selection-start-line="45" selection-start-column="42" selection-end-line="45" selection-end-column="42" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/services.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1428">
+        <state relative-caret-position="658">
           <caret line="68" column="28" selection-start-line="68" selection-start-column="28" selection-end-line="68" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="218" column="27" selection-start-line="218" selection-start-column="27" selection-end-line="218" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/config.js">
+    <entry file="file://$PROJECT_DIR$/www/templates/position/position.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="29" selection-start-line="0" selection-start-column="29" selection-end-line="0" selection-end-column="29" />
+        <state relative-caret-position="252">
+          <caret line="12" column="38" selection-start-line="12" selection-start-column="38" selection-end-line="12" selection-end-column="38" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="579">
-          <caret line="48" column="5" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
+        <state relative-caret-position="210">
+          <caret line="208" column="34" selection-start-line="208" selection-start-column="34" selection-end-line="208" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controller/HomeCtrl.js">
+    <entry file="file://$PROJECT_DIR$/www/templates/position/job-apply.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="27" column="7" selection-start-line="27" selection-start-column="7" selection-end-line="27" selection-end-column="7" />
+        <state relative-caret-position="84">
+          <caret line="6" column="36" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/position/job-invite.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1008">
+          <caret line="48" column="17" selection-start-line="48" selection-start-column="17" selection-end-line="48" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/services/appService.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="58" column="37" selection-start-line="58" selection-start-column="37" selection-end-line="58" selection-end-column="37" />
+        <state relative-caret-position="-441">
+          <caret line="51" column="30" selection-start-line="51" selection-start-column="30" selection-end-line="51" selection-end-column="30" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="23" column="22" selection-start-line="23" selection-start-column="22" selection-end-line="23" selection-end-column="22" />
+          <folding>
+            <element signature="e#361#471#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controller/JobEntryCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="37" column="20" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="20" />
+          <folding>
+            <marker date="1487675251000" expanded="true" signature="3072:3085" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controller/JobInviteCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="60" column="23" selection-start-line="60" selection-start-column="23" selection-end-line="60" selection-end-column="23" />
+          <folding>
+            <marker date="1487675284000" expanded="true" signature="1739:1752" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/controller/JobApplyCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="4" column="3" selection-start-line="4" selection-start-column="3" selection-end-line="4" selection-end-column="3" />
+        <state relative-caret-position="-14">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/position/job-entry.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="7" column="25" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="25" />
           <folding />
         </state>
       </provider>

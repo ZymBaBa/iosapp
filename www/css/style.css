@@ -238,3 +238,10 @@
   color: #f5f5f5;
   font-size: 4rem;
 }
+.dataEmpty{
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  color: #b2b2b2;
+  font-size: 15px;
+}

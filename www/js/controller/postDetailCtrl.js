@@ -54,7 +54,8 @@ angular.module('starter.postDetailCtrl', [])
     //页面加载的时候就去获取当前这个用户是否登录，如果登录了就去获取相应成功入职记录
     $scope.$on('$ionicView.beforeEnter', function () {
       if ($rootScope.state) {
-        getUlr.checkInIdsLoad({status: 'CHECKIN'}, function (resp) {
+        getUlr.checkInIdsLoad({status: 'SUCCESS'}, function (resp) {
+          console.log(resp);
           $scope.chin = resp;
           $scope.checkList = resp.rows;
         })

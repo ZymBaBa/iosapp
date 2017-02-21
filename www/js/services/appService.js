@@ -53,29 +53,53 @@ angular.module('starter.PromptService', [])
       }
     };
   })
-  //获取不同状态的职位申请列表
-  .factory('placeService', ['YW', '$resource', '$rootScope', function (YW, $resource, $rootScope) {
-    var apiUrl=YW.api;
-    var getList=$resource(apiUrl,{},{
-      getApply: {
-        url: Url + 'interviewApply/list',
-        method: 'GET',
-        params: {status: '@status'},
-        isArray: false
-      }
-    });
-    $rootScope.placeItem=[];
-    return{
-      placeGET:function (type) {
-        getList.getApply(url,{status:type},function (resp) {
-          $rootScope.placeItem=resp.rows;
-          $rootScope.$broadcast('apply.user');
+  //岗位申请管理服务
+  .factory('applyService', ['YW', '$resource', '$rootScope', function (YW, $resource, $rootScope) {
+    var apiUrl = YW.api;
+    $rootScope.placeItem = [];
+    return {
+      get: function (reAddress,reParameter) {
+        var getList = $resource(apiUrl + reAddress, {}, {
+          getApply: {
+            url: apiUrl + reAddress,
+            method: 'GET',
+            params: {status: '@status'},
+            isArray: false
+          }
+        });
+        getList.getApply(apiUrl + reAddress, {status: reParameter}, function (resp) {
+          $rootScope.placeItem = resp.rows;
+          $rootScope.$broadcast('apply.list');
         })
       },
-      placeList:function () {
+      set: function () {
         return $rootScope.placeItem;
       }
     }
+  }])
+  //申请中、待面试、被拒绝根据ID和地址封装服务，只传ID的服务
+  .factory('postOperationService', ['YW', '$resource', '$rootScope', function (YW, $resource, $rootScope) {
+    var apiUrl = YW.api;
+    $rootScope.postJudge = [];
+    return {
+      postOperation: function (address, recruitId) {
+        var postOperationUrl = $resource(apiUrl+address, {}, {
+          postApply: {
+            url: apiUrl + address,
+            method: 'POST',
+            isArray: false
+          }
+        });
+        postOperationUrl.postApply(apiUrl + address, {recruitId: recruitId}, function (resp) {
+          $rootScope.postJudge = resp;
+        });
+        $rootScope.$broadcast('post.Operation')
+      },
+      postNotice: function () {
+        return $rootScope.postJudge;
+      }
+    }
+
   }])
   //用户登录
   .factory('User', ['YW', '$resource', 'Storage', '$rootScope', function (YW, $resource, Storage, $rootScope) {
