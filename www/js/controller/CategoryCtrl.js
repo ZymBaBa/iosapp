@@ -1,6 +1,6 @@
 angular.module('starter.CategoryCtrl', [])
 //分类页
-  .controller('CategoryCtrl', ['$scope', '$resource',  '$ionicLoading', '$timeout','CategoryFactory', 'YW', function ($scope, $resource,  $ionicLoading, $timeout, CategoryFactory,YW) {
+  .controller('CategoryCtrl', ['$scope', '$resource',  '$ionicLoading', '$timeout','CategoryFactory', function ($scope, $resource,  $ionicLoading, $timeout, CategoryFactory) {
     $ionicLoading.show({
       template: '数据载入中，请稍等......',
       noBackdrop: true,

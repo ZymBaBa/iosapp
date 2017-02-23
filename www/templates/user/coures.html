@@ -4,12 +4,15 @@
   </ion-nav-title>
   <ion-content>
     <ion-refresher pulling-text="更新数据..." spinner="ripple" on-refresh="doRefresh();"></ion-refresher>
+    <div class="dataEmpty" ng-show="tipShow==false">
+      <span>暂无入职记录，快去找兼职吧！</span>
+    </div>
     <div class="card" ng-repeat="item in items">
       <ion-list>
         <ion-item class="head item-divider">
           <div class="row">
             <div class="col col-80">
-              <p ng-bind="item.name"></p>
+              <p ng-bind="item.recruitModel.positionModel.name"></p>
             </div>
             <div class="col text-right" ng-click="openPopover($event,item);">
               <i class="icon ion-android-menu"></i>
@@ -19,24 +22,22 @@
         <ion-item class="body">
           <div class="row responsive-sm">
             <div class="col">
-              <p><span class="stable">公司名称：</span><span ng-bind="item.firm"></span></p>
-              <p><span class="stable">工作地点：</span><span  ng-bind="item.workSite"></span></p>
-              <p><span class="stable">就职岗位：</span><span ng-bind="item.job"></span></p>
-              <p><span class="stable">兼职薪酬：</span><span  ng-bind="item.Pay+'元/'+item.way"></span></p>
-              <p><span class="stable">入职时间：</span><span  ng-bind="item.workTimeStart"></span></p>
-              <p><span class="stable">离职时间：</span><span  ng-bind="item.workTimeClear"></span></p>
+              <p><span class="stable">单位：</span><span ng-bind="item.recruitModel.enterpriseUserModel.name"></span></p>
+              <p><span class="stable">地址：</span><span  ng-bind="item.recruitModel.jobAddress"></span></p>
+              <p><span class="stable">薪酬：</span><span  ng-bind="item.recruitModel.salary+' '+item.recruitModel.salaryTypeName"></span></p>
+              <p ng-show="item.checkInReviewModel==null"><span class="stable">评价：</span><span class="stable" >未评价</span></p>
+              <p ng-show="item.checkInReviewModel!==null"><span class="stable">评价：</span><span class="balanced" >已评价</span></p>
             </div>
           </div>
         </ion-item>
       </ion-list>
     </div>
   </ion-content>
-  <script id="jobInvite-popover.html" type="text/ng-template">
+  <script id="jobCoures-popover.html" type="text/ng-template">
     <ion-popover-view class="Confirm">
       <ion-list class="text-center">
-        <ion-item ng-click="delConfirm();" style="color:#a2a2a2">删除评价</ion-item>
-        <ion-item ng-click="seeConfirm(userList.evaluate);" class="balanced" ng-show="userList.evaluateState!=0" >查看评价</ion-item>
-        <ion-item ng-click="dialPhone(userList.touchName,userList.touchPhone);" class="balanced">拨打电话</ion-item>
+        <ion-item ng-click="delConfirm();" style="color:#a2a2a2">删除记录</ion-item>
+        <ion-item ng-click="seeConfirm();" class="balanced">查看评价</ion-item>
       </ion-list>
     </ion-popover-view>
   </script>

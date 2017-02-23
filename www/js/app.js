@@ -103,7 +103,7 @@ angular.module('starter',
   .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $httpProvider) {
     //cookie请求头配置
     // $httpProvider.defaults.withCredentials = true;
-    // $httpProvider.defaults.headers.common['Authorization'] = "89757";
+    $httpProvider.defaults.headers.common['Authorization'] = "89757";
     //系统配置
     $ionicConfigProvider.views.transition('ios');
     $ionicConfigProvider.views.maxCache(10);
@@ -135,6 +135,7 @@ angular.module('starter',
       //岗位详细页-首页
       .state('tab.postDetail', {
         url: '/postDetail/:id',
+        cache:'false',
         views: {
           'tab-home': {
             templateUrl: 'templates/public/postDetail.html',
@@ -145,6 +146,7 @@ angular.module('starter',
       //category 分类
       .state('tab.category', {
         url: '/category',
+        cache:'false',
         views: {
           'tab-category': {
             templateUrl: 'templates/category/category.html',
@@ -155,6 +157,7 @@ angular.module('starter',
       //分类列表
       .state('tab.Classification', {
         url: '/Classification/:id',
+        cache:'false',
         views: {
           'tab-category': {
             templateUrl: 'templates/public/Classification.html',
@@ -165,6 +168,7 @@ angular.module('starter',
       //岗位详细页-列表
       .state('tab.postlist', {
         url: '/postlist/:id',
+        cache:'false',
         views: {
           'tab-category': {
             templateUrl: 'templates/public/postDetail.html',
@@ -187,6 +191,7 @@ angular.module('starter',
       //position
       .state('tab.position', {
         url: '/position',
+        cache:'false',
         views: {
           'tab-position': {
             templateUrl: 'templates/position/position.html',
@@ -203,6 +208,7 @@ angular.module('starter',
       .state('job-apply', {
         url: '/job-apply',
         parent: 'tab.position',
+        cache:'false',
         views: {
           'job-apply': {
             templateUrl: 'templates/position/job-apply.html',
@@ -212,6 +218,7 @@ angular.module('starter',
       })
       .state('job-invite', {
         url: '/job-invite',
+        cache:'false',
         parent: 'tab.position',
         views: {
           'job-invite': {
@@ -222,6 +229,7 @@ angular.module('starter',
       })
       .state('job-entry', {
         url: '/job-entry',
+        cache:'false',
         parent: 'tab.position',
         views: {
           'job-entry': {
@@ -232,6 +240,7 @@ angular.module('starter',
       })
       .state('job-refuse', {
         url: '/job-refuse',
+        cache:'false',
         parent: 'tab.position',
         views: {
           'job-refuse': {

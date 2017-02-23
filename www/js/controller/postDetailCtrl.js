@@ -1,6 +1,6 @@
 angular.module('starter.postDetailCtrl', [])
 
-  .controller('postDetail', ['$scope', '$resource', '$ionicGesture', '$stateParams', '$resource', '$ionicModal', '$ionicLoading', '$timeout', '$state', '$rootScope', 'PromptService', 'YW', function ($scope, $resource, $ionicGesture, $stateParams, $resource, $ionicModal, $ionicLoading, $timeout, $state, $rootScope, PromptService, YW) {
+  .controller('postDetail', ['$scope', '$resource', '$ionicGesture', '$stateParams', '$ionicModal', '$ionicLoading', '$timeout', '$state', '$rootScope', '$ionicPopup', 'PromptService', 'YW', function ($scope, $resource, $ionicGesture, $stateParams, $ionicModal, $ionicLoading, $timeout, $state, $rootScope, $ionicPopup, PromptService, YW) {
     $scope.name = '兼职详细';
     $scope.applyTitle = '岗位申请';
     console.log($stateParams);
@@ -65,13 +65,13 @@ angular.module('starter.postDetailCtrl', [])
      * 1、判断用户是否登录、是否有成功入职记录，则打开申请列表；
      * 2、判断用户是否登录，没有成功入职记录的，则发送该岗位的记录
      * 3、用户没登录的话，测打开登录对话框*/
-    $scope.applyData={
-      recruitId: id,
-      checkInIds:[]
+    $scope.applyData = {
+      recruitIds: [id],
+      checkInIds: []
     };
     $scope.openApply = function () {
       if ($rootScope.state) {
-        if ($scope.chin.total !== 0) {
+        if ($scope.chin.total !== 0 || $scope.item.interviewApplyModel!==null) {
           console.log($scope.chin.total);
           $scope.apply.show();
         } else {
@@ -84,8 +84,12 @@ angular.module('starter.postDetailCtrl', [])
         $state.go("login")
       }
     };
+    //拨打电话
+    $scope.telPhone = function ($event, mobilePhone) {
+      window.open("tel:" + mobilePhone)
+    };
     //用户发送兼职申请请求
-    $scope.addApply = function () {
+    var sendApply = function () {
       getUlr.applyPost($scope.applyData, function (resp) {
         if (resp.success) {
           PromptService.PromptMsg(resp.msg);
@@ -97,20 +101,57 @@ angular.module('starter.postDetailCtrl', [])
         }
       })
     };
+    var showConfirm = function () {
+      var clearPopup = $ionicPopup.confirm({
+        title: "信息确认",
+        template: "<p class='text-center'>" + "<span class='assertive'>" + "是否不发送您的兼职经历？" + "</span></p>",
+        okText: "确认",
+        okType: "button-light",
+        cancelText: '取消',
+        cancelType: "button-balanced"
+      });
+      clearPopup.then(function (res) {
+        if (res) {
+          sendApply()
+        }
+      })
+    };
+    //用户发送兼职申请请求判断入职记录是否等于0
+    $scope.addApply = function () {
+      if ($scope.applyData.checkInIds.length === 0) {
+        showConfirm()
+      } else {
+        sendApply()
+      }
+    };
     //关闭入职成功记录界面
     $scope.closeApply = function () {
       $scope.apply.hide()
     };
-    $scope.devList = [
-      {text: "HTML5", checked: false},
-      {text: "CSS3", checked: false},
-      {text: "JavaScript", checked: false}
-    ];
-
-    $scope.pushNotificationChange = function () {
-      console.log('Push Notification Change', $scope.pushNotification.checked);
+    //Start 插入兼职经验ID
+    var updateSelected = function (action, id) {
+      if (action == 'add' && $scope.applyData.checkInIds.indexOf(id) == -1) {
+        $scope.applyData.checkInIds.push(id);
+      }
+      if (action == 'remove' && $scope.applyData.checkInIds.indexOf(id) != -1) {
+        var idx = $scope.applyData.checkInIds.indexOf(id);
+        $scope.applyData.checkInIds.splice(idx, 1);
+      }
     };
-    $scope.pushNotification = {checked: true};
-    $scope.emailNotification = 'Subscribed'
+    $scope.updateSelection = function ($event, id) {
+      var checkbox = $event.target;
+      var action = (checkbox.checked ? 'add' : 'remove');
+      updateSelected(action, id);
+    };
+    $scope.isSelected = function (id) {
+      return $scope.applyData.checkInIds.indexOf(id) >= 0;
+    };
+    //End
+
+    // $scope.pushNotificationChange = function () {
+    //   console.log('Push Notification Change', $scope.pushNotification.checked);
+    // };
+    // $scope.pushNotification = {checked: true};
+    // $scope.emailNotification = 'Subscribed'
   }]);
 

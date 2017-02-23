@@ -15,6 +15,10 @@ angular.module('starter.JobApply', [])
         $ionicLoading.hide();
       })
     });
+    //拨打电话
+    $scope.telPhone = function ($event, mobilePhone) {
+      window.open("tel:" + mobilePhone)
+    };
 //下拉更新
     $scope.doRefresh = function () {
       $ionicLoading.show({

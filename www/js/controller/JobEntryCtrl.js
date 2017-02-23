@@ -1,5 +1,5 @@
 angular.module('starter.JobEntry', [])
-  .controller('JobEntry', ['$scope', '$resource', '$ionicPopover', '$ionicLoading', '$timeout', '$ionicPopup', 'PromptService', 'applyService','postOperationService', 'YW', function ($scope, $resource, $ionicPopover, $ionicLoading, $timeout, $ionicPopup, PromptService, applyService,postOperationService, YW) {
+  .controller('JobEntry', ['$scope', '$resource', '$ionicPopover', '$ionicLoading', '$timeout', '$ionicPopup', 'PromptService', 'applyService','postOperationService', '$rootScope','YW', function ($scope, $resource, $ionicPopover, $ionicLoading, $timeout, $ionicPopup, PromptService, applyService,postOperationService,$rootScope, YW) {
     $ionicLoading.show({
       template: '入职邀请载入中，请稍等...',
       noBackdrop: true,
@@ -11,11 +11,15 @@ angular.module('starter.JobEntry', [])
       applyService.get(YW.objList[2],YW.applyList[1]);
       $scope.$on('apply.list', function () {
         $scope.items = applyService.set();
-        ($scope.items.length !== 0) ? $scope.tipShow = true : $scope.tipShow = false;
+        ($scope.items.length!==0) ? $scope.tipShow = true : $scope.tipShow = false;
         console.log($scope.items);
         $ionicLoading.hide();
       })
     });
+    //拨打电话
+    $scope.telPhone=function ($event,mobilePhone) {
+      window.open("tel:"+mobilePhone)
+    };
 //下拉更新
     $scope.doRefresh = function () {
       $ionicLoading.show({
@@ -27,7 +31,7 @@ angular.module('starter.JobEntry', [])
       $scope.$broadcast("scroll.refreshComplete")
     };
 //Popover 弹出框代码
-    $ionicPopover.fromTemplateUrl("jobApply-popover.html", {
+    $ionicPopover.fromTemplateUrl("jobEntry-popover.html", {
       scope: $scope
     })
       .then(function (popover) {

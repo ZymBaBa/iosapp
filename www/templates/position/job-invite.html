@@ -4,7 +4,7 @@
   </ion-nav-title>
   <ion-content>
     <ion-refresher pulling-text="更新数据..." spinner="ripple" on-refresh="doRefresh();"></ion-refresher>
-    <div class="dataEmpty" ng-show="tipShow==false">
+    <div class="dataEmpty"  ng-show="tipShow==false">
       <span>暂无面试邀请</span>
     </div>
     <div class="card" ng-repeat="item in items">
@@ -32,8 +32,8 @@
                 ng-bind="item.recruitModel.jobEndTime.substring(0,10)+' 至 '+item.recruitModel.jobStartTime.substring(0,10)"></span>
               </p>
               <p><span class="stable">工作地点：</span><span ng-bind="item.recruitModel.jobAddress"></span></p>
-              <p><span class="stable">面试人员：</span><span ng-bind="item.recruitModel.contactPerson"></span></p>
-              <p><span class="stable">联系电话：</span><span ng-bind="item.recruitModel.contactPhone"></span></p>
+              <p><span class="stable">联系人员：</span><span ng-bind="item.recruitModel.contactPerson"></span></p>
+              <p><span class="stable">联系电话：</span><i class="icon ion-android-call balanced" ng-click="telPhone($event,item.recruitModel.contactPhone)"></i> <span class="balanced" ng-bind="item.recruitModel.contactPhone" ng-click="telPhone($event,item.recruitModel.contactPhone)"></span></p>
               <p><span class="stable">面式地点：</span><span ng-bind="item.recruitModel.interviewAddressModel.address"></span></p>
             </div>
           </div>

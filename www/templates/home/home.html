@@ -74,10 +74,10 @@
         <a class="button" ng-click="openSend();">下一步</a>
       </ion-header-bar>
       <ion-content class="modelContent" scrollbar-x="false">
-        <div ng-repeat="r in jobs">
+        <div ng-repeat="r in CateLists">
           <ion-list>
             <ion-item class="item-divider item-borderless" ng-bind="r.name" style="color: #b2b2b2;font-size: 0.85rem"></ion-item>
-            <ion-radio  ng-repeat="y in r.list" ng-value="y.name" ng-model="ret.choice">
+            <ion-radio  ng-repeat="y in PostLists |filter:r.name" ng-value="y.id" ng-model="formatJob[$parent.$index]">
               {{y.name}}
             </ion-radio>
           </ion-list>
@@ -91,24 +91,22 @@
       <ion-header-bar class="bar-dark">
         <a class="button button-icon ion-ios-arrow-left" ng-click="closeSend();"></a>
         <h1 class="title" ng-bind="Title.send"></h1>
-        <a class="button" ng-click="openSend();">发送</a>
+        <a class="button" ng-click="addApply();">发送</a>
       </ion-header-bar>
       <ion-content>
         <ion-list>
           <ion-item class="item-divider item-borderless" style="color: #b2b2b2;font-size: 0.85rem">薪酬要求</ion-item>
           <ion-item class="item-input">
             <i class="icon ion-cash placeholder-icon"></i>
-            <input type="tel" autocomplete="off" ng-required="true" name="realPassword" ng-model="data.monery" maxlength="2"
-                   placeholder="请输入您的薪酬要求，以小时为单位">
+            <input type="tel"  ng-model="pay" maxlength="2" placeholder="请输入您的薪酬要求，以小时为单位">
           </ion-item>
         </ion-list>
+        {{pay}}
         <ion-list>
           <ion-item class="item-divider item-borderless"  style="color: #b2b2b2;font-size: 0.85em">兼职经验(多选)</ion-item>
-          <ion-checkbox ng-repeat="item in devList"
-                        ng-model="item.checked"
-                        ng-checked="item.checked" class="checkbox-dark">
-            <h2 ng-bind="item.text"></h2>
-            <p>2016-06-07至2016-06-12</p>
+          <ion-checkbox ng-repeat="item in checkList" id={{item.id}} ng-checked="isSelected(item.id)" ng-click="updateSelection($event,item.id)" class="checkbox-dark">
+            <h2 ng-bind="item.recruitModel.enterpriseUserModel.name+'('+item.recruitModel.positionModel.name+')'"></h2>
+            <p ng-bind="item.recruitModel.jobStartTime.substring(0,10)+' 至 '+item.recruitModel.jobEndTime.substring(0,10)"></p>
           </ion-checkbox>
         </ion-list>
       </ion-content>

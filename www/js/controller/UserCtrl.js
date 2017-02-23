@@ -119,60 +119,79 @@ angular.module('starter.UserCtrl', [])
     };
   }])
   //兼职历程
-  .controller('CouresCtrl', ['$scope', '$resource', '$ionicPopover', '$ionicLoading', '$timeout', '$ionicPopup', function ($scope, $resource, $ionicPopover, $ionicLoading, $timeout, $ionicPopup) {
-    var url = 'json/coures.json';
-    var getUlr = $resource(url);
+  .controller('CouresCtrl', ['$scope', '$resource', '$ionicPopover', '$ionicLoading', '$timeout', '$ionicPopup','$rootScope','applyService', 'postOperationService','YW',function ($scope, $resource, $ionicPopover, $ionicLoading, $timeout, $ionicPopup,$rootScope,applyService,postOperationService,YW) {
     $ionicLoading.show({
-      template: '数据载入中，请稍等......',
+      template: '入职邀请载入中，请稍等...',
       noBackdrop: true,
       delay: 300
     });
-    $timeout(function () {
-      getUlr.get(function (data) {
-        $scope.items = data.rows;
-      });
-      $ionicLoading.hide()
-    }, 1000);
 
+//页面加载时执行的代码-拉取待入职中的列表
+    $scope.$on('$ionicView.beforeEnter', function () {
+      applyService.get(YW.objList[2],YW.applyList[2]);
+      $scope.$on('apply.list', function () {
+        $scope.items = applyService.set();
+        ($scope.items.length !== 0) ? $scope.tipShow = true : $scope.tipShow = false;
+        console.log($scope.items);
+        $ionicLoading.hide();
+      })
+    });
 //下拉更新
     $scope.doRefresh = function () {
-      //you code
+      $ionicLoading.show({
+        template: '入职邀请载入中，请稍等...',
+        noBackdrop: true,
+        delay: 300
+      });
+      applyService.get(YW.objList[2],YW.applyList[2]);
       $scope.$broadcast("scroll.refreshComplete")
     };
 //Popover 弹出框代码
-    $ionicPopover.fromTemplateUrl("jobInvite-popover.html", {
+    $ionicPopover.fromTemplateUrl("jobCoures-popover.html", {
       scope: $scope
     })
       .then(function (popover) {
-        $scope.popover = popover;
+        $scope.popover = popover
       });
-    //打开对话框，并且取到相应对象的数据
     $scope.openPopover = function ($event, item) {
       $scope.popover.show($event);
-      $scope.userList = item;
+      $scope.jobList = item
     };
-    //拨打电话
-    $scope.dialPhone = function (touchName, phone) {
+    //删除记录
+    $scope.delConfirm = function () {
       $scope.popover.hide();
-      $ionicPopup.confirm({
-        title: "联系面试官",
-        template: "<p class='text-center' style='color:#10ac86'>" + touchName + "-" + phone + "</p>",
-        okText: "拨号",
-        okType: "button-balanced",
+      var clearPopup = $ionicPopup.confirm({
+        title: "删除记录",
+        template: "<p class='text-center'>确认" + "<span class='assertive'>" + "</span>删除入职记录</p>",
+        okText: "确认",
+        okType: "button-light",
         cancelText: '取消',
-        cancelType: "button-light"
+        cancelType: "button-balanced"
+      });
+      clearPopup.then(function (res) {
+        if (res) {
+          postOperationService.postOperation(YW.postOperationAdd[3],$scope.jobList.recruitId);
+          $scope.$on('post.Operation',function () {
+            $scope.tipOperation=postOperationService.postNotice();
+            console.log($scope.tipOperation)
+          });
+        }
       })
     };
     //查看评价
-    $scope.seeConfirm = function (data) {
+    $scope.seeConfirm = function () {
       $scope.popover.hide();
       $ionicPopup.alert({
         title: "兼职评价",
-        template: "<div>" + data + "</div>",
+        template: "<div>" + 我是评价 + "</div>",
         okText: "知了",
         okType: "button-balanced"
       })
     };
+    //监听清空数据
+    $scope.$on('$destroy', function () {
+      $rootScope.placeItem = [];
+    });
   }])
   //兼职收藏
   .controller('CollectionCtrl', ['$scope', function ($scope) {

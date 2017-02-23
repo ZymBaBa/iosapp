@@ -74,11 +74,12 @@
       </ion-item>
       <ion-item class="item-borderless">
         <span class="stable">联系人：</span>
-        <span class="dark" ng-bind="item.enterpriseUserModel.contractPerson"></span>
+        <span class="dark" ng-bind="item.contactPerson"></span>
       </ion-item>
       <ion-item class="item-borderless">
         <span class="stable">联系电话：</span>
-        <span class="dark" ng-bind="item.contractPhone"></span>
+        <!--<i class="icon ion-android-call balanced" ng-click="telPhone($event,item.contactPhone)"></i>-->
+        <span class="balanced" ng-bind="item.contactPhone" ng-click="telPhone($event,item.contactPhone)"></span>
       </ion-item>
       <ion-item class="item-borderless">
         <span class="stable">投递回复：</span>
@@ -101,11 +102,9 @@
       </ion-header-bar>
       <ion-content class="modelContent" scrollbar-x="false">
         <ion-list>
-          <ion-checkbox ng-repeat="item in devList"
-                        ng-model="item.checked"
-                        ng-checked="item.checked" class="checkbox-dark">
-          <h2 ng-bind="item.text"></h2>
-            <p>2016-06-07至2016-06-12</p>
+          <ion-checkbox ng-repeat="item in checkList" id={{item.id}} ng-checked="isSelected(item.id)" ng-click="updateSelection($event,item.id)" class="checkbox-dark">
+          <h2 ng-bind="item.recruitModel.enterpriseUserModel.name+'('+item.recruitModel.positionModel.name+')'"></h2>
+            <p ng-bind="item.recruitModel.jobStartTime.substring(0,10)+' 至 '+item.recruitModel.jobEndTime.substring(0,10)"></p>
           </ion-checkbox>
         </ion-list>
       </ion-content>

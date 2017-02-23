@@ -1,6 +1,6 @@
 angular.module('starter.JobInvite', [])
 
-  .controller('JobInvite', ['$scope', '$resource', '$ionicPopover', '$ionicLoading', '$timeout', '$ionicPopup', 'PromptService', 'applyService', 'postOperationService','$rootScope', 'YW', function ($scope, $resource, $ionicPopover, $ionicLoading, $timeout, $ionicPopup, PromptService, applyService,postOperationService, $rootScope, YW) {
+  .controller('JobInvite', ['$scope', '$resource', '$ionicPopover', '$ionicLoading', '$timeout', '$ionicPopup', 'PromptService', 'applyService', 'postOperationService','$rootScope', '$window','YW', function ($scope, $resource, $ionicPopover, $ionicLoading, $timeout, $ionicPopup, PromptService, applyService,postOperationService, $rootScope,$window, YW) {
     $ionicLoading.show({
       template: '面试信息载入中，请稍等...',
       noBackdrop: true,
@@ -12,12 +12,16 @@ angular.module('starter.JobInvite', [])
       applyService.get(YW.objList[1], YW.applyList[1]);
       $scope.$on('apply.list', function () {
         $scope.items = applyService.set();
-        ($scope.items.length !== 0) ? $scope.tipShow = true : $scope.tipShow =false;
+        ($scope.items.length!==0) ? $scope.tipShow = true : $scope.tipShow =false;
         console.log($scope.tipShow);
         console.log($scope.items);
         $ionicLoading.hide();
       })
     });
+    //拨打电话
+    $scope.telPhone=function ($event,mobilePhone) {
+      window.open("tel:"+mobilePhone)
+    };
 //下拉更新
     $scope.doRefresh = function () {
       $ionicLoading.show({
@@ -53,7 +57,7 @@ angular.module('starter.JobInvite', [])
       });
       telPhone.then(function (resp) {
         if (resp) {
-
+          window.open("tel:"+$scope.jobList.recruitModel.contactPhone )
         }
       })
     };
@@ -73,6 +77,7 @@ angular.module('starter.JobInvite', [])
           postOperationService.postOperation(YW.postOperationAdd[4],$scope.jobList.recruitId);
           $scope.$on('post.Operation',function () {
             $scope.tipOperation=postOperationService.postNotice();
+            applyService.get(YW.objList[1], YW.applyList[1]);
             console.log($scope.tipOperation)
           });
         }

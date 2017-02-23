@@ -4,7 +4,7 @@
   </ion-nav-title>
   <ion-content>
     <ion-refresher pulling-text="更新数据..." spinner="ripple" on-refresh="doRefresh();"></ion-refresher>
-    <div class="dataEmpty" ng-show="tipShow==false">
+    <div class="dataEmpty"  ng-show="tipShow==false">
       <span>暂无入职邀请</span>
     </div>
     <div class="card" ng-repeat="item in items">
@@ -12,7 +12,7 @@
         <ion-item class="head item-divider">
           <div class="row">
             <div class="col col-80">
-              <p ng-bind="item.name"></p>
+              <p ng-bind="item.recruitModel.positionModel.name"></p>
             </div>
             <div class="col text-right" ng-click="openPopover($event,item);">
               <i class="icon ion-android-menu"></i>
@@ -22,20 +22,25 @@
         <ion-item class="body">
           <div class="row responsive-sm">
             <div class="col">
-              <p><span class="stable">公司名称：</span><span ng-bind="item.firm"></span></p>
-              <p><span class="stable">兼职薪酬：</span><span class="balanced" ng-bind="item.Pay+'元/'+item.way"></span></p>
-              <p><span class="stable">结算方式：</span><span class="balanced" ng-bind="item.balance"></span></p>
-              <p><span class="stable">面试人员：</span><span  ng-bind="item.touchName"></span></p>
-              <p><span class="stable">联系电话：</span><span  ng-bind="item.touchPhone"></span></p>
-              <p><span class="stable">面式地点：</span><span ng-bind="item.interViewAdd"></span></p>
-              <p><span class="stable">面试时间：</span><span ng-bind="item.interviewTime"></span></p>
+              <p><span class="stable">兼职单位：</span><span ng-bind="item.recruitModel.enterpriseUserModel.name"></span></p>
+              <p><span class="stable">兼职薪酬：</span><span class="balanced"
+                                                        ng-bind="item.recruitModel.salary+' '+item.recruitModel.salaryTypeName"></span>
+              </p>
+              <p><span class="stable">结算方式：</span><span class="balanced"
+                                                        ng-bind="item.recruitModel.settlementTypeName"></span></p>
+              <p><span class="stable">工作时间：</span><span
+                ng-bind="item.recruitModel.jobEndTime.substring(0,10)+' 至 '+item.recruitModel.jobStartTime.substring(0,10)"></span>
+              </p>
+              <p><span class="stable">工作地点：</span><span ng-bind="item.recruitModel.jobAddress"></span></p>
+              <p><span class="stable">联系人员：</span><span ng-bind="item.recruitModel.contactPerson"></span></p>
+              <p><span class="stable">联系电话：</span><i class="icon ion-android-call balanced" ng-click="telPhone($event,item.recruitModel.contactPhone)"></i> <span class="balanced" ng-bind="item.recruitModel.contactPhone" ng-click="telPhone($event,item.recruitModel.contactPhone)"></span></p>
             </div>
           </div>
         </ion-item>
       </ion-list>
     </div>
   </ion-content>
-  <script id="jobInvite-popover.html" type="text/ng-template">
+  <script id="jobEntry-popover.html" type="text/ng-template">
     <ion-popover-view class="Confirm">
       <ion-list class="text-center">
         <ion-item ng-click="refuseJob();" class="balanced">拒绝入职</ion-item>
