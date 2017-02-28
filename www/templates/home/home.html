@@ -1,6 +1,7 @@
 <ion-view title="优职">
   <ion-nav-buttons side="left">
-    <a class="button button-clear icon-right ion-android-arrow-dropdown" ng-click="openCity();" ng-bind="cityName.name"></a>
+    <a class="button button-clear icon-right ion-android-arrow-dropdown" ng-click="openCity();"
+       ng-bind="cityName.name"></a>
   </ion-nav-buttons>
   <ion-content>
     <div class="home-count">
@@ -29,11 +30,11 @@
           </button>
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          {{GpsPosition}}
-        </div>
-      </div>
+      <!--<div class="row">-->
+      <!--<div class="col">-->
+      <!--{{GpsPosition}}-->
+      <!--</div>-->
+      <!--</div>-->
     </div>
     <div>
       <ion-item class="item-divider text-center">
@@ -56,7 +57,7 @@
               <h3 class="balanced" ng-bind="item.positionModel.name+'-'+item.salary+item.salaryTypeName"></h3>
             </div>
             <!--<div class="col text-center">-->
-              <!--<span class="balanced" ng-bind="item.distance+'m'"></span>-->
+            <!--<span class="balanced" ng-bind="item.distance+'m'"></span>-->
             <!--</div>-->
           </div>
         </ion-item>
@@ -76,12 +77,17 @@
       <ion-content class="modelContent" scrollbar-x="false">
         <div ng-repeat="r in CateLists">
           <ion-list>
-            <ion-item class="item-divider item-borderless" ng-bind="r.name" style="color: #b2b2b2;font-size: 0.85rem"></ion-item>
-            <ion-radio  ng-repeat="y in PostLists |filter:r.name" ng-value="y.id" ng-model="formatJob[$parent.$index]">
+            <ion-item class="item-divider item-borderless balanced" ng-bind="r.name"
+                      style="color: #b2b2b2;font-size: 0.85rem"></ion-item>
+            <ion-radio ng-repeat="y in PostLists |filter:r.id" ng-value="y.id"
+                       ng-model="applyJob.formatJob" class="balanced">
+              <!--多个条件并列的时候使用以下方法-->
+              <!--ng-model="applyJob.formatJob[$parent.$index]" class="balanced">-->
               {{y.name}}
             </ion-radio>
           </ion-list>
         </div>
+        {{applyJob.formatJob|json}}
       </ion-content>
     </ion-modal-view>
   </script>
@@ -98,20 +104,60 @@
           <ion-item class="item-divider item-borderless" style="color: #b2b2b2;font-size: 0.85rem">薪酬要求</ion-item>
           <ion-item class="item-input">
             <i class="icon ion-cash placeholder-icon"></i>
-            <input type="tel"  ng-model="pay" maxlength="2" placeholder="请输入您的薪酬要求，以小时为单位">
+            <input type="tel" ng-model="applyJob.pay" maxlength="2" placeholder="请输入您的薪酬要求，以时薪为单位" class="balanced">
           </ion-item>
         </ion-list>
-        {{pay}}
         <ion-list>
-          <ion-item class="item-divider item-borderless"  style="color: #b2b2b2;font-size: 0.85em">兼职经验(多选)</ion-item>
-          <ion-checkbox ng-repeat="item in checkList" id={{item.id}} ng-checked="isSelected(item.id)" ng-click="updateSelection($event,item.id)" class="checkbox-dark">
-            <h2 ng-bind="item.recruitModel.enterpriseUserModel.name+'('+item.recruitModel.positionModel.name+')'"></h2>
-            <p ng-bind="item.recruitModel.jobStartTime.substring(0,10)+' 至 '+item.recruitModel.jobEndTime.substring(0,10)"></p>
+          <ion-item class="item-divider item-borderless" style="color: #b2b2b2;font-size: 0.85em">兼职经验(多选)</ion-item>
+          <ion-checkbox ng-repeat="item in checkList" id={{item.id}} ng-checked="isSelected(item.id)"
+                        ng-click="updateSelection($event,item.id)" class="checkbox-balanced">
+            <h2 class="balanced"
+                ng-bind="item.recruitModel.enterpriseUserModel.name+'('+item.recruitModel.positionModel.name+')'"></h2>
+            <p style="margin-top: 5px"
+               ng-bind="item.recruitModel.jobStartTime.substring(0,10)+' 至 '+item.recruitModel.jobEndTime.substring(0,10)"></p>
           </ion-checkbox>
         </ion-list>
       </ion-content>
     </ion-modal-view>
   </script>
+  <!--推荐兼职岗位-->
+  <script id="jobGroom-modal.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-header-bar class="bar-dark">
+        <a class="button button-icon ion-ios-close-empty" ng-click="closeJob();"></a>
+        <h1 class="title" ng-bind="Title.job"></h1>
+        <a class="button" ng-click="interviewApplyBtn();">申请</a>
+      </ion-header-bar>
+      <ion-content>
+        <ion-list ng-hide="FristJobGrooms.length==0">
+          <ion-item class="item-divider item-borderless" style="color: #b2b2b2;font-size: 0.85em">符合您要求的兼职岗位</ion-item>
+          <ion-checkbox ng-repeat="fGroom in FristJobGrooms" id={{fGroom.id}} ng-checked="jobIsSelected(fGroom.id)"
+                        ng-click="jobUpdateSelection($event,fGroom.id)" class="checkbox-balanced">
+            <h2 class="balanced" ng-bind="fGroom.enterpriseUserModel.name"></h2>
+            <p style="margin-top: 5px" class="balanced"
+               ng-bind="fGroom.positionModel.name+'  '+fGroom.salary+fGroom.salaryTypeName+'  '+fGroom.settlementTypeName"></p>
+          </ion-checkbox>
+        </ion-list>
+        <ion-list ng-hide="SecondJobGrooms.length==0">
+          <ion-item ng-show="FristJobGrooms.length!==0" class="item-divider item-borderless"
+                    style="color: #b2b2b2;font-size: 0.85em">为您推荐的兼职岗位
+          </ion-item>
+          <ion-item ng-show="FristJobGrooms.length==0" class="item-divider item-borderless"
+                    style="color: #b2b2b2;font-size: 0.85em">未找到符合您要求的，以下是为您推荐的兼职岗位
+          </ion-item>
+          <ion-checkbox ng-repeat="sGroom in SecondJobGrooms" id={{sGroom.id}} ng-checked="jobIsSelected(sGroom.id)"
+                        ng-click="jobUpdateSelection($event,sGroom.id)" class="checkbox-balanced">
+            <h2 class="balanced" ng-bind="sGroom.enterpriseUserModel.name"></h2>
+            <p style="margin-top: 5px" class="balanced"
+               ng-bind="sGroom.positionModel.name+'  '+sGroom.salary+sGroom.salaryTypeName+'  '+sGroom.settlementTypeName"></p>
+          </ion-checkbox>
+        </ion-list>
+        {{applyJob.recruitIds|json}}
+        {{applyJob.checkInIds|json}}
+      </ion-content>
+    </ion-modal-view>
+  </script>
+
   <!--城市选择-->
   <script id="city-modal.html" type="text/ng-template">
     <ion-modal-view class="city-home">
@@ -120,13 +166,13 @@
         <h1 class="title" ng-bind="Title.city"></h1>
       </ion-header-bar>
       <ion-content padding="true">
-      <h6>定位城市</h6>
-      <div class="row">
-        <div class="col">
-          <button class="button button-light" ng-bind="cityName.name"></button>
+        <h6>定位城市</h6>
+        <div class="row">
+          <div class="col">
+            <button class="button button-light" ng-bind="cityName.name"></button>
+          </div>
         </div>
-      </div>
-      <h6>最近访问的城市</h6>
+        <h6>最近访问的城市</h6>
         <div class="row">
           <div class="col">
             <button class="button button-light">嘉兴</button>
@@ -137,7 +183,7 @@
         <ion-list>
           <div ng-repeat="x in provinces">
             <ion-item class="item-divider item-borderless" ng-bind="x.name"></ion-item>
-            <ion-radio  ng-repeat="y in cities |filter:x.code" ng-value="y.name">
+            <ion-radio ng-repeat="y in cities |filter:x.code" ng-value="y.name">
               {{y.name}}
             </ion-radio>
           </div>

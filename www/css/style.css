@@ -245,3 +245,24 @@
   color: #b2b2b2;
   font-size: 15px;
 }
+input:checked{
+  background-color: #33cd5f !important;
+  border: 1px solid #33cd5f !important;
+}
+.userClass{
+  margin-left: 12px;
+}
+.userClass>img[att^="img"]{
+  border: 2px solid #ffffff;
+  display: inline-flex;
+  width: 80px;
+  height: 80px;
+}
+.userClass>img[att^="upImg"]{
+  border: 2px solid #ffffff;
+  display: inline-flex;
+  width: 80px;
+  height: 80px;
+  background: url(../img/add.png) no-repeat 8px 8px/60px 60px;
+
+}

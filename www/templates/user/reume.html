@@ -31,7 +31,7 @@
       </ion-item>
       <ion-item>
         <span class="stable">出生年月：</span>
-        <span ng-bind="modifyList.appUserModel.birthday"></span>
+        <span ng-bind="modifyList.appUserModel.birthday.substring(0,10)"></span>
       </ion-item>
       <ion-item class="item-divider"></ion-item>
       <ion-item>
@@ -74,7 +74,7 @@
           </ion-item>
           <ion-item>
             <span class="stable">出生年月：</span>
-            <span ng-bind="resumeList.birthday"></span>
+            <span ng-bind="resumeList.birthday.substring(0,10)"></span>
           </ion-item>
           <ion-item>
             <span class="stable">联系方式：</span>
@@ -101,15 +101,11 @@
             <span class="input-label">个人风采(非必传)</span>
           </ion-item>
         </ion-list>
-        <div class="row">
-          <div class="col">
-            <img src="img/timg.jpeg" style="width: 100%;height: 100%;">
-            <img src="img/timg1.jpeg" style="width: 100%;height: 100%;">
-            <img src="img/timg2.jpg" style="width: 100%;height: 100%;">
-          </div>
-          <div class="col imgPlus">
-            <span class="ionic ion-plus"></span>
-          </div>
+        <div class="row userClass">
+          <img att="img1" ng-src="img/timg.jpeg">
+          <img att="img2" ng-src="img/timg1.jpeg">
+          <img att="img3" ng-src="img/timg2.jpg">
+          <img att="upImg">
         </div>
       </ion-content>
     </ion-modal-view>

@@ -1,6 +1,6 @@
 angular.module('starter.HomeCtrl', [])
 
-  .controller('HomeCtrl', ['$scope', '$resource', '$ionicLoading', '$timeout', 'homeFactory', '$ionicModal', '$rootScope', '$state', '$sce', 'GpsService', 'CategoryFactory', 'PromptService', 'YW', function ($scope, $resource, $ionicLoading, $timeout, homeFactory, $ionicModal, $rootScope, $state, $sce, GpsService, CategoryFactory, PromptService, YW) {
+  .controller('HomeCtrl', ['$scope', '$resource', '$ionicLoading', '$timeout', 'homeFactory', '$ionicModal', '$rootScope', '$state', '$sce', 'GpsService', 'CategoryFactory', 'PromptService', '$ionicPopup', 'YW', function ($scope, $resource, $ionicLoading, $timeout, homeFactory, $ionicModal, $rootScope, $state, $sce, GpsService, CategoryFactory, PromptService, $ionicPopup, YW) {
     //显示载入信息
     $ionicLoading.show({
       template: '数据载入中，请稍等......',
@@ -42,6 +42,11 @@ angular.module('starter.HomeCtrl', [])
           salary: '@salary'
         },
         isArray: false
+      },
+      interviewApply: {
+        url: Url + 'interviewApply/apply',
+        method: 'POST',
+        isArray: false
       }
     });
     //获取当前城市招聘信息函数
@@ -53,8 +58,8 @@ angular.module('starter.HomeCtrl', [])
       };
       if (success) {
         getData.getCityObj(getDataObj, function (resp) {
-          console.log(resp);
           $scope.items = resp.rows;
+          $ionicLoading.hide()
         })
       }
     };
@@ -62,7 +67,6 @@ angular.module('starter.HomeCtrl', [])
     GpsService.setGps();
     $rootScope.$on('getGps.update', function () {
       $rootScope.GpsPosition = GpsService.getGps();
-      console.log($rootScope.GpsPosition);
       getData.getCity({
         locationLng: $rootScope.GpsPosition.lng,
         locationLat: $rootScope.GpsPosition.lat
@@ -81,23 +85,19 @@ angular.module('starter.HomeCtrl', [])
       //这里放上拉更新请求的代码
       $scope.$broadcast("scroll.infiniteScrollComplete")
     };
-
-    //帮我找兼职
-    //标题
-    $scope.Title = {
-      sorts: '岗位选择',
-      send: '薪酬要求',
-      city: '选择城市'
+    //城市选择页面弹出
+    $ionicModal.fromTemplateUrl("city-modal.html", {
+      scope: $scope,
+      animation: "slide-in-up"
+    }).then(function (modal) {
+      $scope.city = modal
+    });
+    $scope.openCity = function () {
+      $scope.city.show();
     };
-
-
-    //岗位类型
-    $scope.formatJob = [];
-    //薪酬要求
-    $scope.pay = 5;
-    //兼职经验ID
-    $scope.checkInIds = [];
-
+    $scope.closeCity = function () {
+      $scope.city.hide();
+    };
     //分类选择页面弹出
     $ionicModal.fromTemplateUrl("sorts-modal.html", {
       scope: $scope,
@@ -105,6 +105,49 @@ angular.module('starter.HomeCtrl', [])
     }).then(function (modal) {
       $scope.sorts = modal
     });
+    //薪酬选择弹出界面
+    $scope.closeSend = function () {
+      $scope.send.hide();
+    };
+    $ionicModal.fromTemplateUrl("send-modal.html", {
+      scope: $scope,
+      animation: "slide-in-up"
+    }).then(function (modal) {
+      $scope.send = modal
+    });
+    //推荐岗位
+    $ionicModal.fromTemplateUrl("jobGroom-modal.html", {
+      scope: $scope,
+      animation: "slide-in-up"
+    }).then(function (modal) {
+      $scope.jobGroom = modal
+    });
+    $scope.closeJob = function () {
+      $scope.jobGroom.hide();
+      $state.go("tab.home")
+    };
+    //帮我找兼职
+    //标题
+    $scope.Title = {
+      sorts: '岗位选择',
+      send: '薪酬要求',
+      city: '选择城市',
+      job: '推荐岗位'
+    };
+
+    //岗位类型
+    $scope.applyJob = {
+      formatJob: [],
+      checkInIds: [],
+      pay: '15',
+      recruitIds: []
+    };
+    //发送申请岗位的ID及兼职经验ID
+    var interviewApplyData = {
+      recruitIds: $scope.applyJob.recruitIds,
+      checkInIds: $scope.applyJob.checkInIds
+    };
+
     //"帮我找兼职"按钮功能
     $scope.openSorts = function () {
       if ($rootScope.state) {
@@ -130,8 +173,7 @@ angular.module('starter.HomeCtrl', [])
     };
     //选择岗位类别后：下一步
     $scope.openSend = function () {
-      if ($scope.formatJob.length !== 0) {
-        console.log($scope.formatJob[0]);
+      if ($scope.applyJob.formatJob.length !== 0) {
         $scope.send.show();
         getData.checkInIdsLoad({status: 'SUCCESS'}, function (resp) {
           $scope.chin = resp;
@@ -140,27 +182,17 @@ angular.module('starter.HomeCtrl', [])
       } else {
         PromptService.PromptMsg('请选择您想要的兼职岗位！')
       }
+    };
 
-    };
-    //薪酬选择
-    $scope.closeSend = function () {
-      $scope.send.hide();
-    };
-    $ionicModal.fromTemplateUrl("send-modal.html", {
-      scope: $scope,
-      animation: "slide-in-up"
-    }).then(function (modal) {
-      $scope.send = modal
-    });
     //兼职经验选择
     //Start 插入兼职经验ID
     var updateSelected = function (action, id) {
-      if (action == 'add' && $scope.checkInIds.indexOf(id) == -1) {
-        $scope.checkInIds.push(id);
+      if (action == 'add' && $scope.applyJob.checkInIds.indexOf(id) == -1) {
+        $scope.applyJob.checkInIds.push(id);
       }
-      if (action == 'remove' && $scope.checkInIds.indexOf(id) != -1) {
-        var idx = $scope.checkInIds.indexOf(id);
-        $scope.checkInIds.splice(idx, 1);
+      if (action == 'remove' && $scope.applyJob.checkInIds.indexOf(id) != -1) {
+        var idx = $scope.applyJob.checkInIds.indexOf(id);
+        $scope.applyJob.checkInIds.splice(idx, 1);
       }
     };
     $scope.updateSelection = function ($event, id) {
@@ -169,44 +201,72 @@ angular.module('starter.HomeCtrl', [])
       updateSelected(action, id);
     };
     $scope.isSelected = function (id) {
-      return $scope.checkInIds.indexOf(id) >= 0;
+      return $scope.applyJob.checkInIds.indexOf(id) >= 0;
     };
     //End
-    //发送帮我的兼职请求
+
+    //Start 插入推荐岗位的ID
+    var jobUpdateSelected = function (action, id) {
+      if (action == 'add' && $scope.applyJob.recruitIds.indexOf(id) == -1) {
+        $scope.applyJob.recruitIds.push(id);
+      }
+      if (action == 'remove' && $scope.applyJob.recruitIds.indexOf(id) != -1) {
+        var Jobs = $scope.applyJob.recruitIds.indexOf(id);
+        $scope.applyJob.recruitIds.splice(Jobs, 1);
+      }
+    };
+    $scope.jobUpdateSelection = function ($event, id) {
+      var checkBoxes = $event.target;
+      var actions = (checkBoxes.checked ? 'add' : 'remove');
+      jobUpdateSelected(actions, id);
+    };
+    $scope.jobIsSelected = function (id) {
+      return $scope.applyJob.recruitIds.indexOf(id) >= 0;
+    };
+    //End
+
+    //发送帮我找兼职的请求
     $scope.addApply = function () {
+      if ($scope.applyJob.pay.length == '') {
+        PromptService.PromptMsg('请输入您的薪酬要求！')
+      } else {
+        getData.requestJob(
+          {
+            city: $rootScope.cityName.code,
+            locationLng: $rootScope.GpsPosition.lng,
+            locationLat: $rootScope.GpsPosition.lat,
+            positionId: $scope.applyJob.formatJob,
+            salary: $scope.applyJob.pay
+          }, function (resp) {
+            console.log(resp);
+            $scope.FristJobGrooms = resp.result.recommendList;
+            $scope.SecondJobGrooms = resp.result.sysRecommendList;
+            if ($scope.FristJobGrooms.length === 0 && $scope.SecondJobGrooms.length === 0) {
+              PromptService.PromptMsg('没有符合您要求的岗位！')
+            } else {
+              //关闭分类和薪酬界面
+              $scope.sorts.hide();
+              $scope.send.hide();
+              //打开兼职申请界面
+              $scope.jobGroom.show();
 
-      getData.requestJob(
-        {
-          city: $rootScope.cityName.code,
-          locationLng: $rootScope.GpsPosition.lng,
-          locationLat: $rootScope.GpsPosition.lat,
-          positionId: $scope.formatJob[0],
-          salary: $scope.pay
-        }, function (resp) {
-          console.log(resp)
-        });
+            }
+          });
+      }
     };
-
-
-    //城市选择
-    $ionicModal.fromTemplateUrl("city-modal.html", {
-      scope: $scope,
-      animation: "slide-in-up"
-    }).then(function (modal) {
-      $scope.city = modal
-    });
-    $scope.openCity = function () {
-      $scope.city.show();
-    };
-    $scope.closeCity = function () {
-      $scope.city.hide();
-    };
-    var cityUrl = 'json/citylist.json';
-    var getCityUlr = $resource(cityUrl);
-    $timeout(function () {
-      getCityUlr.get(function (data) {
-        $scope.cityItems = data.rows;
-      });
-      $ionicLoading.hide()
-    }, 1000);
+// 兼职申请
+    $scope.interviewApplyBtn = function () {
+      if ($scope.applyJob.recruitIds.length == 0) {
+        PromptService.PromptMsg('请选择您要兼职的岗位!')
+      } else {
+        getData.interviewApply(interviewApplyData, function (resp) {
+          PromptService.PromptMsg(resp.msg);
+          $timeout(function () {
+            $scope.closeJob();
+            $scope.applyJob.recruitIds.splice(0,$scope.applyJob.recruitIds.length);
+            $scope.applyJob.checkInIds.splice(0,$scope.applyJob.checkInIds.length);
+          }, 1500)
+        })
+      }
+    }
   }]);

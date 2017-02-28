@@ -155,7 +155,8 @@ angular.module('starter.UserCtrl', [])
       });
     $scope.openPopover = function ($event, item) {
       $scope.popover.show($event);
-      $scope.jobList = item
+      $scope.jobList = item;
+      console.log($scope.jobList)
     };
     //删除记录
     $scope.delConfirm = function () {
@@ -181,9 +182,9 @@ angular.module('starter.UserCtrl', [])
     //查看评价
     $scope.seeConfirm = function () {
       $scope.popover.hide();
-      $ionicPopup.alert({
+      var alertPopup=$ionicPopup.alert({
         title: "兼职评价",
-        template: "<div>" + 我是评价 + "</div>",
+        template: "<div>" + $scope.jobList.checkInReviewModel.content + "</div>",
         okText: "知了",
         okType: "button-balanced"
       })
