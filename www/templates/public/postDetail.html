@@ -10,12 +10,11 @@
             <h2 class="dark" ng-bind="item.title"></h2>
           </div>
         </div>
-        <div class="row jobList">
+        <div class="row">
           <div class="col"><p><b class="textFont" ng-bind="item.positionModel.name"></b></p></div>
           <div class="col"><p><b class="textFont" ng-bind="item.salary"></b><span ng-bind="item.salaryTypeName"></span></p></div>
           <div class="col"><p><b ng-bind="item.settlementTypeName"></b></p></div>
           <!--<div class="col" ><p style="color: #b2b2b2">30天后停招</p></div>-->
-          <div class="col"></div>
         </div>
         </ion-item>
       <ion-item class="item-divider item-borderless"></ion-item>
@@ -62,7 +61,7 @@
       <ion-item class="item-divider item-borderless"></ion-item>
       <ion-item class="item-borderless">
         <span class="lang"></span>
-        <span class="dark">公司介绍</span>
+        <span class="dark">企业概况</span>
       </ion-item>
       <ion-item class="item-borderless">
         <span class="stable">招聘单位：</span>
@@ -81,10 +80,10 @@
         <!--<i class="icon ion-android-call balanced" ng-click="telPhone($event,item.contactPhone)"></i>-->
         <span class="balanced" ng-bind="item.contactPhone" ng-click="telPhone($event,item.contactPhone)"></span>
       </ion-item>
-      <ion-item class="item-borderless">
-        <span class="stable">投递回复：</span>
-        <span class="dark" ng-bind="item.enterpriseUserModel.responseRate"></span>
-      </ion-item>
+      <!--<ion-item class="item-borderless">-->
+        <!--<span class="stable">投递回复：</span>-->
+        <!--<span class="dark" ng-bind="item.enterpriseUserModel.responseRate"></span>-->
+      <!--</ion-item>-->
     </ion-list>
   </ion-content>
   <ion-footer-bar class="balanced-bg" ng-click="openApply();">
@@ -98,12 +97,12 @@
       <ion-header-bar class="bar-dark">
         <a class="button button-icon ion-ios-arrow-left" ng-click="closeApply();"></a>
         <h1 class="title" ng-bind="applyTitle"></h1>
-        <a class="button" ng-click="addApply();">发送</a>
+        <a class="button" ng-click="addApply();">申请</a>
       </ion-header-bar>
       <ion-content class="modelContent" scrollbar-x="false">
         <ion-list>
           <ion-checkbox ng-repeat="item in checkList" id={{item.id}} ng-checked="isSelected(item.id)" ng-click="updateSelection($event,item.id)" class="checkbox-dark">
-          <h2 ng-bind="item.recruitModel.enterpriseUserModel.name+'('+item.recruitModel.positionModel.name+')'"></h2>
+          <h2 class="balanced" ng-bind="item.recruitModel.enterpriseUserModel.name+'('+item.recruitModel.positionModel.name+')'"></h2>
             <p ng-bind="item.recruitModel.jobStartTime.substring(0,10)+' 至 '+item.recruitModel.jobEndTime.substring(0,10)"></p>
           </ion-checkbox>
         </ion-list>

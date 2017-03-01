@@ -1,6 +1,6 @@
 <ion-view title="优职">
   <ion-nav-buttons side="left">
-    <a class="button button-clear icon-right ion-android-arrow-dropdown" ng-click="openCity();"
+    <a class="button button-clear icon-right ion-android-arrow-dropdown"
        ng-bind="cityName.name"></a>
   </ion-nav-buttons>
   <ion-content>
@@ -147,13 +147,11 @@
           </ion-item>
           <ion-checkbox ng-repeat="sGroom in SecondJobGrooms" id={{sGroom.id}} ng-checked="jobIsSelected(sGroom.id)"
                         ng-click="jobUpdateSelection($event,sGroom.id)" class="checkbox-balanced">
-            <h2 class="balanced" ng-bind="sGroom.enterpriseUserModel.name"></h2>
+            <h2 class="balanced" ng-bind="sGroom.positionModel.name+'  '+sGroom.salary+sGroom.salaryTypeName+'  '+sGroom.settlementTypeName" ></h2>
             <p style="margin-top: 5px" class="balanced"
-               ng-bind="sGroom.positionModel.name+'  '+sGroom.salary+sGroom.salaryTypeName+'  '+sGroom.settlementTypeName"></p>
+               ng-bind="sGroom.enterpriseUserModel.name"></p>
           </ion-checkbox>
         </ion-list>
-        {{applyJob.recruitIds|json}}
-        {{applyJob.checkInIds|json}}
       </ion-content>
     </ion-modal-view>
   </script>

@@ -135,7 +135,6 @@ angular.module('starter',
       //岗位详细页-首页
       .state('tab.postDetail', {
         url: '/postDetail/:id',
-        cache:'false',
         views: {
           'tab-home': {
             templateUrl: 'templates/public/postDetail.html',
@@ -146,7 +145,6 @@ angular.module('starter',
       //category 分类
       .state('tab.category', {
         url: '/category',
-        cache:'false',
         views: {
           'tab-category': {
             templateUrl: 'templates/category/category.html',
@@ -157,7 +155,6 @@ angular.module('starter',
       //分类列表
       .state('tab.Classification', {
         url: '/Classification/:id',
-        cache:'false',
         views: {
           'tab-category': {
             templateUrl: 'templates/public/Classification.html',
