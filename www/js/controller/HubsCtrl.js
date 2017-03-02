@@ -1,6 +1,6 @@
 angular.module('starter.hubs', [])
 
-  .controller('HubsCtrl', ['$scope', '$ionicModal', '$interval', '$ionicActionSheet', '$state','$resource', '$timeout', '$cordovaCamera','$rootScope','Storage','$http', 'PromptService', 'YW', function ($scope, $ionicModal, $interval, $ionicActionSheet, $state, $resource, $timeout,$cordovaCamera,$rootScope,Storage,$http, PromptService, YW) {
+  .controller('HubsCtrl', ['$scope', '$ionicModal', '$interval', '$ionicActionSheet', '$state', '$resource', '$timeout', '$cordovaCamera', '$rootScope', 'Storage', '$http', 'PromptService', 'YW', function ($scope, $ionicModal, $interval, $ionicActionSheet, $state, $resource, $timeout, $cordovaCamera, $rootScope, Storage, $http, PromptService, YW) {
     var url = YW.api;
     var userUrl = $resource(
       url,
@@ -25,21 +25,16 @@ angular.module('starter.hubs', [])
           isArray: false
         },
         //上传头像
-        postImg:{
-          url:url+'account/uploadAvatar',
-          method:'POST',
-          // headers: {'Content-Type': undefined}/,
-          // transformRequest: angular.identity,
-          // params: {
-          //   avatar: '@avatar'
-          // },
-          isArray:false
+        postImg: {
+          url: url + 'account/uploadAvatar',
+          method: 'POST',
+          isArray: false
         }
       }
     );
     //上传头像
-    $scope.goCamera=function(){
-      $scope.show_camera=true;
+    $scope.goCamera = function () {
+      $scope.show_camera = true;
       var options = {
         quality: 50,
         destinationType: Camera.DestinationType.DATA_URL,
@@ -50,30 +45,21 @@ angular.module('starter.hubs', [])
         targetHeight: 100,
         popoverOptions: CameraPopoverOptions,
         saveToPhotoAlbum: false,
-        correctOrientation:true
+        correctOrientation: true
       };
-      $cordovaCamera.getPicture(options).then(function(imageData) {
-        $scope.imageSrc="data:image/jpeg;base64," + imageData;
-        // var data=new FormData();
-        // data.append('avatar', imageData);
-        userUrl.postImg({avatar:imageData},function (resp) {
-          var newDate=new Date().getTime();
-          $rootScope.userImg = YW.api + 'account/avatar?' +newDate;
-          console.log($rootScope.userImg);
-          console.log(resp)
+      $cordovaCamera.getPicture(options).then(function (imageData) {
+        $scope.imageSrc = "data:image/jpeg;base64," + imageData;
+        userUrl.postImg({avatar: imageData}, function (resp) {
+          var newDate = new Date().getTime();
+          $rootScope.userImg = YW.api + 'account/avatar?' + newDate;
         });
-        $scope.show_camera=false;
-      }, function(err) {
-        console.log("摄像头保存照片失败");
+        $scope.show_camera = false;
       });
     };
-
-
 
     //页面加载时执行的代码
     $scope.$on('$ionicView.beforeEnter', function () {
       $scope.localUser = Storage.get(YW.userKey);
-      console.log($scope.localUser);
     });
 
     //公共的数据
@@ -199,7 +185,7 @@ angular.module('starter.hubs', [])
         console.log(resp);
         if (resp.success) {
           PromptService.PromptMsg(resp.msg);
-          Storage.user.certifyStatus="SUCCESS";
+          Storage.user.certifyStatus = "SUCCESS";
           $timeout(function () {
             $scope.closeRn()
           }, 2000)
