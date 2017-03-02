@@ -3,7 +3,7 @@
     <ion-list>
       <ion-item class="item-divider"></ion-item>
       <ion-item class="item item-avatar item-icon-right" href="#/tab/hubs">
-        <img src="img/ben.png">
+        <img ng-src="{{userImg}}">
         <h2 ng-bind="user.userModel.userName"></h2>
         <p>登录账号：<span ng-bind="user.userModel.cellPhone"></span></p>
       </ion-item>
@@ -16,10 +16,6 @@
         <i class="icon ion-map"></i>
         兼职历程
       </ion-item>
-      <!--<ion-item class="item item-icon-left" href="#/postDetail/10">-->
-        <!--<i class="icon ion-android-apps"></i>-->
-        <!--详细列表(暂放)-->
-      <!--</ion-item>-->
       <ion-item class="item item-icon-left" href="#/tab/collection">
         <i class="icon ion-ios-star-half"></i>
         兼职收藏

@@ -249,6 +249,7 @@ angular.module('starter',
       //user 我的
       .state('tab.user', {
         url: '/user',
+        cache:'false',
         views: {
           'tab-user': {
             templateUrl: 'templates/user/user.html',
@@ -259,6 +260,7 @@ angular.module('starter',
       //hubs 个人中心
       .state('tab.hubs', {
         url: '/hubs',
+        cache:'false',
         views: {
           'tab-user': {
             templateUrl: 'templates/user/hubs.html',

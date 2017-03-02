@@ -57,6 +57,9 @@ angular.module('starter.hubs', [])
         // var data=new FormData();
         // data.append('avatar', imageData);
         userUrl.postImg({avatar:imageData},function (resp) {
+          var newDate=new Date().getTime();
+          $rootScope.userImg = YW.api + 'account/avatar?' +newDate;
+          console.log($rootScope.userImg);
           console.log(resp)
         });
         $scope.show_camera=false;
