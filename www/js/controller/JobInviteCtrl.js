@@ -1,6 +1,6 @@
 angular.module('starter.JobInvite', [])
 
-  .controller('JobInvite', ['$scope', '$resource', '$ionicPopover', '$ionicLoading', '$timeout', '$ionicPopup', 'PromptService', 'applyService', 'postOperationService','$rootScope', '$window','YW', function ($scope, $resource, $ionicPopover, $ionicLoading, $timeout, $ionicPopup, PromptService, applyService,postOperationService, $rootScope,$window, YW) {
+  .controller('JobInvite', ['$scope', '$resource', '$ionicPopover', '$ionicLoading', '$timeout', '$ionicPopup', 'PromptService', 'applyService', 'postOperationService','$rootScope', '$window','$state','YW', function ($scope, $resource, $ionicPopover, $ionicLoading, $timeout, $ionicPopup, PromptService, applyService,postOperationService, $rootScope,$window,$state, YW) {
     $ionicLoading.show({
       template: '面试信息载入中，请稍等...',
       noBackdrop: true,
@@ -8,13 +8,10 @@ angular.module('starter.JobInvite', [])
     });
 //页面加载时执行的代码-拉取待面试的列表
     $scope.$on('$ionicView.beforeEnter', function () {
-      console.log('jobinvite');
       applyService.get(YW.objList[1], YW.applyList[1]);
       $scope.$on('apply.list', function () {
         $scope.items = applyService.set();
         ($scope.items.length!==0) ? $scope.tipShow = true : $scope.tipShow =false;
-        console.log($scope.tipShow);
-        console.log($scope.items);
         $ionicLoading.hide();
       })
     });
@@ -78,8 +75,8 @@ angular.module('starter.JobInvite', [])
           $scope.$on('post.Operation',function () {
             $scope.tipOperation=postOperationService.postNotice();
             applyService.get(YW.objList[1], YW.applyList[1]);
-            console.log($scope.tipOperation)
           });
+          $state.go("job-invite", {}, {reload: true})
         }
       })
     };

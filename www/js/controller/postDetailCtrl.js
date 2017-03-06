@@ -3,7 +3,6 @@ angular.module('starter.postDetailCtrl', [])
   .controller('postDetail', ['$scope', '$resource', '$ionicGesture', '$stateParams', '$ionicModal', '$ionicLoading', '$timeout', '$state', '$rootScope', '$ionicPopup', 'PromptService', 'YW', function ($scope, $resource, $ionicGesture, $stateParams, $ionicModal, $ionicLoading, $timeout, $state, $rootScope, $ionicPopup, PromptService, YW) {
     $scope.name = '兼职详细';
     $scope.applyTitle = '岗位申请';
-    console.log($stateParams);
     var Url = YW.api;
     var id = $stateParams.id;
     var getUlr = $resource(Url, {}, {
@@ -40,8 +39,6 @@ angular.module('starter.postDetailCtrl', [])
           startDate: $scope.item.jobStartTime.substring(0, 10),
           endDate: $scope.item.jobEndTime.substring(0, 10)
         };
-        console.log('岗位信息:');
-        console.log($scope.item)
       });
       $ionicLoading.hide()
     }, 1500);
@@ -55,7 +52,6 @@ angular.module('starter.postDetailCtrl', [])
     $scope.$on('$ionicView.beforeEnter', function () {
       if ($rootScope.state) {
         getUlr.checkInIdsLoad({status: 'SUCCESS'}, function (resp) {
-          console.log(resp);
           $scope.chin = resp;
           $scope.checkList = resp.rows;
         })
@@ -71,13 +67,14 @@ angular.module('starter.postDetailCtrl', [])
     };
     $scope.openApply = function () {
       if ($rootScope.state) {
-        if ($scope.chin.total !== 0 || $scope.item.interviewApplyModel!==null) {
-          console.log($scope.chin.total);
+        if ($scope.chin.total !== 0 && $scope.item.interviewApplyModel == null) {
           $scope.apply.show();
         } else {
           getUlr.applyPost($scope.applyData, function (resp) {
-            console.log(resp);
-            PromptService.PromptMsg(resp.msg)
+            PromptService.PromptMsg(resp.msg);
+            $timeout(function () {
+              $state.go("tab.user")
+            },1500)
           })
         }
       } else {

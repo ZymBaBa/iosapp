@@ -44,7 +44,6 @@ angular.module('starter.login', [])
         if (res.success) {
           userUrl.sendDate({type: type, cellPhone: data.cellPhone}, function (res) {
             //手机号码格式通过验证并且返回值是true的情况下发送短信
-            console.log(res);
             if (res.success) {
               $interval.cancel(stop);
               stop = $interval(
@@ -104,7 +103,6 @@ angular.module('starter.login', [])
     };
     $scope.SubmitLogin = function () {
       userUrl.submitLogin($scope.loginData, function (data) {
-        console.log(data)
       })
     };
 
@@ -171,7 +169,6 @@ angular.module('starter.login', [])
         Storage.set(storageKey, userRel.result);
         $rootScope.isLogin = true;
         var items = Storage.get('user');
-        console.log(items);
         $state.go("tab.home");  //路由跳转
       }
     });

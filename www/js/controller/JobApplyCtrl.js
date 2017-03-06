@@ -1,19 +1,21 @@
 angular.module('starter.JobApply', [])
-  .controller('JobApply', ['$scope', '$resource', '$ionicPopover', '$ionicLoading', '$timeout', '$ionicPopup', 'PromptService', 'applyService', 'postOperationService', '$rootScope', 'YW', function ($scope, $resource, $ionicPopover, $ionicLoading, $timeout, $ionicPopup, PromptService, applyService, postOperationService, $rootScope, YW) {
+  .controller('JobApply', ['$scope', '$resource', '$ionicPopover', '$ionicLoading', '$timeout', '$ionicPopup', 'PromptService', 'applyService', 'postOperationService', '$rootScope', '$state', 'YW', function ($scope, $resource, $ionicPopover, $ionicLoading, $timeout, $ionicPopup, PromptService, applyService, postOperationService, $rootScope, $state, YW) {
     $ionicLoading.show({
       template: '申请记录载入中，请稍等...',
       noBackdrop: true,
       delay: 300
     });
-//页面加载时执行的代码-拉取申请中的列表
-    $scope.$on('$ionicView.beforeEnter', function () {
+    var getApply = function () {
       applyService.get(YW.objList[0], YW.applyList[0]);
       $scope.$on('apply.list', function () {
         $scope.items = applyService.set();
         ($scope.items.length !== 0) ? $scope.tipShow = true : $scope.tipShow = false;
-        console.log($scope.items);
         $ionicLoading.hide();
       })
+    };
+//页面加载时执行的代码-拉取申请中的列表
+    $scope.$on('$ionicView.beforeEnter', function () {
+      getApply();
     });
     //拨打电话
     $scope.telPhone = function ($event, mobilePhone) {
@@ -60,6 +62,8 @@ angular.module('starter.JobApply', [])
             $scope.type = postOperationService.postNotice();
           });
           applyService.get(YW.applyList[0]);
+          //解决页面刷新，重新跳转和定位，但不是最好的办法；
+          $state.go("job-apply", {}, {reload: true})
         }
       })
     };

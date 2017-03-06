@@ -29,6 +29,12 @@ angular.module('starter.hubs', [])
           url: url + 'account/uploadAvatar',
           method: 'POST',
           isArray: false
+        },
+        //重新获取用户信息
+        getUser: {
+          url: url + 'account/load',
+          method: 'GET',
+          isArray: false
         }
       }
     );
@@ -48,7 +54,7 @@ angular.module('starter.hubs', [])
         correctOrientation: true
       };
       $cordovaCamera.getPicture(options).then(function (imageData) {
-        $scope.imageSrc = "data:image/jpeg;base64," + imageData;
+        // $scope.imageSrc = "data:image/jpeg;base64," + imageData;
         userUrl.postImg({avatar: imageData}, function (resp) {
           var newDate = new Date().getTime();
           $rootScope.userImg = YW.api + 'account/avatar?' + newDate;
@@ -81,7 +87,6 @@ angular.module('starter.hubs', [])
       };
       userUrl.sendDate(postData, function (res) {
         //手机号码格式通过验证并且返回值是true的情况下发送短信
-        console.log(res);
         if (res.success) {
           $interval.cancel(stop);
           stop = $interval(
@@ -130,7 +135,6 @@ angular.module('starter.hubs', [])
     //修改密码post请求
     $scope.revPassword = function () {
       userUrl.revPassword($scope.modifyPasswrod, function (resp) {
-        console.log(resp);
         if (resp.success) {
           PromptService.PromptMsg(resp.msg);
           $timeout(function () {
@@ -182,13 +186,18 @@ angular.module('starter.hubs', [])
     };
     $scope.certification = function (cerData) {
       userUrl.certification(cerData, function (resp) {
-        console.log(resp);
         if (resp.success) {
           PromptService.PromptMsg(resp.msg);
-          Storage.user.certifyStatus = "SUCCESS";
+          userUrl.getUser(function (resp) {
+            var getUser = resp.result;
+            Storage.remove('user');
+            Storage.set('user', getUser)
+          });
+          // Storage.user.certifyStatus = "SUCCESS";
           $timeout(function () {
-            $scope.closeRn()
-          }, 2000)
+            $scope.closeRn();
+            $state.go("tab.hubs", {}, {reload: true})
+          }, 1500)
         } else {
           PromptService.PromptMsg(resp.msg);
         }

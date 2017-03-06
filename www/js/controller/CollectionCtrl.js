@@ -13,7 +13,6 @@ angular.module('starter.collection', [])
     $timeout(function () {
       getUlr.get(function (data) {
         $scope.items = data.rows;
-        console.log($scope.items)
       });
       $ionicLoading.hide();
       $scope.more=false;

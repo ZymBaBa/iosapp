@@ -23,10 +23,14 @@
           <div class="row responsive-sm">
             <div class="col">
               <p><span class="stable">单位：</span><span ng-bind="item.recruitModel.enterpriseUserModel.name"></span></p>
-              <p><span class="stable">地址：</span><span  ng-bind="item.recruitModel.jobAddress"></span></p>
-              <p><span class="stable">薪酬：</span><span  ng-bind="item.recruitModel.salary+' '+item.recruitModel.salaryTypeName"></span></p>
-              <p ng-show="item.checkInReviewModel==null"><span class="stable">评价：</span><span class="stable" >未评价</span></p>
-              <p ng-show="item.checkInReviewModel!==null"><span class="stable">评价：</span><span class="balanced"  ng-click="seeConfirm();">已评价</span></p>
+              <p><span class="stable">地址：</span><span ng-bind="item.recruitModel.jobAddress"></span></p>
+              <p><span class="stable">薪酬：</span><span
+                ng-bind="item.recruitModel.salary+' '+item.recruitModel.salaryTypeName"></span></p>
+              <p ng-show="item.checkInReviewModel==null"><span class="stable">评价：</span><span class="stable">未评价</span>
+              </p>
+              <p ng-show="item.checkInReviewModel!==null"><span class="stable">评价：</span><span class="balanced"
+                                                                                               ng-click="seeConfirm();">已评价</span>
+              </p>
             </div>
           </div>
         </ion-item>

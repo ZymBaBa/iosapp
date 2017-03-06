@@ -1,5 +1,5 @@
 angular.module('starter.JobEntry', [])
-  .controller('JobEntry', ['$scope', '$resource', '$ionicPopover', '$ionicLoading', '$timeout', '$ionicPopup', 'PromptService', 'applyService','postOperationService', '$rootScope','YW', function ($scope, $resource, $ionicPopover, $ionicLoading, $timeout, $ionicPopup, PromptService, applyService,postOperationService,$rootScope, YW) {
+  .controller('JobEntry', ['$scope', '$resource', '$ionicPopover', '$ionicLoading', '$timeout', '$ionicPopup', 'PromptService', 'applyService','postOperationService', '$rootScope','$state','YW', function ($scope, $resource, $ionicPopover, $ionicLoading, $timeout, $ionicPopup, PromptService, applyService,postOperationService,$rootScope,$state, YW) {
     $ionicLoading.show({
       template: '入职邀请载入中，请稍等...',
       noBackdrop: true,
@@ -12,7 +12,6 @@ angular.module('starter.JobEntry', [])
       $scope.$on('apply.list', function () {
         $scope.items = applyService.set();
         ($scope.items.length!==0) ? $scope.tipShow = true : $scope.tipShow = false;
-        console.log($scope.items);
         $ionicLoading.hide();
       })
     });
@@ -58,8 +57,8 @@ angular.module('starter.JobEntry', [])
           postOperationService.postOperation(YW.postOperationAdd[1],$scope.jobList.recruitId);
           $scope.$on('post.Operation',function () {
             $scope.tipOperation=postOperationService.postNotice();
-            console.log($scope.tipOperation)
           });
+          $state.go("job-entry", {}, {reload: true})
         }
       })
     };
@@ -79,8 +78,8 @@ angular.module('starter.JobEntry', [])
           postOperationService.postOperation(YW.postOperationAdd[2],$scope.jobList.recruitId);
           $scope.$on('post.Operation',function () {
             $scope.tipOperation=postOperationService.postNotice();
-            console.log($scope.tipOperation)
           });
+          $state.go("job-entry", {}, {reload: true})
         }
       })
     };

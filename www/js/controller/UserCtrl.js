@@ -1,17 +1,15 @@
 angular.module('starter.UserCtrl', [])
-  .controller('UserCtrl', ['$scope', '$resource', '$state', '$ionicModal', '$cordovaCamera', '$rootScope', 'Storage', 'GpsService', 'YW', function ($scope, $resource, $state, $ionicModal, $cordovaCamera, $rootScope, Storage, GpsService,YW) {
+  .controller('UserCtrl', ['$scope', '$resource', '$state', '$ionicModal', '$cordovaCamera', '$rootScope', 'Storage', 'GpsService', 'YW', function ($scope, $resource, $state, $ionicModal, $cordovaCamera, $rootScope, Storage, GpsService, YW) {
     $scope.$on('$ionicView.beforeEnter', function () {
       $scope.user = Storage.get(YW.userKey);
       console.log($scope.user);
-      var newDate=new Date().getTime();
-      $rootScope.userImg = YW.api + 'account/avatar?' +newDate;
+      var newDate = new Date().getTime();
+      $rootScope.userImg = YW.api + 'account/avatar?' + newDate;
       GpsService.setGps();
       $scope.$on('getGps.update', function () {
         $scope.GpsPosition = GpsService.getGps()
       });
     });
-
-
   }])
   //我的简历
   .controller('ResumeCtrl', ['$scope', '$state', '$ionicModal', '$cordovaCamera', '$resource', '$timeout', '$ionicActionSheet', '$cordovaImagePicker', '$cordovaFileTransfer', 'PromptService', 'Storage', 'YW', function ($scope, $state, $ionicModal, $cordovaCamera, $resource, $timeout, $ionicActionSheet, $cordovaImagePicker, $cordovaFileTransfer, PromptService, Storage, YW) {
@@ -27,31 +25,29 @@ angular.module('starter.UserCtrl', [])
       resumeAdd: {
         url: url + 'resume/add',
         method: 'POST',
-        isArray: false,
-        params: {
-          height: '@height',
-          weight: '@weight',
-          description: '@description',
-          photos: '@photos'
-        }
+        isArray: false
       },
       //简历编辑
       resumeModify: {
         url: url + 'resume/modify',
         method: 'POST',
-        isArray: false,
-        params: {
-          height: '@height',
-          weight: '@weight',
-          description: '@description',
-          photos: '@photos'
-        }
+        isArray: false
+      },
+      //照片列表
+      imageGet: {
+        url: url + 'resume/photo/list',
+        method: 'GET',
+        isArray: false
       }
     });
     $scope.resumeList = Storage.get(YW.userKey);
-    console.log($scope.resumeList);
     //打开我的简历先判断是否已经有间历了，如果有简历了就把相应的信息取下来
     $scope.$on('$ionicView.beforeEnter', function () {
+      //照片列表
+      resumeUrl.imageGet(function (resp) {
+        $scope.imageUser=resp.rows;
+      });
+      //简历信息
       resumeUrl.resumeLoad(function (resp) {
         $scope.resumeModify = resp;
         $scope.modifyList = resp.result;
@@ -124,14 +120,13 @@ angular.module('starter.UserCtrl', [])
     };
 
     //拍照
-    $scope.images_list = [];
     $scope.picture = function () {
       $ionicActionSheet.show({
         buttons: [
-          {text: '相机'},
-          {text: '图库'}
+          {text: '拍照'},
+          {text: '相册'}
         ],
-        cancelText: '关闭',
+        cancelText: '取消',
         cancel: function () {
           return true;
         },
@@ -153,7 +148,7 @@ angular.module('starter.UserCtrl', [])
     //image picker
     var pickImage = function () {
       var options = {
-        maximumImagesCount: 1,
+        maximumImagesCount: 3,
         width: 800,
         height: 800,
         quality: 80
@@ -161,8 +156,12 @@ angular.module('starter.UserCtrl', [])
 
       $cordovaImagePicker.getPictures(options)
         .then(function (results) {
-          $scope.images_list.push(results[0]);
-          console.log(results);
+          for(var i=0;i<results.length;i++){
+            $scope.addData.photos.push(results[i])
+          }
+          console.log($scope.addData.photos);
+          // $scope.images_list.push(results[0]);
+          // console.log(results);
           upImage(results[0]);
         }, function (error) {
           // error getting photos
@@ -185,10 +184,13 @@ angular.module('starter.UserCtrl', [])
       };
       $cordovaCamera.getPicture(options).then(function (imageData) {
         // CommonJs.AlertPopup(imageData);
-        var image = document.getElementById('myImage');
-        image.src = imageData;
-        upImage(imageData);
         //image.src = "data:image/jpeg;base64," + imageData;
+        console.log(imageData);
+        for(var i=$scope.addData.photos.length;i<$scope.addData.photos.length+1;i++){
+          $scope.addData.photos.push(imageData)
+        }
+        console.log($scope.addData.photos);
+        // upImage(imageData);
       }, function (err) {
         console.log('err')
       });
@@ -212,7 +214,7 @@ angular.module('starter.UserCtrl', [])
   }])
 
   //兼职历程
-  .controller('CouresCtrl', ['$scope', '$resource', '$ionicPopover', '$ionicLoading', '$timeout', '$ionicPopup', '$rootScope', 'applyService', 'postOperationService', 'YW', function ($scope, $resource, $ionicPopover, $ionicLoading, $timeout, $ionicPopup, $rootScope, applyService, postOperationService, YW) {
+  .controller('CouresCtrl', ['$scope', '$resource', '$ionicPopover', '$ionicLoading', '$timeout', '$ionicPopup', '$rootScope', 'applyService', 'postOperationService','$state','YW', function ($scope, $resource, $ionicPopover, $ionicLoading, $timeout, $ionicPopup, $rootScope, applyService, postOperationService,$state,YW) {
     $ionicLoading.show({
       template: '入职邀请载入中，请稍等...',
       noBackdrop: true,
@@ -224,7 +226,6 @@ angular.module('starter.UserCtrl', [])
       $scope.$on('apply.list', function () {
         $scope.items = applyService.set();
         ($scope.items.length !== 0) ? $scope.tipShow = true : $scope.tipShow = false;
-        console.log($scope.items);
         $ionicLoading.hide();
       })
     });
@@ -266,8 +267,8 @@ angular.module('starter.UserCtrl', [])
           postOperationService.postOperation(YW.postOperationAdd[3], $scope.jobList.recruitId);
           $scope.$on('post.Operation', function () {
             $scope.tipOperation = postOperationService.postNotice();
-            console.log($scope.tipOperation)
           });
+          $state.go("tab.coures",{},{reload:true})
         }
       })
     };
