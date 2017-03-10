@@ -1,19 +1,22 @@
 <ion-view title="我的简历" hide-tabs="true">
   <ion-nav-buttons side="right">
-    <a class="button" ng-click="openNr()" ng-show="resumeModify.success===false">新增</a>
+    <a class="button" ng-click="openNr()"
+       ng-show="resumeModify.success===false && resumeList.certifyStatus==='SUCCESS'">新增</a>
     <a class="button" ng-click="openNr()" ng-show="resumeModify.success===true">编辑</a>
   </ion-nav-buttons>
-  <ion-content class="reume_Countent" ng-show="resumeModify.success===false || resumeList.certifyStatus=='NOT'">
-    <div style="padding-top:250px" class="text-center" padding ng-show="resumeModify.success===false">
+  <ion-content class="reume_Countent" ng-hide="resumeModify.success===true && resumeList.certifyStatus==='SUCCESS'">
+    <div style="padding-top:250px" class="text-center" padding
+         ng-show="resumeModify.success===false && resumeList.certifyStatus==='SUCCESS'">
       从"右上角"新增简历，每位求职者只允许有一份简历<br/>
       兼职经验可以在求职时选择性进行发送
     </div>
-    <div style="padding-top:250px" class="text-center" padding ng-show="resumeList.certifyStatus=='NOT'">
+    <div style="padding-top:250px" class="text-center" padding ng-show="resumeList.certifyStatus==='NOT'">
       添加简历前，请先进行实名身份认证<br/>
       我的--安全中心--实名认证
     </div>
   </ion-content>
-  <ion-content class="newReume" ng-show="resumeModify.success===true || resumeList.certifyStatus=='NOT'">
+  <!--<ion-content class="newReume" ng-show="resumeModify.success===true || resumeList.certifyStatus=='NOT'">-->
+  <ion-content class="newReume" ng-show="resumeModify.success===true">
     <!--这里写用户的信息-->
     <ion-list>
       <ion-item class="item-divider"></ion-item>
@@ -83,18 +86,24 @@
           <ion-item class="item-divider"></ion-item>
           <ion-item class="item-input">
             <span class="input-label">身高：</span>
-            <input type="tel" ng-model="userData.height" placeholder="请输入您的身高，单位为CM" maxlength="3" ng-show="resumeModify.success===false">
-            <input type="tel" ng-model="modifyData.height" placeholder="请输入您的身高，单位为CM" maxlength="3" ng-show="resumeModify.success===true">
+            <input type="tel" ng-model="addData.height" placeholder="请输入您的身高，单位为CM" maxlength="3"
+                   ng-show="resumeModify.success===false">
+            <input type="tel" ng-model="modifyData.height" placeholder="请输入您的身高，单位为CM" maxlength="3"
+                   ng-show="resumeModify.success===true">
           </ion-item>
           <ion-item class="item-input">
             <span class="input-label">体重：</span>
-            <input type="tel" ng-model="userData.weight" placeholder="请输入您的体重，单位为KG" maxlength="3" ng-show="resumeModify.success===false">
-            <input type="tel" ng-model="modifyData.weight" placeholder="请输入您的体重，单位为KG" maxlength="3" ng-show="resumeModify.success===true">
+            <input type="tel" ng-model="addData.weight" placeholder="请输入您的体重，单位为KG" maxlength="3"
+                   ng-show="resumeModify.success===false">
+            <input type="tel" ng-model="modifyData.weight" placeholder="请输入您的体重，单位为KG" maxlength="3"
+                   ng-show="resumeModify.success===true">
           </ion-item>
           <ion-item class="item-divider"></ion-item>
           <ion-item class="item-input">
-            <textarea ng-model="userData.description" placeholder="请简单的做下自我介绍，让用人单位能够了解下您。" ng-show="resumeModify.success===false"></textarea>
-            <textarea ng-model="modifyData.description" placeholder="现在是编辑了" ng-show="resumeModify.success===true"></textarea>
+            <textarea ng-model="addData.description" placeholder="请简单的做下自我介绍，让用人单位能够了解下您。"
+                      ng-show="resumeModify.success===false"></textarea>
+            <textarea ng-model="modifyData.description" placeholder="现在是编辑了"
+                      ng-show="resumeModify.success===true"></textarea>
           </ion-item>
           <ion-item class="item-divider"></ion-item>
           <ion-item class="item-divider">

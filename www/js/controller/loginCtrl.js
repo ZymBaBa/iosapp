@@ -1,6 +1,6 @@
 angular.module('starter.login', [])
 
-  .controller('LoginCtrl', ['$scope', '$ionicModal', '$interval', '$ionicActionSheet', '$resource', '$state', '$timeout', '$rootScope', 'Storage', 'PromptService', 'User', 'YW', function ($scope, $ionicModal, $interval, $ionicActionSheet, $resource, $state, $timeout, $rootScope, Storage, PromptService, User, YW) {
+  .controller('LoginCtrl', ['$scope', '$ionicModal', '$interval', '$ionicActionSheet', '$resource', '$state', '$timeout', '$rootScope', 'Storage', 'PromptService', 'GpsService', 'User', 'YW', function ($scope, $ionicModal, $interval, $ionicActionSheet, $resource, $state, $timeout, $rootScope, Storage, PromptService, GpsService,User,YW) {
     var url = YW.api;
     var userUrl = $resource(
       url,
@@ -14,10 +14,10 @@ angular.module('starter.login', [])
           params: {type: '@type', cellPhone: '@cellPhone'},
           isArray: false
         },
-        postFg:{url:url+'forget',method:'POST',isArray:false}
+        postFg: {url: url + 'forget', method: 'POST', isArray: false}
       }
     );
-    $scope.goHome=function () {
+    $scope.goHome = function () {
       $state.go("tab.home")
     };
     //公共的数据
@@ -36,15 +36,16 @@ angular.module('starter.login', [])
     var time = 60;
     var stop;
     //发送验证码及接收验证码的验证。
-    $scope.minute = function (type,phone) {
+    $scope.minute = function (type, phone) {
       var data = {
         cellPhone: phone
       };
-      userUrl.phoneDate(data, function (res) {
-        if (res.success) {
-          userUrl.sendDate({type: type, cellPhone: data.cellPhone}, function (res) {
+      userUrl.phoneDate(data, function (resp) {
+        console.log(resp);
+        if (resp.success) {
+          userUrl.sendDate({type: type, cellPhone: data.cellPhone}, function (resp) {
             //手机号码格式通过验证并且返回值是true的情况下发送短信
-            if (res.success) {
+            if (resp.success) {
               $interval.cancel(stop);
               stop = $interval(
                 function () {
@@ -59,11 +60,11 @@ angular.module('starter.login', [])
                     $interval.cancel(stop);
                   }
                   //短信发送成功给出提示
-                  PromptService.PromptMsg(res.msg);
+                  PromptService.PromptMsg(resp.msg);
                 }, 1000);
             } else {
               //手机号码格式通过验证并且返回值是false的情况下给出提示
-              PromptService.PromptMsg(res.msg);
+              PromptService.PromptMsg(resp.msg);
             }
           }, function (error) {
             //如何报错，给出报错的提示
@@ -95,14 +96,21 @@ angular.module('starter.login', [])
       userName: '',
       cellPhone: '',
       password: '',
-      locationLat: 32.127,
-      locationLng: 120.2312,
-      smsCode: ''
-      // locationLat:$scope.locationLat,
-      // locationLng:$scope.locationLng
+      smsCode: '',
+      locationLat: $rootScope.GpsPosition.lat,
+      locationLng: $rootScope.GpsPosition.lng
     };
     $scope.SubmitLogin = function () {
-      userUrl.submitLogin($scope.loginData, function (data) {
+      userUrl.submitLogin($scope.loginData, function (resp) {
+        console.log(resp);
+        if (resp.success) {
+          PromptService.PromptMsg(resp.msg);
+          $timeout(function () {
+            $state.go("login")
+          }, 1500)
+        } else {
+          PromptService.PromptMsg(resp.msg);
+        }
       })
     };
 
@@ -127,16 +135,16 @@ angular.module('starter.login', [])
     };
     //找回密码
     $scope.postFg = function () {
-        userUrl.postFg($scope.fgData,function (res) {
-          if(res.success){
-            PromptService.PromptMsg('密码修改成功！');
-            $timeout(function () {
-              $scope.forgetModal.hide()
-            },1500)
-          }else{
-            PromptService.PromptMsg(res.msg);
-          }
-        })
+      userUrl.postFg($scope.fgData, function (res) {
+        if (res.success) {
+          PromptService.PromptMsg('密码修改成功！');
+          $timeout(function () {
+            $scope.forgetModal.hide()
+          }, 1500)
+        } else {
+          PromptService.PromptMsg(res.msg);
+        }
+      })
     };
     //密码找回-监听手机格式是否正确
     $scope.$watch("fgData.cellPhone", function (newVular, oldVular) {

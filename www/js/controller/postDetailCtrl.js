@@ -72,9 +72,9 @@ angular.module('starter.postDetailCtrl', [])
         } else {
           getUlr.applyPost($scope.applyData, function (resp) {
             PromptService.PromptMsg(resp.msg);
-            $timeout(function () {
-              $state.go("tab.user")
-            },1500)
+            // $timeout(function () {
+            //   $state.go("tab.user")
+            // },1500)
           })
         }
       } else {

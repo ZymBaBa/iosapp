@@ -82,7 +82,7 @@ angular.module('starter.UserCtrl', [])
     };
 
     $scope.addData = {
-      photos: [],
+      // photos: [],
       height: '',
       weight: '',
       description: ''
@@ -97,7 +97,7 @@ angular.module('starter.UserCtrl', [])
             PromptService.PromptMsg(resp.msg);
             $timeout(function () {
               $scope.closeNr();
-              $scope.ionicView();
+              $state.go("tab.user");
             }, 1500);
           } else {
             PromptService.PromptMsg(resp.msg);
