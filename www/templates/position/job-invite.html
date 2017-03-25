@@ -4,8 +4,9 @@
   </ion-nav-title>
   <ion-content>
     <ion-refresher pulling-text="更新数据..." spinner="ripple" on-refresh="doRefresh();"></ion-refresher>
-    <div class="dataEmpty"  ng-show="tipShow==false">
-      <span>暂无面试邀请</span>
+    <div class="NullInfo" ng-show="tipShow==false" style="margin-top: 50%">
+      <div class="tipImgF"></div>
+      <h6 class="tip text-center balanced" >暂无面试邀请</h6>
     </div>
     <div class="card" ng-repeat="item in items">
       <ion-list>

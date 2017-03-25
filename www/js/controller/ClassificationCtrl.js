@@ -17,7 +17,7 @@ angular.module('starter.Classification', [])
         params: {locationLng: '@locationLng', locationLat: '@locationLat'},
         isArray: false
       },
-      getCityObj: {
+      getClassObj: {
         url: Url + 'recruit/list',
         method: 'GET',
         params: {
@@ -25,40 +25,69 @@ angular.module('starter.Classification', [])
           city: '@city',
           locationLng: '@locationLng',
           locationLat: '@locationLat',
-          status: '@NORMAL'
+          status: '@status'
         },
         isArray: false
       }
     });
-    //获取当前分类和城市的相关招聘信息函数
-    var cityJobs = function (success) {
-      var getDataObj = {
-        positionId: id,
-        city: $rootScope.cityName.code,
-        locationLng: $rootScope.GpsPosition.lng,
-        locationLat: $rootScope.GpsPosition.lat,
-        status: 'NORMAL'
-      };
-      if (success) {
-        getData.getCityObj(getDataObj, function (resp) {
-          console.log(resp);
-          $scope.items = resp.rows;
-        })
-      }
-    };
-//获取用户当时的GPS地址，并且通过函数cityJobs函数获取招聘信息
-    GpsService.setGps();
-    $rootScope.$on('getGps.update', function () {
-      $rootScope.GpsPosition = GpsService.getGps();
-      getData.getCity({
-        locationLng: $rootScope.GpsPosition.lng,
-        locationLat: $rootScope.GpsPosition.lat
-      }, function (resp) {
-        $rootScope.cityName = resp.result;
-        cityJobs(resp.success);
-        $ionicLoading.hide()
+
+//当页面加载时
+    $scope.$on('$ionicView.beforeEnter',function () {
+      GpsService.setGps();
+      $rootScope.$on('getGps.update', function () {
+        $rootScope.GpsPosition = GpsService.getGps();
+        getData.getCity({
+          locationLng: $rootScope.GpsPosition.lng,
+          locationLat: $rootScope.GpsPosition.lat
+        }, function (resp) {
+          if(resp.success){
+            $rootScope.cityName = resp.result;
+            var getDataObjClass = {
+              positionId: id,
+              city: $rootScope.cityName.code,
+              locationLng: $rootScope.GpsPosition.lng,
+              locationLat: $rootScope.GpsPosition.lat,
+              status: 'NORMAL'
+            };
+            getData.getClassObj(getDataObjClass, function (resp) {
+              $scope.items = resp.rows;
+              console.log($scope.items);
+            });
+            $ionicLoading.hide()
+          }
+        });
       });
     });
+    //获取用户当时的GPS地址，并且通过函数cityJobs函数获取招聘信息
+    // GpsService.setGps();
+    // $rootScope.$on('getGps.update', function () {
+    //   $rootScope.GpsPosition = GpsService.getGps();
+    //   getData.getCity({
+    //     locationLng: $rootScope.GpsPosition.lng,
+    //     locationLat: $rootScope.GpsPosition.lat
+    //   }, function (resp) {
+    //     $rootScope.cityName = resp.result;
+    //     cityJobs(resp.success);
+    //     $ionicLoading.hide()
+    //   });
+    // });
+    //获取当前分类和城市的相关招聘信息函数
+    // var cityJobs = function (success) {
+    //   var getDataObj = {
+    //     positionId: id,
+    //     city: $rootScope.cityName.code,
+    //     locationLng: $rootScope.GpsPosition.lng,
+    //     locationLat: $rootScope.GpsPosition.lat,
+    //     status: 'NORMAL'
+    //   };
+    //   if (success) {
+    //     getData.getCityObj(getDataObj, function (resp) {
+    //       console.log(resp);
+    //       $scope.items = resp.rows;
+    //     })
+    //   }
+    // };
+
     //下拉更新
     $scope.doRefresh = function () {
       GpsService.setGps();

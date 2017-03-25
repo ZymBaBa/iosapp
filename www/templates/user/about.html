@@ -1,6 +1,36 @@
 <ion-view view-title="关于我们" hide-tabs="true">
-  <ion-content>
-      {{name}}
+  <ion-content class="user_content">
+    <ion-list>
+      <ion-item class="item-divider"></ion-item>
+      <ion-item style="height: 8rem;">
+        <div class="aboutInfo">
+          <div class="aboutImg"></div>
+          <h5 class="balanced text-center" style="font-size:.8rem;">版本号：V1.0</h5>
+        </div>
+      </ion-item>
+      <ion-item class="item-divider"></ion-item>
+      <ion-item class="item" ng-click="telPhone($event,tel)">
+        联系我们
+        <span class="item-note">15988368669</span>
+      </ion-item>
+      <ion-item class="item">
+        企业招聘访问
+        <span class="item-note">https://www.icewnet.com</span>
+      </ion-item>
+      <ion-item class="item">
+      微    博
+      <span class="item-note">@优职招聘</span>
+    </ion-item>
+      <ion-item class="item">
+        微信公众号
+        <span class="item-note">优职招聘</span>
+      </ion-item>
+      <ion-item class="item-divider text-center" style="font-size: 0.7rem">
+        优职网 版权所有<br/>
+        Copyright@2017-2020 icewnet
+      </ion-item>
+
+    </ion-list>
   </ion-content>
 </ion-view>
 

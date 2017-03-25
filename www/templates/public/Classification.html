@@ -11,14 +11,21 @@
   </ion-nav-title>
   <ion-content class="Classification">
     <ion-refresher pulling-text="更新数据..." spinner="ripple" on-refresh="doRefresh();"></ion-refresher>
-    <div class="home-list">
+    <div class="NullInfo" ng-show="items.length==0" style="margin-top: 50%">
+      <div class="tipImgF"></div>
+      <h6 class="tip text-center balanced" >该职位无兼职</h6>
+    </div>
+    <div class="home-list" ng-show="items.length!==0">
       <ion-list>
         <ion-item collection-repeat="item in items | orderBy:'distance'" href="#/tab/postlist/{{item.id}}">
           <div class="row">
             <div class="col col-80">
               <h2 class="title" ng-bind="item.title"></h2>
-              <p ng-bind-html="item.description"></p>
-              <h3 class="balanced" ng-bind="item.positionModel.name+'/'+item.salary+item.salaryTypeName"></h3>
+              <p ng-bind="item.jobAddress" style="padding: .1rem 0rem"></p>
+              <h3 class="balanced" ng-bind="item.positionModel.name+'&nbsp&nbsp&nbsp&nbsp'+item.salary+item.salaryTypeName+'&nbsp&nbsp&nbsp&nbsp'+item.settlementTypeName+'&nbsp&nbsp&nbsp&nbsp'+'招聘&nbsp'+item.count+'人'"></h3>
+            </div>
+            <div class="col col-20">
+              <h2><span ng-bind="(item.distance|number:1)+'Km'" class="balanced"></span></h2>
             </div>
           </div>
         </ion-item>

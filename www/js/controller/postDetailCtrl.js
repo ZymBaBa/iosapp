@@ -1,6 +1,6 @@
 angular.module('starter.postDetailCtrl', [])
 
-  .controller('postDetail', ['$scope', '$resource', '$ionicGesture', '$stateParams', '$ionicModal', '$ionicLoading', '$timeout', '$state', '$rootScope', '$ionicPopup', 'PromptService', 'YW', function ($scope, $resource, $ionicGesture, $stateParams, $ionicModal, $ionicLoading, $timeout, $state, $rootScope, $ionicPopup, PromptService, YW) {
+  .controller('postDetail', ['$scope', '$resource', '$ionicGesture','$ionicHistory', '$stateParams', '$ionicModal', '$ionicLoading', '$timeout', '$state', '$rootScope', '$ionicPopup', 'PromptService', 'postOperationService', 'YW', function ($scope, $resource, $ionicGesture,$ionicHistory, $stateParams, $ionicModal, $ionicLoading, $timeout, $state, $rootScope, $ionicPopup,PromptService, postOperationService, YW) {
     $scope.name = '兼职详细';
     $scope.applyTitle = '岗位申请';
     var Url = YW.api;
@@ -25,28 +25,24 @@ angular.module('starter.postDetailCtrl', [])
         url: Url + 'interviewApply/apply',
         method: 'POST',
         isArray: false
+      },
+      //兼职收藏
+      addIconPost: {
+        url: Url + 'recruit/fav/add',
+        method: 'POST',
+        isArray: false
+      },
+      //取消收藏
+      delIconPost: {
+        url: Url + 'recruit/fav/del',
+        method: 'POST',
+        isArray: false
       }
     });
     $ionicLoading.show({
       template: '数据载入中，请稍等......',
       noBackdrop: true,
       delay: 500
-    });
-    $timeout(function () {
-      getUlr.recruitLoad({id: id}, function (resp) {
-        $scope.item = resp.result;
-        $scope.jobDate = {
-          startDate: $scope.item.jobStartTime.substring(0, 10),
-          endDate: $scope.item.jobEndTime.substring(0, 10)
-        };
-      });
-      $ionicLoading.hide()
-    }, 1500);
-    $ionicModal.fromTemplateUrl("applying.html", {
-      scope: $scope,
-      animation: "slide-in-up"
-    }).then(function (modal) {
-      $scope.apply = modal
     });
     //页面加载的时候就去获取当前这个用户是否登录，如果登录了就去获取相应成功入职记录
     $scope.$on('$ionicView.beforeEnter', function () {
@@ -56,6 +52,57 @@ angular.module('starter.postDetailCtrl', [])
           $scope.checkList = resp.rows;
         })
       }
+    });
+    //右滑返回
+    $scope.swipeRight=function () {
+      $ionicHistory.goBack();
+    };
+
+    $timeout(function () {
+      getUlr.recruitLoad({id: id}, function (resp) {
+        $scope.item = resp.result;
+        console.log($scope.item);
+        $scope.jobDate = {
+          startDate: $scope.item.jobStartTime.substring(0, 10),
+          endDate: $scope.item.jobEndTime.substring(0, 10)
+        };
+      });
+      $ionicLoading.hide()
+    }, 1500);
+
+    //岗位收藏
+    $scope.iconIs = function (objId) {
+      if ($rootScope.state) {
+        if ($scope.chin.total !== 0 && $scope.item.interviewApplyModel == null) {
+          $scope.apply.show();
+        } else {
+          if ($scope.item.fav===false) {
+            getUlr.addIconPost({recruitId: objId}, function (resp) {
+              console.log(resp);
+              if(resp.success){
+                $scope.item.fav=true
+              }
+              PromptService.PromptMsg(resp.msg);
+            })
+          } else {
+            getUlr.delIconPost({recruitId: objId}, function (resp) {
+              if(resp.success){
+                $scope.item.fav=false
+              }
+              PromptService.PromptMsg(resp.msg);
+            })
+          }
+        }
+      } else {
+        $state.go("login")
+      }
+    };
+    //岗位申请
+    $ionicModal.fromTemplateUrl("applying.html", {
+      scope: $scope,
+      animation: "slide-in-up"
+    }).then(function (modal) {
+      $scope.apply = modal
     });
     /*
      * 1、判断用户是否登录、是否有成功入职记录，则打开申请列表；
@@ -72,9 +119,6 @@ angular.module('starter.postDetailCtrl', [])
         } else {
           getUlr.applyPost($scope.applyData, function (resp) {
             PromptService.PromptMsg(resp.msg);
-            // $timeout(function () {
-            //   $state.go("tab.user")
-            // },1500)
           })
         }
       } else {
@@ -143,12 +187,5 @@ angular.module('starter.postDetailCtrl', [])
     $scope.isSelected = function (id) {
       return $scope.applyData.checkInIds.indexOf(id) >= 0;
     };
-    //End
-
-    // $scope.pushNotificationChange = function () {
-    //   console.log('Push Notification Change', $scope.pushNotification.checked);
-    // };
-    // $scope.pushNotification = {checked: true};
-    // $scope.emailNotification = 'Subscribed'
   }]);
 

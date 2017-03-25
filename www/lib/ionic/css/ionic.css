@@ -3960,7 +3960,7 @@ a.subdued {
       background-image: linear-gradient(180deg, #e42112, #e42112 50%, transparent 50%); }
   .bar.bar-balanced {
     border-color: #28a54c;
-    background-color: #33cd5f;
+    background-color: #10ac86;
     background-image: linear-gradient(0deg, #28a54c, #28a54c 50%, transparent 50%);
     color: #fff; }
     .bar.bar-balanced .title {
@@ -5019,11 +5019,11 @@ ion-tabs.tabs-striped.tabs-color-active-assertive .tab-item.tab-item-active, ion
 ion-tabs.tabs-color-active-balanced .tab-item {
   color: #444; }
   ion-tabs.tabs-color-active-balanced .tab-item.tab-item-active, ion-tabs.tabs-color-active-balanced .tab-item.active, ion-tabs.tabs-color-active-balanced .tab-item.activated {
-    color: #33cd5f; }
+    color: #10ac86; }
 
 ion-tabs.tabs-striped.tabs-color-active-balanced .tab-item.tab-item-active, ion-tabs.tabs-striped.tabs-color-active-balanced .tab-item.active, ion-tabs.tabs-striped.tabs-color-active-balanced .tab-item.activated {
-  border-color: #33cd5f;
-  color: #33cd5f; }
+  border-color: #10ac86;
+  color: #10ac86; }
 
 ion-tabs.tabs-color-active-energized .tab-item {
   color: #444; }
@@ -8755,7 +8755,7 @@ progress {
         color: #fff; }
   .button.button-balanced {
     border-color: transparent;
-    background-color: #33cd5f;
+    background-color: #10ac86;
     color: #fff; }
     .button.button-balanced:hover {
       color: #fff;
@@ -9533,10 +9533,10 @@ a.button {
   border-color: #e42112; }
 
 .balanced, a.balanced {
-  color: #33cd5f; }
+  color: #10ac86; }
 
 .balanced-bg {
-  background-color: #33cd5f; }
+  background-color: #10ac86; }
 
 .balanced-border {
   border-color: #28a54c; }

@@ -14,6 +14,11 @@ angular.module('starter.PromptService', [])
             postGps.lat = postion.coords.latitude;
             postGps.lng = postion.coords.longitude;
             $rootScope.$broadcast('getGps.update')
+          },function (err) {
+            //拒绝定位后，默认的城市为嘉兴；
+            postGps.lat = 30.744837;
+            postGps.lng = 120.76092;
+            $rootScope.$broadcast('getGps.update')
           })
       },
       getGps: function () {
@@ -80,7 +85,7 @@ angular.module('starter.PromptService', [])
   //申请中、待面试、被拒绝根据ID和地址封装服务，只传ID的服务
   .factory('postOperationService', ['YW', '$resource', '$rootScope', function (YW, $resource, $rootScope) {
     var apiUrl = YW.api;
-    $rootScope.postJudge = [];
+    $rootScope.postJudge =[];
     return {
       postOperation: function (address, recruitId) {
         var postOperationUrl = $resource(apiUrl+address, {}, {
@@ -92,6 +97,7 @@ angular.module('starter.PromptService', [])
         });
         postOperationUrl.postApply(apiUrl + address, {recruitId: recruitId}, function (resp) {
           $rootScope.postJudge = resp;
+          console.log($rootScope.postJudge);
         });
         $rootScope.$broadcast('post.Operation')
       },
@@ -99,7 +105,6 @@ angular.module('starter.PromptService', [])
         return $rootScope.postJudge;
       }
     }
-
   }])
   //用户登录
   .factory('User', ['YW', '$resource', 'Storage', '$rootScope', function (YW, $resource, Storage, $rootScope) {

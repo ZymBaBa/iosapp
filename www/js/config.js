@@ -2,9 +2,7 @@ angular.module('starter.config', [])
   .constant("YW", {
     //常规的配置项
     "debug": false,
-    // "api":"http://localhost:8087/hands/",
-    "api": "http://121.40.226.241:8080/hands-app/",
-    //"api":"http://192.168.31.187:8080/hands-app/",
+    "api": "https://www.icewnet.com/app/api/",
     "imgUrl": "",
     "version": "1.0",
     "userKey": "user",

@@ -1,8 +1,11 @@
-<ion-view hide-tabs="true">
+<ion-view  hide-tabs="true">
   <ion-nav-title>
     岗位详细
   </ion-nav-title>
-  <ion-content class="postDetail">
+  <ion-nav-buttons side="right">
+    <i ng-class="{false:'icon ion-ios-star-outline light',true:'icon ion-ios-star ligth'}[item.fav]" style="font-size: 1.6rem;margin-top: 5px;margin-right: 4px;" ng-click="iconIs(item.id);"></i>
+  </ion-nav-buttons>
+  <ion-content class="postDetail" on-swipe-right="swipeRight();">
     <ion-list>
       <ion-item>
         <div class="row">
@@ -11,12 +14,13 @@
           </div>
         </div>
         <div class="row">
-          <div class="col"><p><b class="textFont" ng-bind="item.positionModel.name"></b></p></div>
-          <div class="col"><p><b class="textFont" ng-bind="item.salary"></b><span ng-bind="item.salaryTypeName"></span></p></div>
-          <div class="col"><p><b ng-bind="item.settlementTypeName"></b></p></div>
+          <div class="col"><p><b class="balanced" ng-bind="item.positionModel.name"></b></p></div>
+          <div class="col"><p><b class="balanced" ng-bind="item.salary"></b><span class="balanced" ng-bind="item.salaryTypeName"></span>
+          </p></div>
+          <div class="col"><p><b class="balanced" ng-bind="item.settlementTypeName"></b></p></div>
           <!--<div class="col" ><p style="color: #b2b2b2">30天后停招</p></div>-->
         </div>
-        </ion-item>
+      </ion-item>
       <ion-item class="item-divider item-borderless"></ion-item>
     </ion-list>
     <ion-list class="jobcount">
@@ -32,15 +36,15 @@
         <span class="stable">性别要求：</span>
         <span class="dark" ng-bind="item.sexName"></span>
       </ion-item>
-    <ion-item>
+      <ion-item>
         <span class="stable">工作时间：</span>
         <span class="dark" ng-bind="jobDate.startDate+' 至 '+jobDate.endDate"></span>
       </ion-item>
-    <ion-item>
+      <ion-item>
         <span class="stable">所在城市：</span>
         <span class="dark" ng-bind="item.cityModel.name"></span>
-    </ion-item>
-    <ion-item>
+      </ion-item>
+      <ion-item>
         <span class="stable">工作地点：</span>
         <span class="dark" ng-bind="item.jobAddress"></span>
       </ion-item>
@@ -69,28 +73,19 @@
       </ion-item>
       <ion-item class="item-borderless">
         <span class="stable">所属行业：</span>
-        <span class="dark">餐饮</span>
+        <span class="dark" ng-bind="item.enterpriseUserModel.industryModel.name"></span>
       </ion-item>
-      <ion-item class="item-borderless">
-        <span class="stable">联系人：</span>
-        <span class="dark" ng-bind="item.contactPerson"></span>
-      </ion-item>
-      <ion-item class="item-borderless">
-        <span class="stable">联系电话：</span>
-        <!--<i class="icon ion-android-call balanced" ng-click="telPhone($event,item.contactPhone)"></i>-->
-        <span class="balanced" ng-bind="item.contactPhone" ng-click="telPhone($event,item.contactPhone)"></span>
-      </ion-item>
-      <!--<ion-item class="item-borderless">-->
-        <!--<span class="stable">投递回复：</span>-->
-        <!--<span class="dark" ng-bind="item.enterpriseUserModel.responseRate"></span>-->
-      <!--</ion-item>-->
+
     </ion-list>
   </ion-content>
-  <ion-footer-bar class="balanced-bg" ng-click="openApply();">
-      <div class="col text-center light" style="font-size: 1.2rem" >
-        申请职位
-      </div>
-    </a>
+  <ion-footer-bar  style="padding: 0;border-top: 1px solid #10ac86;box-shadow: -2px -1px 0 rgba(16,172,134,.1)">
+    <div class="col col-33 light-bg" style="padding: 0px" ng-click="telPhone($event,item.contactPhone)">
+      <div class="col" style="padding: 5px 0 0 6px;"><h2 ng-bind="item.contactPerson" style="font-size: 0.8rem;margin-bottom: 0px;padding-left: 4px;color: #10ac86;" ></h2></div>
+      <div class="col" style="padding: 0 0 0 8px;"><p  style="color: #10ac86;"  ng-bind="item.contactPhone"></p></div>
+    </div>
+    <div class="col text-center light balanced-bg" style="font-size: 1.2rem;line-height: 2.2rem" ng-click="openApply();">
+      申请职位
+    </div>
   </ion-footer-bar>
   <script id="applying.html" type="text/ng-template">
     <ion-modal-view>
@@ -101,9 +96,12 @@
       </ion-header-bar>
       <ion-content class="modelContent" scrollbar-x="false">
         <ion-list>
-          <ion-checkbox ng-repeat="item in checkList" id={{item.id}} ng-checked="isSelected(item.id)" ng-click="updateSelection($event,item.id)" class="checkbox-dark">
-          <h2 class="balanced" ng-bind="item.recruitModel.enterpriseUserModel.name+'('+item.recruitModel.positionModel.name+')'"></h2>
-            <p ng-bind="item.recruitModel.jobStartTime.substring(0,10)+' 至 '+item.recruitModel.jobEndTime.substring(0,10)"></p>
+          <ion-checkbox ng-repeat="item in checkList" id={{item.id}} ng-checked="isSelected(item.id)"
+                        ng-click="updateSelection($event,item.id)" class="checkbox-dark">
+            <h2 class="balanced"
+                ng-bind="item.recruitModel.enterpriseUserModel.name+'('+item.recruitModel.positionModel.name+')'"></h2>
+            <p
+              ng-bind="item.recruitModel.jobStartTime.substring(0,10)+' 至 '+item.recruitModel.jobEndTime.substring(0,10)"></p>
           </ion-checkbox>
         </ion-list>
       </ion-content>

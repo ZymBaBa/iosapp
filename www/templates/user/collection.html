@@ -1,0 +1,18 @@
+<ion-view title="兼职收藏" hide-tabs="true">
+  <ion-content>
+    <ion-list ng-show="items.length!==0">
+      <ion-item collection-repeat="item in items">
+          <h2 ng-bind="item.recruitModel.positionModel.name"></h2>
+          <p class="balanced" ng-bind="item.recruitModel.salary+'/'+item.recruitModel.salaryTypeName+'  '+item.recruitModel.settlementTypeName"></p>
+        <ion-option-button class="button-balanced" ng-click="delFav(item.recruitId)">删除</ion-option-button>
+      </ion-item>
+    </ion-list>
+    <div class="NullInfo" ng-show="items.length==0">
+    <div class="tipImgF"></div>
+    <h6 class="tip text-center balanced">暂无兼职收藏信息</h6>
+    </div>
+  </ion-content>
+</ion-view>
+
+
+

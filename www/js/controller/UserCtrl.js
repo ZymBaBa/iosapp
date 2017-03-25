@@ -268,7 +268,13 @@ angular.module('starter.UserCtrl', [])
           $scope.$on('post.Operation', function () {
             $scope.tipOperation = postOperationService.postNotice();
           });
-          $state.go("tab.coures",{},{reload:true})
+          applyService.get(YW.objList[2], YW.applyList[2]);
+          $scope.$on('apply.list', function () {
+            $scope.items = applyService.set();
+            ($scope.items.length !== 0) ? $scope.tipShow = true : $scope.tipShow = false;
+            $ionicLoading.hide();
+          });
+          // $state.go("tab.coures",{},{reload:true})
         }
       })
     };
@@ -288,10 +294,46 @@ angular.module('starter.UserCtrl', [])
     });
   }])
   //兼职收藏
-  .controller('CollectionCtrl', ['$scope', function ($scope) {
-    $scope.name = 'CollectionCtrl';
+  .controller('CollectionCtrl', ['$scope','$resource','$ionicLoading','PromptService','YW',function ($scope,$resource,$ionicLoading,PromptService,YW) {
+    var Url = YW.api;
+    console.log('1');
+    var getUlr = $resource(Url, {}, {
+      favList: {
+        url: Url + 'recruit/fav/list',
+        method: 'GET',
+        isArray: false
+      },
+      notIconPost: {
+        url: Url + 'recruit/fav/del',
+        method: 'POST',
+        isArray: false
+      }
+    });
+    $ionicLoading.show({
+      template: '数据载入中，请稍等......',
+      noBackdrop: true,
+      delay:300
+    });
+    getUlr.favList(function (resp) {
+      $scope.items=resp.rows;
+      console.log(resp);
+      $ionicLoading.hide();
+    });
+    $scope.delFav=function (id) {
+      getUlr.notIconPost({recruitId:id},function (resp) {
+        if(resp.success){
+          PromptService.PromptMsg(resp.msg);
+          getUlr.favList(function (resp) {
+            $scope.items=resp.rows;
+          });
+        }
+      })
+    };
   }])
   //关于我们
   .controller('AboutCtrl', ['$scope', function ($scope) {
-    $scope.name = 'AboutCtrl';
+    $scope.tel=15988368669;
+    $scope.telPhone=function ($event,mobilePhone) {
+      window.open("tel:"+mobilePhone);
+    };
   }]);

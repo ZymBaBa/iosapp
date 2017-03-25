@@ -4,8 +4,10 @@
   </ion-nav-title>
   <ion-content>
     <ion-refresher pulling-text="更新数据..." spinner="ripple" on-refresh="doRefresh();"></ion-refresher>
-    <div class="dataEmpty" ng-show="tipShow==false">
-      <span>暂无入职记录，快去找兼职吧！</span>
+
+    <div class="NullInfo" ng-show="tipShow==false">
+      <div class="tipImgF"></div>
+      <h6 class="tip text-center balanced">暂无兼职历程</h6>
     </div>
     <div class="card" ng-repeat="item in items">
       <ion-list>

@@ -50,31 +50,56 @@ angular.module('starter.HomeCtrl', [])
       }
     });
     //获取当前城市招聘信息函数
-    var cityJobs = function (success) {
-      var getDataObj = {
-        city: $rootScope.cityName.code,
-        locationLng: $rootScope.GpsPosition.lng,
-        locationLat: $rootScope.GpsPosition.lat
-      };
-      if (success) {
-        getData.getCityObj(getDataObj, function (resp) {
-          $scope.items = resp.rows;
-          $ionicLoading.hide()
-        })
-      }
-    };
-    //用户打开页面获取相应坐标,并且根据坐标获取相应的城市招聘信息
-    GpsService.setGps();
-    $rootScope.$on('getGps.update', function () {
-      $rootScope.GpsPosition = GpsService.getGps();
-      getData.getCity({
-        locationLng: $rootScope.GpsPosition.lng,
-        locationLat: $rootScope.GpsPosition.lat
-      }, function (resp) {
-        $rootScope.cityName = resp.result;
-        cityJobs(resp.success);
+    $scope.$on('$ionicView.beforeEnter',function () {
+      GpsService.setGps();
+      $rootScope.$on('getGps.update', function () {
+        $rootScope.GpsPosition = GpsService.getGps();
+        getData.getCity({
+          locationLng: $rootScope.GpsPosition.lng,
+          locationLat: $rootScope.GpsPosition.lat
+        }, function (resp) {
+          if(resp.success){
+            $rootScope.cityName = resp.result;
+            var getDataObj = {
+              city: $rootScope.cityName.code,
+              locationLng: $rootScope.GpsPosition.lng,
+              locationLat: $rootScope.GpsPosition.lat
+            };
+              getData.getCityObj(getDataObj, function (resp) {
+                $scope.items = resp.rows;
+                console.log($scope.items);
+                $ionicLoading.hide()
+              })
+          }
+        });
       });
     });
+    //   var cityJobs = function (success) {
+    //   var getDataObj = {
+    //     city: $rootScope.cityName.code,
+    //     locationLng: $rootScope.GpsPosition.lng,
+    //     locationLat: $rootScope.GpsPosition.lat
+    //   };
+    //   if (success) {
+    //     getData.getCityObj(getDataObj, function (resp) {
+    //       $scope.items = resp.rows;
+    //       console.log($scope.items);
+    //       $ionicLoading.hide()
+    //     })
+    //   }
+    // };
+    //用户打开页面获取相应坐标,并且根据坐标获取相应的城市招聘信息
+    // GpsService.setGps();
+    // $rootScope.$on('getGps.update', function () {
+    //   $rootScope.GpsPosition = GpsService.getGps();
+    //   getData.getCity({
+    //     locationLng: $rootScope.GpsPosition.lng,
+    //     locationLat: $rootScope.GpsPosition.lat
+    //   }, function (resp) {
+    //     $rootScope.cityName = resp.result;
+    //     cityJobs(resp.success);
+    //   });
+    // });
     //下拉更新
     $scope.doRefresh = function () {
       //这里写下拉更新请求的代码
@@ -178,6 +203,7 @@ angular.module('starter.HomeCtrl', [])
         getData.checkInIdsLoad({status: 'SUCCESS'}, function (resp) {
           $scope.chin = resp;
           $scope.checkList = resp.rows;
+          console.log(resp);
         });
       } else {
         PromptService.PromptMsg('请选择您想要的兼职岗位！')

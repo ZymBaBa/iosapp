@@ -30,15 +30,10 @@
           </button>
         </div>
       </div>
-      <!--<div class="row">-->
-      <!--<div class="col">-->
-      <!--{{GpsPosition}}-->
-      <!--</div>-->
-      <!--</div>-->
     </div>
     <div>
       <ion-item class="item-divider text-center">
-        <h5 class="title">附近的兼职</h5>
+        <h5 class="title" style="font-size: 0.7rem">附近的兼职</h5>
       </ion-item>
     </div>
     <ion-refresher pulling-text="更新数据..." spinner="ripple" on-refresh="doRefresh();"></ion-refresher>
@@ -53,8 +48,12 @@
           <div class="row">
             <div class="col col-80">
               <h2 class="title" ng-bind="item.title"></h2>
-              <p ng-bind-html="item.description"></p>
-              <h3 class="balanced" ng-bind="item.positionModel.name+'-'+item.salary+item.salaryTypeName"></h3>
+              <p ng-bind="item.jobAddress" style="padding: .1rem 0rem"></p>
+              <!--<p ng-bind-html="item.description"></p>-->
+              <h3 class="balanced" ng-bind="item.positionModel.name+'&nbsp&nbsp&nbsp&nbsp'+item.salary+item.salaryTypeName+'&nbsp&nbsp&nbsp&nbsp'+item.settlementTypeName+'&nbsp&nbsp&nbsp&nbsp'+'招聘&nbsp'+item.count+'人'"></h3>
+            </div>
+            <div class="col col-20">
+              <h2><span ng-bind="(item.distance|number:1)+'Km'" class="dark3"></span></h2>
             </div>
             <!--<div class="col text-center">-->
             <!--<span class="balanced" ng-bind="item.distance+'m'"></span>-->
@@ -107,7 +106,7 @@
             <input type="tel" ng-model="applyJob.pay" maxlength="2" placeholder="请输入您的薪酬要求，以时薪为单位" class="balanced">
           </ion-item>
         </ion-list>
-        <ion-list>
+        <ion-list ng-show="chin.total!==0">
           <ion-item class="item-divider item-borderless" style="color: #b2b2b2;font-size: 0.85em">兼职经验(多选)</ion-item>
           <ion-checkbox ng-repeat="item in checkList" id={{item.id}} ng-checked="isSelected(item.id)"
                         ng-click="updateSelection($event,item.id)" class="checkbox-balanced">

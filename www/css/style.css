@@ -85,7 +85,7 @@
   color: #f5f5f5;
 }
 .user_content .icon{
-  color: #b2b2b2;
+  color: #10ac86;
 }
 
 .modelContent,.user_content{
@@ -265,4 +265,36 @@ input:checked{
   height: 80px;
   background: url(../img/add.png) no-repeat 8px 8px/60px 60px;
 
+}
+.NullInfo{
+  margin-left: 50%;
+  display: block;
+  margin-top: 70%;
+  left: -48px;
+  top: -48px;
+  position: absolute;
+  width: 6rem;
+  height: 6rem;
+}
+.NullInfo .tipImgF{
+  display: block;
+  height: 96px;
+  width: 96px;
+  background: url(../img/icon.png) no-repeat 0 0/96px 96px;
+}
+.aboutInfo{
+  margin-left: 50%;
+  display: block;
+  margin-top: 16%;
+  left: -48px;
+  top: -48px;
+  position: absolute;
+  width: 6rem;
+  height: 6rem;
+}
+.aboutInfo .aboutImg{
+  display: block;
+  height: 96px;
+  width: 96px;
+  background: url(../img/icon.png) no-repeat 0 0/96px 96px;
 }

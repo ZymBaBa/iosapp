@@ -13,7 +13,6 @@ angular.module('starter',
     'starter.NewsCategoryCtrl',
     'starter.hubs',
     'starter.postDetailCtrl',
-    'starter.collection',
     'starter.services',
     'starter.PromptService',
     'starter.Classification',
@@ -276,20 +275,6 @@ angular.module('starter',
           }
         }
       })
-      .state('newreume', {
-        url: '/newreume',
-        templateUrl: 'templates/user/newReume.html',
-        controller: 'ResumeCtrl'
-      })
-      // .state('tab.newreume', {
-      //   url: '/newreume',
-      //   views: {
-      //     'tab-user': {
-      //       templateUrl: 'templates/user/newreume.html',
-      //       controller: 'ReumeCtrl'
-      //     }
-      //   }
-      // })
       //coures 兼职历程
       .state('tab.coures', {
         url: '/coures',
@@ -305,7 +290,7 @@ angular.module('starter',
         url: '/collection',
         views: {
           'tab-user': {
-            templateUrl: 'templates/user/Collection.html',
+            templateUrl: 'templates/user/collection.html',
             controller: 'CollectionCtrl'
           }
         }
