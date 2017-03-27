@@ -14,6 +14,7 @@ angular.module('starter.UserCtrl', [])
   //我的简历
   .controller('ResumeCtrl', ['$scope', '$state', '$ionicModal', '$cordovaCamera', '$resource', '$timeout', '$ionicActionSheet', '$cordovaImagePicker', '$cordovaFileTransfer', 'PromptService', 'Storage', 'YW', function ($scope, $state, $ionicModal, $cordovaCamera, $resource, $timeout, $ionicActionSheet, $cordovaImagePicker, $cordovaFileTransfer, PromptService, Storage, YW) {
     var url = YW.api;
+    $scope.imageUrl=YW.api+'resume/photo/img?id=';
     var resumeUrl = $resource(url, {}, {
       //简历加载
       resumeLoad: {
@@ -38,6 +39,18 @@ angular.module('starter.UserCtrl', [])
         url: url + 'resume/photo/list',
         method: 'GET',
         isArray: false
+      },
+      //新增照片
+      imagePost:{
+        url:url+'resume/photo/add',
+        method:'POST',
+        isArray:false
+      },
+      //删除照片
+      imageDel:{
+        url:url+'resume/photo/del',
+        method:'POST',
+        isArray:false
       }
     });
     $scope.resumeList = Storage.get(YW.userKey);
@@ -45,8 +58,21 @@ angular.module('starter.UserCtrl', [])
     $scope.$on('$ionicView.beforeEnter', function () {
       //照片列表
       resumeUrl.imageGet(function (resp) {
-        $scope.imageUser=resp.rows;
+        $scope.imageUser = resp.rows;
+        console.log($scope.imageUser)
       });
+      //删除照片
+      $scope.imgDelete = function (id) {
+        resumeUrl.imageDel({ids:[id]},function (resp) {
+          console.log(resp);
+          if(resp.success){
+            resumeUrl.imageGet(function (resp) {
+              $scope.imageUser = resp.rows;
+            })
+          }
+        })
+      };
+
       //简历信息
       resumeUrl.resumeLoad(function (resp) {
         $scope.resumeModify = resp;
@@ -80,45 +106,14 @@ angular.module('starter.UserCtrl', [])
     $scope.closeNr = function () {
       $scope.newReume.hide()
     };
-
     $scope.addData = {
-      // photos: [],
       height: '',
       weight: '',
       description: ''
     };
-
-    //保存简历请求
-    $scope.preserveNr = function () {
-      if ($scope.resumeModify.success === false) {
-        //新增简历API请求
-        resumeUrl.resumeAdd($scope.addData, function (resp) {
-          if (resp.success) {
-            PromptService.PromptMsg(resp.msg);
-            $timeout(function () {
-              $scope.closeNr();
-              $state.go("tab.user");
-            }, 1500);
-          } else {
-            PromptService.PromptMsg(resp.msg);
-          }
-        })
-      } else {
-        //编辑简历API请求
-        console.log($scope.modifyData);
-        resumeUrl.resumeModify($scope.modifyData, function (resp) {
-          if (resp.success) {
-            PromptService.PromptMsg(resp.msg);
-            $timeout(function () {
-              $scope.closeNr();
-            }, 1500);
-          } else {
-            PromptService.PromptMsg(resp.msg);
-          }
-        })
-      }
+    $scope.addDataImg={
+      photos:[]
     };
-
     //拍照
     $scope.picture = function () {
       $ionicActionSheet.show({
@@ -145,76 +140,122 @@ angular.module('starter.UserCtrl', [])
         }
       });
     };
+    //图片格式转Base64
+    function convertImgToBase64URL(url, callback, outputFormat) {
+      var canvas = document.createElement('CANVAS'),
+        ctx = canvas.getContext('2d'),
+      img = new Image();
+      img.crossOrigin = 'Anonymous';
+      img.onload = function () {
+        var dataURL;
+        canvas.height = img.height;
+        canvas.width = img.width;
+        ctx.drawImage(img, 0, 0);
+        dataURL = canvas.toDataURL(outputFormat);
+        callback(dataURL);
+        canvas = null;
+      };
+      img.src = url;
+    };
     //image picker
     var pickImage = function () {
-      var options = {
-        maximumImagesCount: 3,
-        width: 800,
-        height: 800,
-        quality: 80
+      $scope.addDataImg={
+        photos:[]
       };
-
-      $cordovaImagePicker.getPictures(options)
-        .then(function (results) {
-          for(var i=0;i<results.length;i++){
-            $scope.addData.photos.push(results[i])
-          }
-          console.log($scope.addData.photos);
-          // $scope.images_list.push(results[0]);
-          // console.log(results);
-          upImage(results[0]);
-        }, function (error) {
-          // error getting photos
-        });
+      console.log($scope.addDataImg.photos);
+      var options = {
+        maximumImagesCount:3-($scope.imageUser.length),
+        width: 300,
+        height: 300,
+        quality: 100
+      };
+      //这是选择照片插入
+        $cordovaImagePicker.getPictures(options)
+          .then(function (results) {
+            for (var i = 0; i < results.length; i++) {
+              convertImgToBase64URL(results[i], function (base64Img) {
+                $scope.addDataImg.photos.push(base64Img);
+                upImage($scope.addDataImg.photos)
+              });
+            }
+          }, function (error) {
+            console.log('照片上传失败')
+          });
     };
     var takePhoto = function () {
+      $scope.addDataImg={
+        photos:[]
+      };
+      $scope.show_camera = true;
       var options = {
         //这些参数可能要配合着使用，比如选择了sourcetype是0，destinationtype要相应的设置
         quality: 100,                                            //相片质量0-100
-        destinationType: Camera.DestinationType.FILE_URI,        //返回类型：DATA_URL= 0，返回作为 base64 編碼字串。 FILE_URI=1，返回影像档的 URI。NATIVE_URI=2，返回图像本机URI (例如，資產庫)
+        destinationType: Camera.DestinationType.DATA_URL,        //返回类型：DATA_URL= 0，返回作为 base64 編碼字串。 FILE_URI=1，返回影像档的 URI。NATIVE_URI=2，返回图像本机URI (例如，資產庫)
         sourceType: Camera.PictureSourceType.CAMERA,             //从哪里选择图片：PHOTOLIBRARY=0，相机拍照=1，SAVEDPHOTOALBUM=2。0和1其实都是本地图库
         allowEdit: false,                                        //在选择之前允许修改截图
         encodingType: Camera.EncodingType.JPEG,                   //保存的图片格式： JPEG = 0, PNG = 1
-        targetWidth: 200,                                        //照片宽度
-        targetHeight: 200,                                       //照片高度
-        mediaType: 0,                                             //可选媒体类型：圖片=0，只允许选择图片將返回指定DestinationType的参数。 視頻格式=1，允许选择视频，最终返回 FILE_URI。ALLMEDIA= 2，允许所有媒体类型的选择。
-        cameraDirection: 0,                                       //枪后摄像头类型：Back= 0,Front-facing = 1
+        targetWidth: 300,                                        //照片宽度
+        targetHeight: 300,                                       //照片高度
+        // mediaType: 0,                                             //可选媒体类型：圖片=0，只允许选择图片將返回指定DestinationType的参数。 視頻格式=1，允许选择视频，最终返回 FILE_URI。ALLMEDIA= 2，允许所有媒体类型的选择。
+        // cameraDirection: 0,                                       //枪后摄像头类型：Back= 0,Front-facing = 1
         popoverOptions: CameraPopoverOptions,
-        saveToPhotoAlbum: true                                   //保存进手机相册
+        saveToPhotoAlbum: true,                                 //保存进手机相册
+        correctOrientation: true
       };
       $cordovaCamera.getPicture(options).then(function (imageData) {
-        // CommonJs.AlertPopup(imageData);
-        //image.src = "data:image/jpeg;base64," + imageData;
-        console.log(imageData);
-        for(var i=$scope.addData.photos.length;i<$scope.addData.photos.length+1;i++){
-          $scope.addData.photos.push(imageData)
+        if ($scope.addDataImg.photos.length < 3) {
+          $scope.addDataImg.photos.push(imageData);
+          upImage($scope.addDataImg.photos)
         }
-        console.log($scope.addData.photos);
-        // upImage(imageData);
       }, function (err) {
         console.log('err')
       });
     };
 
-    var upImage = function (imageUrl) {
-      document.addEventListener('deviceready', function () {
-        var url = "http://192.168.1.248/api/UserInfo/PostUserHead";
-        var options = {};
-        $cordovaFileTransfer.upload(url, imageUrl, options)
-          .then(function (result) {
-            console.log('成功');
-          }, function (err) {
-            console.log('失败');
-          }, function (progress) {
-            console.log('不知道是啥');
-          });
-      }, false);
-    }
-
+    var upImage = function (imageData) {
+      resumeUrl.imagePost({photos: imageData}, function (resp) {
+        console.log(resp);
+        if(resp.success){
+          resumeUrl.imageGet(function (resp) {
+            $scope.imageUser = resp.rows;
+          })
+        }
+      });
+    };
+    //保存简历请求
+    $scope.preserveNr = function () {
+      if ($scope.resumeModify.success === false) {
+        //新增简历API请求
+        resumeUrl.resumeAdd($scope.addData, function (resp) {
+          if (resp.success) {
+            PromptService.PromptMsg(resp.msg);
+            $timeout(function () {
+              $scope.closeNr();
+              $state.go("tab.user");
+            }, 1500);
+          } else {
+            PromptService.PromptMsg(resp.msg);
+          }
+        })
+      } else {
+        //编辑简历API请求
+        resumeUrl.resumeModify($scope.modifyData, function (resp) {
+          console.log($scope.modifyData);
+          if (resp.success) {
+            PromptService.PromptMsg(resp.msg);
+            $timeout(function () {
+              $scope.closeNr();
+            }, 1500);
+          } else {
+            PromptService.PromptMsg(resp.msg);
+          }
+        })
+      }
+    };
   }])
 
   //兼职历程
-  .controller('CouresCtrl', ['$scope', '$resource', '$ionicPopover', '$ionicLoading', '$timeout', '$ionicPopup', '$rootScope', 'applyService', 'postOperationService','$state','YW', function ($scope, $resource, $ionicPopover, $ionicLoading, $timeout, $ionicPopup, $rootScope, applyService, postOperationService,$state,YW) {
+  .controller('CouresCtrl', ['$scope', '$resource', '$ionicPopover', '$ionicLoading', '$timeout', '$ionicPopup', '$rootScope', 'applyService', 'postOperationService', '$state', 'YW', function ($scope, $resource, $ionicPopover, $ionicLoading, $timeout, $ionicPopup, $rootScope, applyService, postOperationService, $state, YW) {
     $ionicLoading.show({
       template: '入职邀请载入中，请稍等...',
       noBackdrop: true,
@@ -294,7 +335,7 @@ angular.module('starter.UserCtrl', [])
     });
   }])
   //兼职收藏
-  .controller('CollectionCtrl', ['$scope','$resource','$ionicLoading','PromptService','YW',function ($scope,$resource,$ionicLoading,PromptService,YW) {
+  .controller('CollectionCtrl', ['$scope', '$resource', '$ionicLoading', 'PromptService', 'YW', function ($scope, $resource, $ionicLoading, PromptService, YW) {
     var Url = YW.api;
     console.log('1');
     var getUlr = $resource(Url, {}, {
@@ -312,19 +353,19 @@ angular.module('starter.UserCtrl', [])
     $ionicLoading.show({
       template: '数据载入中，请稍等......',
       noBackdrop: true,
-      delay:300
+      delay: 300
     });
     getUlr.favList(function (resp) {
-      $scope.items=resp.rows;
+      $scope.items = resp.rows;
       console.log(resp);
       $ionicLoading.hide();
     });
-    $scope.delFav=function (id) {
-      getUlr.notIconPost({recruitId:id},function (resp) {
-        if(resp.success){
+    $scope.delFav = function (id) {
+      getUlr.notIconPost({recruitId: id}, function (resp) {
+        if (resp.success) {
           PromptService.PromptMsg(resp.msg);
           getUlr.favList(function (resp) {
-            $scope.items=resp.rows;
+            $scope.items = resp.rows;
           });
         }
       })
@@ -332,8 +373,8 @@ angular.module('starter.UserCtrl', [])
   }])
   //关于我们
   .controller('AboutCtrl', ['$scope', function ($scope) {
-    $scope.tel=15988368669;
-    $scope.telPhone=function ($event,mobilePhone) {
-      window.open("tel:"+mobilePhone);
+    $scope.tel = 15988368669;
+    $scope.telPhone = function ($event, mobilePhone) {
+      window.open("tel:" + mobilePhone);
     };
   }]);

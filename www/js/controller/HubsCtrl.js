@@ -42,7 +42,7 @@ angular.module('starter.hubs', [])
     $scope.goCamera = function () {
       $scope.show_camera = true;
       var options = {
-        quality: 50,
+        quality: 100,
         destinationType: Camera.DestinationType.DATA_URL,
         sourceType: Camera.PictureSourceType.CAMERA,
         allowEdit: true,
@@ -50,11 +50,12 @@ angular.module('starter.hubs', [])
         targetWidth: 100,
         targetHeight: 100,
         popoverOptions: CameraPopoverOptions,
-        saveToPhotoAlbum: false,
+        saveToPhotoAlbum: true,
         correctOrientation: true
       };
       $cordovaCamera.getPicture(options).then(function (imageData) {
         // $scope.imageSrc = "data:image/jpeg;base64," + imageData;
+        console.log(imageData);
         userUrl.postImg({avatar: imageData}, function (resp) {
           var newDate = new Date().getTime();
           $rootScope.userImg = YW.api + 'account/avatar?' + newDate;

@@ -45,12 +45,19 @@
         <span class="stable">体重：</span>
         <span ng-bind="modifyData.weight"></span>
       </ion-item>
-      <ion-item class="item-divider">个人介绍</ion-item>
+      <ion-item class="item-divider">
+        <p>个人介绍</p>
+        </ion-item>
       <ion-item>
         <span ng-bind="modifyData.description"></span>
       </ion-item>
-      <ion-item class="item-divider">个人风采</ion-item>
+      <ion-item class="item-divider" ng-hide="imageUser.length==0">
+      <p>个人风采</p>
+      </ion-item>
     </ion-list>
+    <div class="row userClass" ng-hide="imageUser.length==0">
+      <img att="img" ng-repeat="img in imageUser" ng-src="{{imageUrl+img.id}}">
+    </div>
   </ion-content>
   <script id="newReume-modal.html" type="text/ng-template">
     <ion-modal-view>
@@ -98,23 +105,22 @@
             <input type="tel" ng-model="modifyData.weight" placeholder="请输入您的体重，单位为KG" maxlength="3"
                    ng-show="resumeModify.success===true">
           </ion-item>
-          <ion-item class="item-divider"></ion-item>
+          <ion-item class="item-divider">
+            <p>个人介绍</p>
+          </ion-item>
           <ion-item class="item-input">
             <textarea ng-model="addData.description" placeholder="请简单的做下自我介绍，让用人单位能够了解下您。"
                       ng-show="resumeModify.success===false"></textarea>
             <textarea ng-model="modifyData.description" placeholder="现在是编辑了"
                       ng-show="resumeModify.success===true"></textarea>
           </ion-item>
-          <ion-item class="item-divider"></ion-item>
           <ion-item class="item-divider">
-            <span class="input-label">个人风采(非必传)</span>
+            <p>个人风采(非必传)</p>
           </ion-item>
         </ion-list>
         <div class="row userClass">
-          <img att="img1" ng-src="img/timg.jpeg">
-          <img att="img2" ng-src="img/timg1.jpeg">
-          <img att="img3" ng-src="img/timg2.jpg">
-          <img att="upImg" ng-click="picture();">
+          <img att="img" ng-repeat="img in imageUser" ng-src="{{imageUrl+img.id}}" ng-click="imgDelete(img.id)">
+          <img att="upImg" ng-click="picture();" ng-hide="imageUser.length==3">
         </div>
       </ion-content>
     </ion-modal-view>

@@ -14,7 +14,7 @@ angular.module('starter.config', [])
      * 3、SUCCESS 通过/入职
      * 4、FAIL 未通过/未入职
      * 5、CANCEL 取消*/
-    "applyList": ['APPLYING', 'WAIT', 'SUCCESS', 'FAIL', 'CANCEL'],
+    "applyList": ['APPLYING', 'WAIT', 'SUCCESS', 'FAIL', 'CANCEL','ALL'],
     /*操作
      * 0、interviewApply/cancel 取消申请
      * 1、checkin/reject 拒绝入职
@@ -27,7 +27,7 @@ angular.module('starter.config', [])
      * 1、待面试列表
      * 2、待入职列表
      * 3、拒绝面试/入职列表*/
-    "objList": ['interviewApply/list', 'interview/list', 'checkin/list']
+    "objList": ['interviewApply/list', 'interview/list', 'checkin/list','message/recommend/list']
   });
 
 
