@@ -133,6 +133,20 @@ angular.module('starter.login', [])
       password: '',
       smsCode: ''
     };
+    //用户协议
+    $scope.userAgrTile='用户协议';
+    $ionicModal.fromTemplateUrl("user-agreement.html", {
+      scope: $scope,
+      animation: "slide-in-up"
+    }).then(function (modal) {
+      $scope.userAgr = modal
+    });
+    $scope.openAgr = function () {
+      $scope.userAgr.show();
+    };
+    $scope.closeAgr = function () {
+      $scope.userAgr.hide()
+    };
     //找回密码
     $scope.postFg = function () {
       userUrl.postFg($scope.fgData, function (res) {
