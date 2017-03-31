@@ -106,6 +106,30 @@ angular.module('starter.PromptService', [])
       }
     }
   }])
+  //信息处理（信息删除）
+  .factory('messageOperationService', ['YW', '$resource', '$rootScope', function (YW, $resource, $rootScope) {
+    var apiUrl = YW.api;
+    $rootScope.messageJudge =[];
+    return {
+      postOperation: function (address, messageId) {
+        var messageOperationUrl = $resource(apiUrl+address, {}, {
+          postApply: {
+            url: apiUrl + address,
+            method: 'POST',
+            isArray: false
+          }
+        });
+        messageOperationUrl.postApply(apiUrl + address, {id: messageId}, function (resp) {
+          $rootScope.messageJudge = resp;
+          console.log($rootScope.messageJudge);
+        });
+        $rootScope.$broadcast('post.messageOperation')
+      },
+      postNotice: function () {
+        return $rootScope.messageJudge;
+      }
+    }
+  }])
   //用户登录
   .factory('User', ['YW', '$resource', 'Storage', '$rootScope', function (YW, $resource, Storage, $rootScope) {
     var apiUrl = YW.api;
@@ -114,10 +138,12 @@ angular.module('starter.PromptService', [])
     var user = Storage.get(storageKey) || {};
     // var user ='';
     return {
-      login: function (username, password) {
+      login: function (username, password,locationLng,locationLat) {
         return resource.save({}, {
           userName: username,
-          password: password
+          password: password,
+          lng: locationLng,
+          lat: locationLat
         }, function (response) {
           console.log(response);
           user = response;

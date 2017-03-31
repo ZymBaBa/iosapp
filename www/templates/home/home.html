@@ -49,15 +49,11 @@
             <div class="col col-80">
               <h2 class="title" ng-bind="item.title"></h2>
               <p ng-bind="item.jobAddress" style="padding: .1rem 0rem"></p>
-              <!--<p ng-bind-html="item.description"></p>-->
               <h3 class="balanced" ng-bind="item.positionModel.name+'&nbsp&nbsp&nbsp&nbsp'+item.salary+item.salaryTypeName+'&nbsp&nbsp&nbsp&nbsp'+item.settlementTypeName+'&nbsp&nbsp&nbsp&nbsp'+'招聘&nbsp'+item.count+'人'"></h3>
             </div>
             <div class="col col-20">
               <h2><span ng-bind="(item.distance|number:1)+'Km'" class="dark3"></span></h2>
             </div>
-            <!--<div class="col text-center">-->
-            <!--<span class="balanced" ng-bind="item.distance+'m'"></span>-->
-            <!--</div>-->
           </div>
         </ion-item>
       </ion-list>

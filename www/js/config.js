@@ -20,13 +20,15 @@ angular.module('starter.config', [])
      * 1、checkin/reject 拒绝入职
      * 2、checkin/accept 接受入职
      * 3、checkin/del 删除入职
-     * 4、interview/reject 拒绝面试*/
-    "postOperationAdd": ['interviewApply/cancel', 'checkin/reject', 'checkin/accept', 'checkin/del', 'interview/reject'],
+     * 4、interview/reject 拒绝面试
+     * 5、message/del 删除推荐信息*/
+    "postOperationAdd": ['interviewApply/cancel', 'checkin/reject', 'checkin/accept', 'checkin/del', 'interview/reject','message/del'],
     /*列表
      *0、岗位申请列表
      * 1、待面试列表
      * 2、待入职列表
-     * 3、拒绝面试/入职列表*/
+     * 3、拒绝面试/入职列表
+     * 4、推荐列表*/
     "objList": ['interviewApply/list', 'interview/list', 'checkin/list','message/recommend/list']
   });
 

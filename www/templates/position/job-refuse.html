@@ -1,4 +1,4 @@
-<ion-view>
+<ion-view class="jobApply">
   <ion-nav-title>
     申请管理
   </ion-nav-title>
@@ -8,5 +8,81 @@
       <div class="tipImgF"></div>
       <h6 class="tip text-center balanced" >暂无推荐岗位</h6>
     </div>
+    <div class="card" ng-repeat="item in items">
+      <ion-list>
+        <ion-item class="head item-divider">
+          <div class="row">
+            <div class="col col-80">
+              <p>
+                <span ng-bind="item.recruitModel.positionModel.name"></span>
+                <span class="stable" ng-bind="'&nbsp;&nbsp;('+'推荐时间：'+item.recruitModel.cTime.substring(0,16)+')'" style="font-size: .6rem"></span>
+              </p>
+              <!--<p ng-bind="item.recruitModel.positionModel.name"></p>-->
+            </div>
+            <div class="col text-right" ng-click="openPopover($event,item);">
+              <i class="icon ion-android-menu balanced"></i>
+            </div>
+          </div>
+        </ion-item>
+        <ion-item class="body">
+          <div class="row responsive-sm">
+            <div class="col">
+              <!--兼职企业-->
+              <p>
+                <i class="icon ion-ios-home balanced"></i>&nbsp;
+                <span ng-bind="item.recruitModel.enterpriseUserModel.name"></span>
+              </p>
+              <!--结算方式-->
+              <p>
+              <i class="icon ion-social-usd balanced"></i>&nbsp;&nbsp;
+              <span class="balanced" ng-bind="item.recruitModel.salary+' '+item.recruitModel.salaryTypeName"></span>&nbsp;&nbsp;
+             <span class="balanced" ng-bind="item.recruitModel.settlementTypeName"></span></p>
+              <!--工作时间-->
+              <p>
+                <i class="icon ion-ios-clock balanced"></i>&nbsp;
+                <span ng-bind="item.recruitModel.jobEndTime.substring(0,10)+' 至 '+item.recruitModel.jobStartTime.substring(0,10)"></span>
+              </p>
+              <!--工作地址-->
+              <p ng-click="addressAlert(item.recruitModel.jobAddress);">
+                <i class="icon ion-android-compass balanced"></i>&nbsp;
+                <span ng-bind="item.recruitModel.jobAddress"></span></p>
+              <!--面试人员-->
+              <p ng-click="telPhone($event,item.recruitModel.contactPhone)">
+                <i class="icon ion-android-person balanced"></i>&nbsp;&nbsp;<span ng-bind="item.recruitModel.contactPerson"></span>&nbsp;&nbsp;&nbsp;
+                <i class="icon ion-android-call balanced"></i>&nbsp;<span class="balanced" ng-bind="item.recruitModel.contactPhone"></span>
+              </p>
+            </div>
+          </div>
+        </ion-item>
+      </ion-list>
+    </div>
   </ion-content>
+  <script id="jobRefuse-popover.html" type="text/ng-template">
+    <ion-popover-view class="Confirm">
+      <ion-list class="text-center">
+        <ion-item ng-click="delJob();" class="balanced">删除</ion-item>
+        <ion-item ng-click="openApply();" class="balanced">申请</ion-item>
+      </ion-list>
+    </ion-popover-view>
+  </script>
+  <script id="applying.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-header-bar class="bar-balanced">
+        <a class="button button-icon ion-ios-arrow-left" ng-click="closeApply();"></a>
+        <h1 class="title">推荐岗位申请</h1>
+        <a class="button" ng-click="addApply();">申请</a>
+      </ion-header-bar>
+      <ion-content class="modelContent" scrollbar-x="false">
+        <ion-list>
+          <ion-checkbox ng-repeat="item in checkList" id={{item.id}} ng-checked="isSelected(item.id)"
+                        ng-click="updateSelection($event,item.id)" class="checkbox-dark">
+            <h2 class="balanced"
+                ng-bind="item.recruitModel.enterpriseUserModel.name+'('+item.recruitModel.positionModel.name+')'"></h2>
+            <p
+              ng-bind="item.recruitModel.jobStartTime.substring(0,10)+' 至 '+item.recruitModel.jobEndTime.substring(0,10)"></p>
+          </ion-checkbox>
+        </ion-list>
+      </ion-content>
+    </ion-modal-view>
+  </script>
 </ion-view>

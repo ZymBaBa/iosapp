@@ -16,26 +16,41 @@
               <p ng-bind="item.recruitModel.positionModel.name"></p>
             </div>
             <div class="col text-right" ng-click="openPopover($event,item);">
-              <i class="icon ion-android-menu"></i>
+              <i class="icon ion-android-menu  balanced"></i>
             </div>
           </div>
         </ion-item>
         <ion-item class="body">
           <div class="row responsive-sm">
             <div class="col">
-              <p><span class="stable">兼职单位：</span><span ng-bind="item.recruitModel.enterpriseUserModel.name"></span></p>
-              <p><span class="stable">兼职薪酬：</span><span class="balanced"
-                                                        ng-bind="item.recruitModel.salary+' '+item.recruitModel.salaryTypeName"></span>
+              <!--兼职企业-->
+              <p>
+                <i class="icon ion-ios-home balanced"></i>&nbsp;
+                <span ng-bind="item.recruitModel.enterpriseUserModel.name"></span>
               </p>
-              <p><span class="stable">结算方式：</span><span class="balanced"
-                                                        ng-bind="item.recruitModel.settlementTypeName"></span></p>
-              <p><span class="stable">工作时间：</span><span
-                ng-bind="item.recruitModel.jobEndTime.substring(0,10)+' 至 '+item.recruitModel.jobStartTime.substring(0,10)"></span>
+              <!--结算方式-->
+              <p>
+                <i class="icon ion-social-usd balanced"></i>&nbsp;&nbsp;
+                <span class="balanced" ng-bind="item.recruitModel.salary+' '+item.recruitModel.salaryTypeName"></span>&nbsp;&nbsp;
+                <span class="balanced" ng-bind="item.recruitModel.settlementTypeName"></span></p>
+              <!--工作时间-->
+              <p>
+                <i class="icon ion-ios-clock balanced"></i>&nbsp;
+                <span ng-bind="item.recruitModel.jobEndTime.substring(0,10)+' 至 '+item.recruitModel.jobStartTime.substring(0,10)"></span>
               </p>
-              <p><span class="stable">工作地点：</span><span ng-bind="item.recruitModel.jobAddress"></span></p>
-              <p><span class="stable">联系人员：</span><span ng-bind="item.recruitModel.contactPerson"></span></p>
-              <p><span class="stable">联系电话：</span><i class="icon ion-android-call balanced" ng-click="telPhone($event,item.recruitModel.contactPhone)"></i> <span class="balanced" ng-bind="item.recruitModel.contactPhone" ng-click="telPhone($event,item.recruitModel.contactPhone)"></span></p>
-              <p><span class="stable">面式地点：</span><span ng-bind="item.recruitModel.interviewAddressModel.address"></span></p>
+              <!--工作地址-->
+              <p ng-click="addressAlert(address.tip1,item.recruitModel.jobAddress);">
+                <i class="icon ion-android-compass balanced"></i>&nbsp;
+                <span ng-bind="item.recruitModel.jobAddress"></span></p>
+              <!--面试人员和电话-->
+              <p ng-click="telPhone($event,item.recruitModel.contactPhone)">
+                <i class="icon ion-android-person balanced"></i>&nbsp;&nbsp;<span ng-bind="item.recruitModel.contactPerson"></span>&nbsp;&nbsp;&nbsp;
+                <i class="icon ion-android-call balanced"></i>&nbsp;<span class="balanced" ng-bind="item.recruitModel.contactPhone"></span>
+              </p>
+              <!--面试地址-->
+              <p ng-click="addressAlert(address.tip2,item.recruitModel.interviewAddressModel.address);">
+              <i class="icon ion-android-pin balanced"></i>&nbsp;
+              <span ng-bind="item.recruitModel.interviewAddressModel.address"></span></p>
             </div>
           </div>
         </ion-item>

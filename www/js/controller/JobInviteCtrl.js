@@ -80,6 +80,19 @@ angular.module('starter.JobInvite', [])
         }
       })
     };
+    $scope.address={
+      tip1:"工作地址",
+      tip2:"面试地址"
+    };
+    //查看详细地址
+    $scope.addressAlert = function(tip,address) {
+      var alertPopup = $ionicPopup.alert({
+        title: "<span class='bar-stable'>" +tip+"</span>",
+        template: "<span class='balanced'>" +address+"</span>",
+        okText: "确认",
+        okType: "button-balanced"
+      });
+    };
     $scope.$on('$destroy', function () {
       $rootScope.placeItem = [];
     })

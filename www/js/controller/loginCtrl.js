@@ -172,13 +172,15 @@ angular.module('starter.login', [])
     //用户登录
     $scope.user = {
       username: '',
-      password: ''
+      password: '',
+      locationLng: $rootScope.GpsPosition.lng,
+      locationLat: $rootScope.GpsPosition.lat
     };
     //key的名称
     var storageKey = 'user';
     $scope.signIn = function () {
       //把User传到服务中去，然后把中设置了监听回传事件
-      User.login($scope.user.username, $scope.user.password);
+      User.login($scope.user.username, $scope.user.password,$scope.user.locationLng,$scope.user.locationLat);
     };
     //接收服务中的监听回传事件
     $scope.$on('User.loginUpdated', function () {
