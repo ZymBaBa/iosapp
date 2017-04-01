@@ -99,6 +99,21 @@ angular.module('starter',
       }
     };
   })
+  //小红点
+  .directive('headRedPoint', function($compile, $timeout){
+    return {
+      restrict: 'A',
+      replace: false,
+      link: function(scope, element, attrs, controller) {
+        var key = attrs.headRedPoint || false;
+        var template ="<span ng-class={true:'tabs-red-point',false:''}["+key+"]></span>";
+        var html = $compile(template)(scope);
+        $timeout(function() {
+          var test = angular.element(element).parent().append(html)
+        },100)
+      }
+    };
+  })
   .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $httpProvider) {
     //cookie请求头配置
     // $httpProvider.defaults.withCredentials = true;
@@ -130,6 +145,12 @@ angular.module('starter',
             controller: 'HomeCtrl'
           }
         }
+      })
+      //信息
+      .state('message', {
+        url: '/message',
+        templateUrl: 'templates/home/message.html',
+        controller: 'message'
       })
       //岗位详细页-首页
       .state('tab.postDetail', {

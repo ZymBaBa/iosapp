@@ -298,3 +298,13 @@ input:checked{
   width: 96px;
   background: url(../img/icon.png) no-repeat 0 0/96px 96px;
 }
+.tabs-red-point {
+  position: absolute;
+  top: 12%;
+  right: calc(50% - 17px);
+  height: 7px;
+  width: 7px;
+  border-radius: 3.5px;
+  background-color: red;
+  z-index: 151228;
+}

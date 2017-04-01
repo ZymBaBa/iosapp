@@ -50,7 +50,7 @@ angular.module('starter.HomeCtrl', [])
       }
     });
     //获取当前城市招聘信息函数
-    $scope.$on('$ionicView.beforeEnter',function () {
+    $scope.$on('$ionicView.beforeEnter', function () {
       GpsService.setGps();
       $rootScope.$on('getGps.update', function () {
         $rootScope.GpsPosition = GpsService.getGps();
@@ -58,18 +58,18 @@ angular.module('starter.HomeCtrl', [])
           locationLng: $rootScope.GpsPosition.lng,
           locationLat: $rootScope.GpsPosition.lat
         }, function (resp) {
-          if(resp.success){
+          if (resp.success) {
             $rootScope.cityName = resp.result;
             var getDataObj = {
               city: $rootScope.cityName.code,
               locationLng: $rootScope.GpsPosition.lng,
               locationLat: $rootScope.GpsPosition.lat
             };
-              getData.getCityObj(getDataObj, function (resp) {
-                $scope.items = resp.rows;
-                console.log($scope.items);
-                $ionicLoading.hide()
-              })
+            getData.getCityObj(getDataObj, function (resp) {
+              $scope.items = resp.rows;
+              console.log($scope.items);
+              $ionicLoading.hide()
+            })
           }
         });
       });
@@ -289,10 +289,17 @@ angular.module('starter.HomeCtrl', [])
           PromptService.PromptMsg(resp.msg);
           $timeout(function () {
             $scope.closeJob();
-            $scope.applyJob.recruitIds.splice(0,$scope.applyJob.recruitIds.length);
-            $scope.applyJob.checkInIds.splice(0,$scope.applyJob.checkInIds.length);
+            $scope.applyJob.recruitIds.splice(0, $scope.applyJob.recruitIds.length);
+            $scope.applyJob.checkInIds.splice(0, $scope.applyJob.checkInIds.length);
           }, 1500)
         })
       }
+    };
+    $scope.messageUrl = function () {
+      console.log('1');
+      $state.go("tab.message")
     }
+  }])
+  .controller('message', ['$scope', '$resource', '$ionicLoading', '$timeout', 'homeFactory', '$ionicModal', '$rootScope', '$state', '$ionicHistory', '$sce', 'GpsService', 'CategoryFactory', 'PromptService', '$ionicPopup', 'YW', function ($scope, $resource, $ionicLoading, $timeout, homeFactory, $ionicModal, $rootScope, $state, $ionicHistory, $sce, GpsService, CategoryFactory, PromptService, $ionicPopup, YW) {
+    $scope.message = 'message'
   }]);

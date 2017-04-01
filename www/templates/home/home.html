@@ -3,6 +3,11 @@
     <a class="button button-clear icon-right ion-android-arrow-dropdown"
        ng-bind="cityName.name"></a>
   </ion-nav-buttons>
+  <ion-nav-buttons side="right" >
+    <a class="button button-icon" head-red-point='true' href="#/message">
+      <i class="icon ion-ios-email light"></i>
+    </a>
+  </ion-nav-buttons>
   <ion-content>
     <div class="home-count">
       <div class="card">
@@ -150,7 +155,6 @@
       </ion-content>
     </ion-modal-view>
   </script>
-
   <!--城市选择-->
   <script id="city-modal.html" type="text/ng-template">
     <ion-modal-view class="city-home">
