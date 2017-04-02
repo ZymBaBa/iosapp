@@ -301,5 +301,8 @@ angular.module('starter.HomeCtrl', [])
     }
   }])
   .controller('message', ['$scope', '$resource', '$ionicLoading', '$timeout', 'homeFactory', '$ionicModal', '$rootScope', '$state', '$ionicHistory', '$sce', 'GpsService', 'CategoryFactory', 'PromptService', '$ionicPopup', 'YW', function ($scope, $resource, $ionicLoading, $timeout, homeFactory, $ionicModal, $rootScope, $state, $ionicHistory, $sce, GpsService, CategoryFactory, PromptService, $ionicPopup, YW) {
-    $scope.message = 'message'
+    $scope.message = 'message';
+    $scope.msClick=function () {
+      alert('你点到我了')
+    }
   }]);

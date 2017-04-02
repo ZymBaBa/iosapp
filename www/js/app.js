@@ -147,10 +147,14 @@ angular.module('starter',
         }
       })
       //信息
-      .state('message', {
+      .state('tab.message', {
         url: '/message',
-        templateUrl: 'templates/home/message.html',
-        controller: 'message'
+        views: {
+          'tab-home': {
+            templateUrl: 'templates/home/message.html',
+            controller: 'message'
+          }
+        }
       })
       //岗位详细页-首页
       .state('tab.postDetail', {

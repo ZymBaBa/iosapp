@@ -1,164 +1,218 @@
 /* Empty. Add your own CSS if you like */
 
-.home-count .ch-h-right{
+.home-count .ch-h-right {
   border-right: 1px solid #bbb;
 }
-.home-count .card{
+
+.home-count .card {
   height: 130px;
   line-height: 50px;
   margin: 0;
 }
-.city-home h6{
+
+.city-home h6 {
   color: #b2b2b2;
   font-size: 1rem;
   padding-left: 0.5rem;
 }
-.city-home{
+
+.city-home {
   background: #f5f5f5;
 }
-.city-home button{
+
+.city-home button {
   border: 1px solid #b2b2b2 !important;
 }
 
-.home-button .row{
+.home-button .row {
   padding: 0;
 }
-.home-list .item{
+
+.home-list .item {
   padding: 0;
 }
-.home-list .h5{
+
+.home-list .h5 {
 }
-.home-list .item-complex .item-content{
+
+.home-list .item-complex .item-content {
   padding: 0;
 }
-.user{
+
+.user {
   background: #f5f5f5;
 }
-.user .fa{
+
+.user .fa {
   color: #bbbbbb;
 }
-.user .icon{
+
+.user .icon {
   color: #aaaaaa;
 }
-.jobApply .col,.jobApply .row{
+
+.jobApply .col, .jobApply .row {
   padding: 0;
 }
-.jobApply .col p{
+
+.jobApply .col p {
   margin-bottom: 5px;
 }
-.jobApply .item{
+
+.jobApply .item {
   padding-bottom: 0;
 }
-.jobApply .balanced{
+
+.jobApply .balanced {
   color: #10ac86;
 }
-.jobApply .stable{
-  color:#a2a2a2;
+
+.jobApply .stable {
+  color: #a2a2a2;
 }
-.jobApply .card{
+
+.jobApply .card {
   margin-bottom: 10px;
 }
-.jobApply .scroll-content{
+
+.jobApply .scroll-content {
   margin-bottom: 50px;
 }
-.coures .scroll-content{
+
+.coures .scroll-content {
   margin-bottom: 0;
 }
-.popover{
+
+.popover {
   height: auto;
   margin-top: 10px !important;
 }
-.popover .item{
+
+.popover .item {
   padding: 8px;
 }
-.Confirm .balanced{
-  color:#10ac86
+
+.Confirm .balanced {
+  color: #10ac86
 }
-.content_img img{
+
+.content_img img {
   max-width: 90%;
   margin: 0 auto;
 }
-.hubs{
+
+.hubs {
   background: #f5f5f5;
 }
-.hubs .ion-ios-arrow-right{
+
+.hubs .ion-ios-arrow-right {
   color: #f5f5f5;
 }
-.user_content .icon{
+
+.user_content .icon {
   color: #10ac86;
 }
 
-.modelContent,.user_content{
+.modelContent, .user_content, .message_content {
   background: #f5f5f5;
 }
 
-.reume_Countent{
+.message_content .item {
+  padding: 0;
+}
+
+.messageH4 {
+  line-height: 1.3rem;
+  text-indent: 1.5rem;
+  padding: 0 .6rem;
+}
+
+.reume_Countent {
   background: #ffffff;
 }
-.newReume .stable{
+
+.newReume .stable {
   color: #b2b2b2;
 }
-.newReume .input-label{
+
+.newReume .input-label {
   width: 15%;
 }
-.newReume textarea{
+
+.newReume textarea {
   height: 80px;
 }
-.postDetail .item{
+
+.postDetail .item {
   padding: 8px;
 }
-.jobList p{
+
+.jobList p {
   color: #10ac86;
 }
-.jobcount h3,.jobcount span{
+
+.jobcount h3, .jobcount span {
   display: block;
-  float:left;
+  float: left;
 }
-.jobcount .stable{
+
+.jobcount .stable {
   color: #b2b2b2;
 }
-.postDetail .lang{
+
+.postDetail .lang {
   display: block;
   width: 5px;
   height: 20px;
   background: #66cc33;
   margin-right: 5px;
 }
-.contentText h3{
-  white-space:normal;
+
+.contentText h3 {
+  white-space: normal;
 }
-.textFont{
+
+.textFont {
   font-size: 1.1rem;
   color: #f0b840;
 }
-.collection .item-complex .item-content{
+
+.collection .item-complex .item-content {
   padding: 9px 49px 9px 16px;
 }
-.collection .row{
+
+.collection .row {
   padding: 0;
 }
-.collection .row .col{
+
+.collection .row .col {
   color: #10ac86;
 }
+
 .jobList .list .item.item-accordion {
   line-height: 38px;
   padding-top: 0;
   padding-bottom: 0;
   transition: 0.09s all linear;
 }
+
 .jobList .list .item.item-accordion.ng-hide {
   line-height: 0px;
 }
+
 .jobList .list .item.item-accordion.ng-hide-add,
 .jobList.list .item.item-accordion.ng-hide-remove {
   display: block !important;
 }
-.category .item-complex .item-content{
+
+.category .item-complex .item-content {
   padding: 12px 12px 16px 20px;
 }
+
 .platform-android .action-sheet-backdrop.active {
   background-color: rgba(0, 0, 0, 0.2);
 }
+
 .platform-android .action-sheet {
   margin-left: 8px;
   margin-right: 8px;
@@ -166,6 +220,7 @@
   z-index: 11;
   overflow: hidden;
 }
+
 .platform-android .action-sheet .action-sheet-title,
 .platform-android .action-sheet .button {
   display: block;
@@ -178,25 +233,30 @@
   font-size: 21px;
   text-align: center;
 }
+
 .platform-android .action-sheet .action-sheet-title {
   padding: 16px;
   color: #8f8f8f;
   text-align: center;
   font-size: 13px;
 }
+
 .platform-android .action-sheet .button.active,
 .platform-android .action-sheet .button.activated {
   background: #e8e8e8;
 }
+
 .platform-android .action-sheet-group {
   margin-bottom: 8px;
   border-radius: 4px;
   background-color: #fff;
   overflow: hidden;
 }
+
 .platform-android .action-sheet-group .button {
   border-width: 1px 0 0;
 }
+
 .platform-android .action-sheet .button {
   display: block;
   padding: 1px;
@@ -207,13 +267,16 @@
   color: #007aff;
   font-size: 21px;
 }
+
 .platform-android .action-sheet-cancel {
   font-weight: 500;
   display: block;
 }
-.platform-android .action-sheet-has-icons .button {}
 
-.delImage{
+.platform-android .action-sheet-has-icons .button {
+}
+
+.delImage {
   position: absolute;
   height: 1.4rem;
   /*margin-left: -2.4rem;*/
@@ -224,41 +287,48 @@
   color: #ffffff;
   text-align: center;
 }
-.imgPlus{
+
+.imgPlus {
   border: 1px dotted #ddd;
   margin-top: 6px;
   padding: 5px;
   width: 100%;
   height: 100%;
 }
-.imgPlus span{
+
+.imgPlus span {
   display: block;
   margin: 0 auto;
   line-height: 100%;
   color: #f5f5f5;
   font-size: 4rem;
 }
-.dataEmpty{
+
+.dataEmpty {
   padding: 20px;
   border-radius: 5px;
   text-align: center;
   color: #b2b2b2;
   font-size: 15px;
 }
-input:checked{
+
+input:checked {
   background-color: #33cd5f !important;
   border: 1px solid #33cd5f !important;
 }
-.userClass{
+
+.userClass {
   margin-left: 12px;
 }
-.userClass>img[att^="img"]{
+
+.userClass > img[att^="img"] {
   border: 2px solid #ffffff;
   display: inline-flex;
   width: 80px;
   height: 80px;
 }
-.userClass>img[att^="upImg"]{
+
+.userClass > img[att^="upImg"] {
   border: 2px solid #ffffff;
   display: inline-flex;
   width: 80px;
@@ -266,7 +336,8 @@ input:checked{
   background: url(../img/add.png) no-repeat 8px 8px/60px 60px;
 
 }
-.NullInfo{
+
+.NullInfo {
   margin-left: 50%;
   display: block;
   margin-top: 70%;
@@ -276,13 +347,15 @@ input:checked{
   width: 6rem;
   height: 6rem;
 }
-.NullInfo .tipImgF{
+
+.NullInfo .tipImgF {
   display: block;
   height: 96px;
   width: 96px;
   background: url(../img/icon.png) no-repeat 0 0/96px 96px;
 }
-.aboutInfo{
+
+.aboutInfo {
   margin-left: 50%;
   display: block;
   margin-top: 16%;
@@ -292,12 +365,14 @@ input:checked{
   width: 6rem;
   height: 6rem;
 }
-.aboutInfo .aboutImg{
+
+.aboutInfo .aboutImg {
   display: block;
   height: 96px;
   width: 96px;
   background: url(../img/icon.png) no-repeat 0 0/96px 96px;
 }
+
 .tabs-red-point {
   position: absolute;
   top: 12%;
@@ -307,4 +382,73 @@ input:checked{
   border-radius: 3.5px;
   background-color: red;
   z-index: 151228;
+}
+
+.message {
+  display: block;
+  width: 2.6rem;
+  height: 2.3rem;
+  -moz-border-radius: .5rem;
+  -webkit-border-radius: .5rem;
+  border-radius: .5rem;
+  color: #fff;
+  text-align: center;
+  line-height: 2.3rem;
+  font-size: .8rem;
+  margin: 0 auto;
+}
+
+/*面试的*/
+.mInterview {
+  border-left: .4rem solid #009966;
+}
+
+.mInterviewSize {
+  color: #009966;
+  padding-left: .3rem;
+  font-weight: bold
+}
+
+/*推荐的*/
+.mRecommend {
+  border-left: .4rem solid #6666cc
+}
+
+.mRecommendSize {
+  color: #6666cc;
+  padding-left: .3rem;
+  font-weight: bold
+}
+
+/*拒绝的*/
+.mRefuse {
+  border-left: .4rem solid #999999;
+}
+
+.mRefuseSize {
+  color: #999999;
+  padding-left: .3rem;
+  font-weight: bold
+}
+
+/*邀请的*/
+.mInvitation {
+  border-left: .4rem solid #FF9933;
+}
+
+.mInvitationSize {
+  color: #FF9933;
+  padding-left: .3rem;
+  font-weight: bold
+}
+
+/*评价的*/
+.mEvaluate {
+  border-left: .4rem solid #0099cc;
+}
+
+.mEvaluateSize {
+  color: #0099cc;
+  padding-left: .3rem;
+  font-weight: bold
 }
