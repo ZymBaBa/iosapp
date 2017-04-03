@@ -1,6 +1,6 @@
 angular.module('starter.login', [])
 
-  .controller('LoginCtrl', ['$scope', '$ionicModal', '$interval', '$ionicActionSheet', '$resource', '$state', '$timeout', '$rootScope', 'Storage', 'PromptService', 'GpsService', 'User', 'YW', function ($scope, $ionicModal, $interval, $ionicActionSheet, $resource, $state, $timeout, $rootScope, Storage, PromptService, GpsService,User,YW) {
+  .controller('LoginCtrl', ['$scope', '$ionicModal', '$interval', '$ionicActionSheet', '$resource', '$state', '$timeout', '$rootScope', 'Storage', 'PromptService', 'GpsService', 'User','jpushService', 'YW', function ($scope, $ionicModal, $interval, $ionicActionSheet, $resource, $state, $timeout, $rootScope, Storage, PromptService, GpsService,User,jpushService,YW) {
     var url = YW.api;
     var userUrl = $resource(
       url,
@@ -176,6 +176,10 @@ angular.module('starter.login', [])
       locationLng: $rootScope.GpsPosition.lng,
       locationLat: $rootScope.GpsPosition.lat
     };
+    //极光推送设置tags和alias的值
+    var setTagsWithAlias=function(tags,alias){
+      jpushService.setTagsWithAlias(tags,alias);
+    };
     //key的名称
     var storageKey = 'user';
     $scope.signIn = function () {
@@ -186,13 +190,27 @@ angular.module('starter.login', [])
     $scope.$on('User.loginUpdated', function () {
       var userRel = User.getCurrentUser();
       if (userRel.success == false) {//登陆失败
-        //    alert(userRel.message);
         PromptService.PromptMsg(userRel.msg);
       } else {
         //使用set把userRel数据插入到key的值中去
         Storage.set(storageKey, userRel.result);
         $rootScope.isLogin = true;
-        var items = Storage.get('user');
+        //清空账号和密码
+        $scope.user = {
+          username: '',
+          password: ''
+        };
+        // var items = Storage.get('user');
+        //设置推送Tags\Alias
+        var tagArr=userRel.result.userModel.userName.split(',');
+        if(tagArr.length==0){
+          tagArr=null;
+        }
+        var alias=userRel.result.userModel.userName;
+        if(alias===''){
+          alias=null;
+        }
+        setTagsWithAlias(tagArr,alias);
         $state.go("tab.home");  //路由跳转
       }
     });

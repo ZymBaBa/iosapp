@@ -3,8 +3,9 @@
     <a class="button button-clear icon-right ion-android-arrow-dropdown"
        ng-bind="cityName.name"></a>
   </ion-nav-buttons>
-  <ion-nav-buttons side="right" >
-    <a class="button button-icon" head-red-point='true' href="#/tab/message">
+  <ion-nav-buttons side="right">
+    <a class="button button-icon" head-red-point='true' ng-click="goMessage();">
+      <!--<a class="button button-icon" head-red-point='true' href="#/tab/message">-->
       <i class="icon ion-ios-email light"></i>
     </a>
   </ion-nav-buttons>
@@ -54,7 +55,8 @@
             <div class="col col-80">
               <h2 class="title" ng-bind="item.title"></h2>
               <p ng-bind="item.jobAddress" style="padding: .1rem 0rem"></p>
-              <h3 class="balanced" ng-bind="item.positionModel.name+'&nbsp&nbsp&nbsp&nbsp'+item.salary+item.salaryTypeName+'&nbsp&nbsp&nbsp&nbsp'+item.settlementTypeName+'&nbsp&nbsp&nbsp&nbsp'+'招聘&nbsp'+item.count+'人'"></h3>
+              <h3 class="balanced"
+                  ng-bind="item.positionModel.name+'&nbsp&nbsp&nbsp&nbsp'+item.salary+item.salaryTypeName+'&nbsp&nbsp&nbsp&nbsp'+item.settlementTypeName+'&nbsp&nbsp&nbsp&nbsp'+'招聘&nbsp'+item.count+'人'"></h3>
             </div>
             <div class="col col-20">
               <h2><span ng-bind="(item.distance|number:1)+'Km'" class="dark3"></span></h2>
@@ -147,7 +149,8 @@
           </ion-item>
           <ion-checkbox ng-repeat="sGroom in SecondJobGrooms" id={{sGroom.id}} ng-checked="jobIsSelected(sGroom.id)"
                         ng-click="jobUpdateSelection($event,sGroom.id)" class="checkbox-balanced">
-            <h2 class="balanced" ng-bind="sGroom.positionModel.name+'  '+sGroom.salary+sGroom.salaryTypeName+'  '+sGroom.settlementTypeName" ></h2>
+            <h2 class="balanced"
+                ng-bind="sGroom.positionModel.name+'  '+sGroom.salary+sGroom.salaryTypeName+'  '+sGroom.settlementTypeName"></h2>
             <p style="margin-top: 5px" class="balanced"
                ng-bind="sGroom.enterpriseUserModel.name"></p>
           </ion-checkbox>

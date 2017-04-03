@@ -23,7 +23,7 @@ angular.module('starter',
     'ngResource'
   ])
 
-  .run(['$ionicPlatform', '$rootScope', '$ionicHistory', '$state', 'Storage', '$resource', '$timeout', 'GpsService', 'YW', function ($ionicPlatform, $rootScope, $ionicHistory, $state, Storage, $resource, $timeout, GpsService, YW) {
+  .run(['$ionicPlatform', '$rootScope', '$ionicHistory', '$state', 'Storage', '$resource', '$timeout', 'GpsService','jpushService','YW', function ($ionicPlatform, $rootScope, $ionicHistory, $state, Storage, $resource, $timeout, GpsService,jpushService,YW) {
     //配置城市的请求地址，获取坐标发送请求获取城市信息
 
 
@@ -71,6 +71,35 @@ angular.module('starter',
       if (window.StatusBar) {
         StatusBar.styleDefault();
       }
+      //极光推送代码
+      //设置成功之后弹出的
+      var setTagsWithAliasCallback = function (event) {
+        console.log(event)
+      //   window.alert('result code:' + event.resultCode + ' tags:' + event.tags + ' alias:' + event.alias);
+      };
+      //界面跳转
+      var openNotificationInAndroidCallback = function (data) {
+        console.log(JSON.stringify(data));
+        // var json = data;
+        // window.alert(JSON.stringify(json));
+        // if (typeof data === 'string') {
+        //   json = JSON.parse(data);
+        // }
+        // var id = json.extras['cn.jpush.android.EXTRA'].id;
+        // window.alert(id);
+        // var alert = json.extras['cn.jpush.android.ALERT'];
+        // $state.go('detail', {id: id + alert});
+        $state.go("tab.message");
+      };
+      var config = {
+        stac: setTagsWithAliasCallback,
+        oniac: openNotificationInAndroidCallback
+      };
+
+      jpushService.init(config);
+      //启动极光推送服务
+      window.plugins.jPushPlugin.init();
+      window.plugins.jPushPlugin.setDebugMode(true);
     });
   }])
   //控制状态栏的显示或隐藏

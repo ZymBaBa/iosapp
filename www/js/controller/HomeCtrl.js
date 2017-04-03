@@ -1,6 +1,6 @@
 angular.module('starter.HomeCtrl', [])
 
-  .controller('HomeCtrl', ['$scope', '$resource', '$ionicLoading', '$timeout', 'homeFactory', '$ionicModal', '$rootScope', '$state', '$sce', 'GpsService', 'CategoryFactory', 'PromptService', '$ionicPopup', 'YW', function ($scope, $resource, $ionicLoading, $timeout, homeFactory, $ionicModal, $rootScope, $state, $sce, GpsService, CategoryFactory, PromptService, $ionicPopup, YW) {
+  .controller('HomeCtrl', ['$scope', '$resource', '$ionicLoading', '$timeout', 'homeFactory', '$ionicModal', '$rootScope', '$state', '$sce', 'GpsService', 'CategoryFactory', 'PromptService', '$ionicPopup', 'jpushService', 'YW', function ($scope, $resource, $ionicLoading, $timeout, homeFactory, $ionicModal, $rootScope, $state, $sce, GpsService, CategoryFactory, PromptService, $ionicPopup, jpushService, YW) {
     //显示载入信息
     $ionicLoading.show({
       template: '数据载入中，请稍等......',
@@ -49,7 +49,25 @@ angular.module('starter.HomeCtrl', [])
         isArray: false
       }
     });
-    //获取当前城市招聘信息函数
+    //GoMesaage
+    $scope.goMessage = function () {
+      if ($rootScope.state) {
+        $state.go("tab.message")
+      }else{
+        $state.go("login")
+      }
+    };
+    //获取当前城市招聘信息及检查推送服务是否正常，如果不正常则重启服务
+    $scope.getPushState=function(){
+      jpushService.isPushStopped(function(data){
+        window.alert(data);
+        if(data==0){
+          window.alert('启动');
+        }else{
+          window.alert('停止');
+        }
+      });
+    };
     $scope.$on('$ionicView.beforeEnter', function () {
       GpsService.setGps();
       $rootScope.$on('getGps.update', function () {
@@ -73,6 +91,13 @@ angular.module('starter.HomeCtrl', [])
           }
         });
       });
+      $scope.getPushState()
+      //jpushError
+      // jpushService.isPushStopped(function (data) {
+      //   if (data !== 0) {
+      //     jpushService.resumePush();
+      //   }
+      // });
     });
     //   var cityJobs = function (success) {
     //   var getDataObj = {
@@ -302,7 +327,7 @@ angular.module('starter.HomeCtrl', [])
   }])
   .controller('message', ['$scope', '$resource', '$ionicLoading', '$timeout', 'homeFactory', '$ionicModal', '$rootScope', '$state', '$ionicHistory', '$sce', 'GpsService', 'CategoryFactory', 'PromptService', '$ionicPopup', 'YW', function ($scope, $resource, $ionicLoading, $timeout, homeFactory, $ionicModal, $rootScope, $state, $ionicHistory, $sce, GpsService, CategoryFactory, PromptService, $ionicPopup, YW) {
     $scope.message = 'message';
-    $scope.msClick=function () {
+    $scope.msClick = function () {
       alert('你点到我了')
     }
   }]);
