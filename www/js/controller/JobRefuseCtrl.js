@@ -143,6 +143,24 @@ angular.module('starter.JobRefuse', [])
         }
       })
     };
+    //Start 插入兼职经验ID
+    var updateSelected = function (action, id) {
+      if (action == 'add' && $scope.applyData.checkInIds.indexOf(id) == -1) {
+        $scope.applyData.checkInIds.push(id);
+      }
+      if (action == 'remove' && $scope.applyData.checkInIds.indexOf(id) != -1) {
+        var idx = $scope.applyData.checkInIds.indexOf(id);
+        $scope.applyData.checkInIds.splice(idx, 1);
+      }
+    };
+    $scope.updateSelection = function ($event, id) {
+      var checkbox = $event.target;
+      var action = (checkbox.checked ? 'add' : 'remove');
+      updateSelected(action, id);
+    };
+    $scope.isSelected = function (id) {
+      return $scope.applyData.checkInIds.indexOf(id) >= 0;
+    };
     var showConfirm = function () {
       var clearPopup = $ionicPopup.confirm({
         title: "信息确认",

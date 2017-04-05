@@ -1,6 +1,6 @@
 angular.module('starter.hubs', [])
 
-  .controller('HubsCtrl', ['$scope', '$ionicModal', '$interval', '$ionicActionSheet', '$state', '$resource', '$timeout', '$cordovaCamera', '$rootScope', 'Storage', '$http', 'PromptService', 'YW', function ($scope, $ionicModal, $interval, $ionicActionSheet, $state, $resource, $timeout, $cordovaCamera, $rootScope, Storage, $http, PromptService, YW) {
+  .controller('HubsCtrl', ['$scope', '$ionicModal', '$interval', '$ionicActionSheet', '$state', '$resource', '$timeout', '$cordovaCamera', '$rootScope', 'Storage', '$http', 'PromptService','jpushService','YW', function ($scope, $ionicModal, $interval, $ionicActionSheet, $state, $resource, $timeout, $cordovaCamera, $rootScope, Storage, $http, PromptService,jpushService,YW) {
     var url = YW.api;
     var userUrl = $resource(
       url,
@@ -205,6 +205,11 @@ angular.module('starter.hubs', [])
       })
     };
     //退出登录
+    var setTagsWithAlias=function(tags,alias){
+      console.log(tags);
+      console.log(alias);
+      jpushService.setTagsWithAlias(tags,alias);
+    };
     $scope.loginOff = function () {
       var hideSheet = $ionicActionSheet.show({
         cancelOnStateChange: true,
@@ -217,6 +222,17 @@ angular.module('starter.hubs', [])
         },
         destructiveText: "退出登录",
         destructiveButtonClicked: function () {
+          //清空极光推送设置
+          $rootScope.isLogin=false;
+          var tagArr=[];
+          if(tagArr.length==0){
+            tagArr=null;
+          }
+          var alias="";
+          if(alias===''){
+            alias=null;
+          }
+          setTagsWithAlias(tagArr,alias);
           Storage.remove(YW.userKey);
           $state.go("tab.user");
           return true

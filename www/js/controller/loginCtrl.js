@@ -103,7 +103,7 @@ angular.module('starter.login', [])
     $scope.SubmitLogin = function () {
       userUrl.submitLogin($scope.loginData, function (resp) {
         console.log(resp);
-        if (resp.success) {
+        if (resp.success==true) {
           PromptService.PromptMsg(resp.msg);
           $timeout(function () {
             $state.go("login")

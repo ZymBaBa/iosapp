@@ -58,16 +58,13 @@ angular.module('starter.HomeCtrl', [])
       }
     };
     //获取当前城市招聘信息及检查推送服务是否正常，如果不正常则重启服务
-    $scope.getPushState=function(){
-      jpushService.isPushStopped(function(data){
-        window.alert(data);
-        if(data==0){
-          window.alert('启动');
-        }else{
-          window.alert('停止');
-        }
-      });
-    };
+    // $scope.getPushState=function(){
+    //   jpushService.isPushStopped(function(data){
+    //     if(data!==0){
+    //       jpushService.resumePush()
+    //     }
+    //   });
+    // };
     $scope.$on('$ionicView.beforeEnter', function () {
       GpsService.setGps();
       $rootScope.$on('getGps.update', function () {
@@ -85,13 +82,12 @@ angular.module('starter.HomeCtrl', [])
             };
             getData.getCityObj(getDataObj, function (resp) {
               $scope.items = resp.rows;
-              console.log($scope.items);
               $ionicLoading.hide()
             })
           }
         });
       });
-      $scope.getPushState()
+      // $scope.getPushState()
       //jpushError
       // jpushService.isPushStopped(function (data) {
       //   if (data !== 0) {
@@ -321,13 +317,19 @@ angular.module('starter.HomeCtrl', [])
       }
     };
     $scope.messageUrl = function () {
-      console.log('1');
       $state.go("tab.message")
     }
   }])
   .controller('message', ['$scope', '$resource', '$ionicLoading', '$timeout', 'homeFactory', '$ionicModal', '$rootScope', '$state', '$ionicHistory', '$sce', 'GpsService', 'CategoryFactory', 'PromptService', '$ionicPopup', 'YW', function ($scope, $resource, $ionicLoading, $timeout, homeFactory, $ionicModal, $rootScope, $state, $ionicHistory, $sce, GpsService, CategoryFactory, PromptService, $ionicPopup, YW) {
     $scope.message = 'message';
-    $scope.msClick = function () {
-      alert('你点到我了')
-    }
+    var Url = YW.api;
+    var getMessage = $resource(Url, {}, {
+      messageList: {
+        url: Url + 'message/list',
+        method: 'GET',
+        isArray: false
+    }});
+    getMessage.messageList(function (resp) {
+      console.log(resp)
+    })
   }]);

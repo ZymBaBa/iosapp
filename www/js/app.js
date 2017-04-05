@@ -74,12 +74,17 @@ angular.module('starter',
       //极光推送代码
       //设置成功之后弹出的
       var setTagsWithAliasCallback = function (event) {
-        console.log(event)
+        // console.log(event)
       //   window.alert('result code:' + event.resultCode + ' tags:' + event.tags + ' alias:' + event.alias);
       };
       //界面跳转
       var openNotificationInAndroidCallback = function (data) {
-        console.log(JSON.stringify(data));
+        if($rootScope.isLogin){
+          $state.go("tab.message");
+        }else{
+          $state.go("tab.home");
+        }
+        // console.log(JSON.stringify(data));
         // var json = data;
         // window.alert(JSON.stringify(json));
         // if (typeof data === 'string') {
@@ -89,7 +94,6 @@ angular.module('starter',
         // window.alert(id);
         // var alert = json.extras['cn.jpush.android.ALERT'];
         // $state.go('detail', {id: id + alert});
-        $state.go("tab.message");
       };
       var config = {
         stac: setTagsWithAliasCallback,
