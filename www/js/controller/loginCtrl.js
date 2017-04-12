@@ -102,14 +102,13 @@ angular.module('starter.login', [])
     };
     $scope.SubmitLogin = function () {
       userUrl.submitLogin($scope.loginData, function (resp) {
-        console.log(resp);
+        PromptService.PromptMsg(resp.msg);
         if (resp.success==true) {
-          PromptService.PromptMsg(resp.msg);
           $timeout(function () {
-            $state.go("login")
-          }, 1500)
-        } else {
-          PromptService.PromptMsg(resp.msg);
+            $scope.closeRegister();
+            $scope.loginData="";
+            $scope.data.password="";
+          },2500)
         }
       })
     };
@@ -149,14 +148,12 @@ angular.module('starter.login', [])
     };
     //找回密码
     $scope.postFg = function () {
-      userUrl.postFg($scope.fgData, function (res) {
-        if (res.success) {
-          PromptService.PromptMsg('密码修改成功！');
+      userUrl.postFg($scope.fgData, function (resp) {
+        PromptService.PromptMsg(resp.msg);
+        if (resp.success) {
           $timeout(function () {
             $scope.forgetModal.hide()
-          }, 1500)
-        } else {
-          PromptService.PromptMsg(res.msg);
+          }, 2500)
         }
       })
     };

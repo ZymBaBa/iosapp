@@ -1,11 +1,19 @@
-<ion-view  hide-tabs="true">
+<ion-view hide-tabs="true">
   <ion-nav-title>
     岗位详细
   </ion-nav-title>
-  <ion-nav-buttons side="right">
-    <i ng-class="{false:'icon ion-ios-star-outline light',true:'icon ion-ios-star ligth'}[item.fav]" style="font-size: 1.6rem;margin-top: 5px;margin-right: 4px;" ng-click="iconIs(item.id);"></i>
+  <ion-nav-buttons side="right" ng-show="ionicSpr==true;">
+    <i ng-class="{false:'icon ion-ios-star-outline light',true:'icon ion-ios-star ligth'}[item.fav]"
+       style="font-size: 1.6rem;margin-top: 5px;margin-right: 4px;" ng-click="iconIs(item.id);"></i>
   </ion-nav-buttons>
-  <ion-content class="postDetail" on-swipe-right="swipeRight();">
+  <ion-content ng-show="ionicSpr==false;">
+    <div class="NullInfo" style="margin-top: 50%">
+      <p style="text-align: center;margin-bottom: 3rem">
+        <ion-spinner icon="lines" class="spinner-balanced"></ion-spinner>
+      </p>
+    </div>
+  </ion-content>
+  <ion-content class="postDetail" on-swipe-right="swipeRight();" ng-show="ionicSpr==true;">
     <ion-list>
       <ion-item>
         <div class="row">
@@ -15,10 +23,10 @@
         </div>
         <div class="row">
           <div class="col"><p><b class="balanced" ng-bind="item.positionModel.name"></b></p></div>
-          <div class="col"><p><b class="balanced" ng-bind="item.salary"></b><span class="balanced" ng-bind="item.salaryTypeName"></span>
+          <div class="col"><p><b class="balanced" ng-bind="item.salary"></b><span class="balanced"
+                                                                                  ng-bind="item.salaryTypeName"></span>
           </p></div>
           <div class="col"><p><b class="balanced" ng-bind="item.settlementTypeName"></b></p></div>
-          <!--<div class="col" ><p style="color: #b2b2b2">30天后停招</p></div>-->
         </div>
       </ion-item>
       <ion-item class="item-divider item-borderless"></ion-item>
@@ -75,15 +83,19 @@
         <span class="stable">所属行业：</span>
         <span class="dark" ng-bind="item.enterpriseUserModel.industryModel.name"></span>
       </ion-item>
-
+      <ion-item class="item-divider item-borderless"></ion-item>
+      <ion-item class="item-divider item-borderless"></ion-item>
     </ion-list>
   </ion-content>
-  <ion-footer-bar  style="padding: 0;border-top: 1px solid #10ac86;box-shadow: -2px -1px 0 rgba(16,172,134,.1)">
+  <ion-footer-bar style="padding: 0;border-top: 1px solid #10ac86;box-shadow: -2px -1px 0 rgba(16,172,134,.1)" ng-show="ionicSpr==true;">
     <div class="col col-33 light-bg" style="padding: 0px" ng-click="telPhone($event,item.contactPhone)">
-      <div class="col" style="padding: 5px 0 0 6px;"><h2 ng-bind="item.contactPerson" style="font-size: 0.8rem;margin-bottom: 0px;padding-left: 4px;color: #10ac86;" ></h2></div>
-      <div class="col" style="padding: 0 0 0 8px;"><p  style="color: #10ac86;"  ng-bind="item.contactPhone"></p></div>
+      <div class="col" style="padding: 5px 0 0 6px;"><h2 ng-bind="item.contactPerson"
+                                                         style="font-size: 0.8rem;margin-bottom: 0px;padding-left: 4px;color: #10ac86;"></h2>
+      </div>
+      <div class="col" style="padding: 0 0 0 8px;"><p style="color: #10ac86;" ng-bind="item.contactPhone"></p></div>
     </div>
-    <div class="col text-center light balanced-bg" style="font-size: 1.2rem;line-height: 2.2rem" ng-click="openApply();">
+    <div class="col text-center light balanced-bg" style="font-size: 1.2rem;line-height: 2.2rem"
+         ng-click="openApply();">
       申请职位
     </div>
   </ion-footer-bar>

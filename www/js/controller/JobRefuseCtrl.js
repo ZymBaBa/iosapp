@@ -17,26 +17,15 @@ angular.module('starter.JobRefuse', [])
       }
     });
 
-    $ionicLoading.show({
-      template: '面试信息载入中，请稍等...',
-      noBackdrop: true,
-      delay: 300
-    });
+    $scope.items=null;
     $scope.$on('$ionicView.beforeEnter', function () {
       applyService.get(YW.objList[3], YW.applyList[5]);
       $scope.$on('apply.list', function () {
         $scope.items = applyService.set();
-        console.log($scope.items);
         ($scope.items.length !== 0) ? $scope.tipShow = true : $scope.tipShow = false;
-        $ionicLoading.hide();
       })
     });
     $scope.doRefresh = function () {
-      $ionicLoading.show({
-        template: '面试信息更新中，请稍等...',
-        noBackdrop: true,
-        delay: 300
-      });
       applyService.get(YW.objList[3], YW.applyList[5]);
       $scope.$broadcast("scroll.refreshComplete")
     };

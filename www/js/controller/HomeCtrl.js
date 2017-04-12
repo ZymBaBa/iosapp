@@ -1,12 +1,6 @@
 angular.module('starter.HomeCtrl', [])
 
   .controller('HomeCtrl', ['$scope', '$resource', '$ionicLoading', '$timeout', 'homeFactory', '$ionicModal', '$rootScope', '$state', '$sce', 'GpsService', 'CategoryFactory', 'PromptService', '$ionicPopup', 'jpushService', 'YW', function ($scope, $resource, $ionicLoading, $timeout, homeFactory, $ionicModal, $rootScope, $state, $sce, GpsService, CategoryFactory, PromptService, $ionicPopup, jpushService, YW) {
-    //显示载入信息
-    $ionicLoading.show({
-      template: '数据载入中，请稍等......',
-      noBackdrop: true,
-      delay: 300
-    });
     /*
      * 1、getCity 根据坐标请求城市信息
      * 2、getCityObj 根据城市+坐标请求招聘信息
@@ -47,6 +41,11 @@ angular.module('starter.HomeCtrl', [])
         url: Url + 'interviewApply/apply',
         method: 'POST',
         isArray: false
+      },
+      updateLocation:{
+        url:Url+'updateLocation',
+        method:'POST',
+        isArray:false
       }
     });
     //GoMesaage
@@ -65,6 +64,7 @@ angular.module('starter.HomeCtrl', [])
     //     }
     //   });
     // };
+    $scope.items=null;
     $scope.$on('$ionicView.beforeEnter', function () {
       GpsService.setGps();
       $rootScope.$on('getGps.update', function () {
@@ -80,51 +80,35 @@ angular.module('starter.HomeCtrl', [])
               locationLng: $rootScope.GpsPosition.lng,
               locationLat: $rootScope.GpsPosition.lat
             };
+            var postLocation={
+              lat:$rootScope.GpsPosition.lat,
+              lng:$rootScope.GpsPosition.lng
+            };
             getData.getCityObj(getDataObj, function (resp) {
               $scope.items = resp.rows;
-              $ionicLoading.hide()
+            });
+            getData.updateLocation(postLocation,function (resp) {
+              if(resp.success){
+                console.log('更新坐标成功')
+              }
             })
           }
         });
       });
-      // $scope.getPushState()
-      //jpushError
-      // jpushService.isPushStopped(function (data) {
-      //   if (data !== 0) {
-      //     jpushService.resumePush();
-      //   }
-      // });
+
     });
-    //   var cityJobs = function (success) {
-    //   var getDataObj = {
-    //     city: $rootScope.cityName.code,
-    //     locationLng: $rootScope.GpsPosition.lng,
-    //     locationLat: $rootScope.GpsPosition.lat
-    //   };
-    //   if (success) {
-    //     getData.getCityObj(getDataObj, function (resp) {
-    //       $scope.items = resp.rows;
-    //       console.log($scope.items);
-    //       $ionicLoading.hide()
-    //     })
-    //   }
-    // };
-    //用户打开页面获取相应坐标,并且根据坐标获取相应的城市招聘信息
-    // GpsService.setGps();
-    // $rootScope.$on('getGps.update', function () {
-    //   $rootScope.GpsPosition = GpsService.getGps();
-    //   getData.getCity({
-    //     locationLng: $rootScope.GpsPosition.lng,
-    //     locationLat: $rootScope.GpsPosition.lat
-    //   }, function (resp) {
-    //     $rootScope.cityName = resp.result;
-    //     cityJobs(resp.success);
-    //   });
-    // });
     //下拉更新
     $scope.doRefresh = function () {
       //这里写下拉更新请求的代码
-      $scope.$broadcast("scroll.refreshComplete")
+      var getDataObj = {
+        city: $rootScope.cityName.code,
+        locationLng: $rootScope.GpsPosition.lng,
+        locationLat: $rootScope.GpsPosition.lat
+      };
+      getData.getCityObj(getDataObj, function (resp) {
+        $scope.items = resp.rows;
+      });
+      $scope.$broadcast("scroll.refreshComplete");
     };
     //上拉更新
     $scope.load_more = function () {

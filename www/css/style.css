@@ -452,3 +452,7 @@ input:checked {
   padding-left: .3rem;
   font-weight: bold
 }
+.spinner svg {
+  width: 35% !important;
+  height: 8rem !important;
+}

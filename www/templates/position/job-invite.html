@@ -8,6 +8,11 @@
       <div class="tipImgF"></div>
       <h6 class="tip text-center balanced" >暂无面试邀请</h6>
     </div>
+    <div class="NullInfo" ng-show="items===null" style="margin-top: 50%">
+      <p style="text-align: center;margin-bottom: 3rem">
+        <ion-spinner icon="lines" class="spinner-balanced"></ion-spinner>
+      </p>
+    </div>
     <div class="card" ng-repeat="item in items">
       <ion-list>
         <ion-item class="head item-divider">

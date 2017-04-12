@@ -1,18 +1,14 @@
 angular.module('starter.JobInvite', [])
 
   .controller('JobInvite', ['$scope', '$resource', '$ionicPopover', '$ionicLoading', '$timeout', '$ionicPopup', 'PromptService', 'applyService', 'postOperationService','$rootScope', '$window','$state','YW', function ($scope, $resource, $ionicPopover, $ionicLoading, $timeout, $ionicPopup, PromptService, applyService,postOperationService, $rootScope,$window,$state, YW) {
-    $ionicLoading.show({
-      template: '面试信息载入中，请稍等...',
-      noBackdrop: true,
-      delay: 300
-    });
+
 //页面加载时执行的代码-拉取待面试的列表
+    $scope.items=null;
     $scope.$on('$ionicView.beforeEnter', function () {
       applyService.get(YW.objList[1], YW.applyList[1]);
       $scope.$on('apply.list', function () {
         $scope.items = applyService.set();
         ($scope.items.length!==0) ? $scope.tipShow = true : $scope.tipShow =false;
-        $ionicLoading.hide();
       })
     });
     //拨打电话
@@ -21,11 +17,6 @@ angular.module('starter.JobInvite', [])
     };
 //下拉更新
     $scope.doRefresh = function () {
-      $ionicLoading.show({
-        template: '面试信息更新中，请稍等...',
-        noBackdrop: true,
-        delay: 300
-      });
       applyService.get(YW.objList[1], YW.applyList[1]);
       $scope.$broadcast("scroll.refreshComplete")
     };

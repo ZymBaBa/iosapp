@@ -4,7 +4,11 @@
   </ion-nav-title>
   <ion-content>
     <ion-refresher pulling-text="更新数据..." spinner="ripple" on-refresh="doRefresh();"></ion-refresher>
-
+    <div class="NullInfo" ng-show="items===null" style="margin-top: 50%">
+      <p style="text-align: center;margin-bottom: 3rem">
+        <ion-spinner icon="lines" class="spinner-balanced"></ion-spinner>
+      </p>
+    </div>
     <div class="NullInfo" ng-show="tipShow==false">
       <div class="tipImgF"></div>
       <h6 class="tip text-center balanced">暂无兼职历程</h6>

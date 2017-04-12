@@ -1,11 +1,8 @@
 angular.module('starter.CategoryCtrl', [])
 //分类页
   .controller('CategoryCtrl', ['$scope', '$resource',  '$ionicLoading', '$timeout','CategoryFactory', function ($scope, $resource,  $ionicLoading, $timeout, CategoryFactory) {
-    $ionicLoading.show({
-      template: '数据载入中，请稍等......',
-      noBackdrop: true,
-      delay: 500
-    });
+    $scope.CateLists=null;
+    $scope.PostLists=null;
     $timeout(function () {
       CategoryFactory.CateItem();
       CategoryFactory.PostItem();
@@ -15,13 +12,7 @@ angular.module('starter.CategoryCtrl', [])
       $scope.$on('postGory.list',function () {
         $scope.PostLists=CategoryFactory.getPost();
       });
-      $ionicLoading.hide()
     },1500);
-
-    $scope.doRefresh = function () {
-      //这里写下拉更新请求的代码
-      $scope.$broadcast("scroll.refreshComplete")
-    };
     $scope.toggleGroup = function (group) {
       group.show = !group.show;
     };

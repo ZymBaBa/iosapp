@@ -3,6 +3,7 @@ angular.module('starter.Classification', [])
   .controller('Classification', ['$scope', '$resource', '$ionicLoading', '$timeout', '$stateParams', 'homeFactory', '$ionicModal', '$rootScope', 'GpsService', 'YW', function ($scope, $resource, $ionicLoading, $timeout, $stateParams, homeFactory, $ionicModal, $rootScope, GpsService, YW) {
     console.log($stateParams);
     //配置
+    $scope.title=$stateParams.name;
     $ionicLoading.show({
       template: '数据载入中，请稍等......',
       noBackdrop: true,

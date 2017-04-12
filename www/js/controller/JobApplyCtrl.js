@@ -1,16 +1,11 @@
 angular.module('starter.JobApply', [])
   .controller('JobApply', ['$scope', '$resource', '$ionicPopover', '$ionicLoading', '$timeout', '$ionicPopup', 'PromptService', 'applyService', 'postOperationService', '$rootScope', '$state', 'YW', function ($scope, $resource, $ionicPopover, $ionicLoading, $timeout, $ionicPopup, PromptService, applyService, postOperationService, $rootScope, $state, YW) {
-    $ionicLoading.show({
-      template: '申请记录载入中，请稍等...',
-      noBackdrop: true,
-      delay: 300
-    });
+    $scope.items=null;
     var getApply = function () {
       applyService.get(YW.objList[0], YW.applyList[0]);
       $scope.$on('apply.list', function () {
         $scope.items = applyService.set();
         ($scope.items.length !== 0) ? $scope.tipShow = true : $scope.tipShow = false;
-        $ionicLoading.hide();
       })
     };
 //页面加载时执行的代码-拉取申请中的列表
@@ -23,13 +18,7 @@ angular.module('starter.JobApply', [])
     };
 //下拉更新
     $scope.doRefresh = function () {
-      $ionicLoading.show({
-        template: '申请记录更新中，请稍等...',
-        noBackdrop: true,
-        delay: 300
-      });
       applyService.get(YW.objList[0], YW.applyList[0]);
-      $ionicLoading.hide();
       $scope.$broadcast("scroll.refreshComplete")
     };
 //Popover 弹出框代码

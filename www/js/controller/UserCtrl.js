@@ -254,27 +254,18 @@ angular.module('starter.UserCtrl', [])
 
   //兼职历程
   .controller('CouresCtrl', ['$scope', '$resource', '$ionicPopover', '$ionicLoading', '$timeout', '$ionicPopup', '$rootScope', 'applyService', 'postOperationService', '$state', 'YW', function ($scope, $resource, $ionicPopover, $ionicLoading, $timeout, $ionicPopup, $rootScope, applyService, postOperationService, $state, YW) {
-    $ionicLoading.show({
-      template: '入职邀请载入中，请稍等...',
-      noBackdrop: true,
-      delay: 300
-    });
+
 //页面加载时执行的代码-拉取待入职中的列表
+    $scope.items=null;
     $scope.$on('$ionicView.beforeEnter', function () {
       applyService.get(YW.objList[2], YW.applyList[2]);
       $scope.$on('apply.list', function () {
         $scope.items = applyService.set();
         ($scope.items.length !== 0) ? $scope.tipShow = true : $scope.tipShow = false;
-        $ionicLoading.hide();
       })
     });
 //下拉更新
     $scope.doRefresh = function () {
-      $ionicLoading.show({
-        template: '入职邀请载入中，请稍等...',
-        noBackdrop: true,
-        delay: 300
-      });
       applyService.get(YW.objList[2], YW.applyList[2]);
       $scope.$broadcast("scroll.refreshComplete")
     };
@@ -311,7 +302,6 @@ angular.module('starter.UserCtrl', [])
           $scope.$on('apply.list', function () {
             $scope.items = applyService.set();
             ($scope.items.length !== 0) ? $scope.tipShow = true : $scope.tipShow = false;
-            $ionicLoading.hide();
           });
           // $state.go("tab.coures",{},{reload:true})
         }
@@ -335,7 +325,6 @@ angular.module('starter.UserCtrl', [])
   //兼职收藏
   .controller('CollectionCtrl', ['$scope', '$resource', '$ionicLoading', 'PromptService', 'YW', function ($scope, $resource, $ionicLoading, PromptService, YW) {
     var Url = YW.api;
-    console.log('1');
     var getUlr = $resource(Url, {}, {
       favList: {
         url: Url + 'recruit/fav/list',
@@ -348,15 +337,9 @@ angular.module('starter.UserCtrl', [])
         isArray: false
       }
     });
-    $ionicLoading.show({
-      template: '数据载入中，请稍等......',
-      noBackdrop: true,
-      delay: 300
-    });
+    $scope.items=null;
     getUlr.favList(function (resp) {
       $scope.items = resp.rows;
-      console.log(resp);
-      $ionicLoading.hide();
     });
     $scope.delFav = function (id) {
       getUlr.notIconPost({recruitId: id}, function (resp) {

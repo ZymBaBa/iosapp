@@ -1,6 +1,6 @@
 angular.module('starter.postDetailCtrl', [])
 
-  .controller('postDetail', ['$scope', '$resource', '$ionicGesture','$ionicHistory', '$stateParams', '$ionicModal', '$ionicLoading', '$timeout', '$state', '$rootScope', '$ionicPopup', 'PromptService', 'postOperationService', 'YW', function ($scope, $resource, $ionicGesture,$ionicHistory, $stateParams, $ionicModal, $ionicLoading, $timeout, $state, $rootScope, $ionicPopup,PromptService, postOperationService, YW) {
+  .controller('postDetail', ['$scope', '$resource', '$ionicGesture', '$ionicHistory', '$stateParams', '$ionicModal', '$ionicLoading', '$timeout', '$state', '$rootScope', '$ionicPopup', 'PromptService', 'postOperationService', 'YW', function ($scope, $resource, $ionicGesture, $ionicHistory, $stateParams, $ionicModal, $ionicLoading, $timeout, $state, $rootScope, $ionicPopup, PromptService, postOperationService, YW) {
     $scope.name = '兼职详细';
     $scope.applyTitle = '岗位申请';
     var Url = YW.api;
@@ -39,60 +39,60 @@ angular.module('starter.postDetailCtrl', [])
         isArray: false
       }
     });
-    $ionicLoading.show({
-      template: '数据载入中，请稍等......',
-      noBackdrop: true,
-      delay: 500
-    });
+    // $ionicLoading.show({
+    //   template: '数据载入中，请稍等......',
+    //   noBackdrop: true,
+    //   delay: 500
+    // });
     //页面加载的时候就去获取当前这个用户是否登录，如果登录了就去获取相应成功入职记录
     $scope.$on('$ionicView.beforeEnter', function () {
       if ($rootScope.state) {
         getUlr.checkInIdsLoad({status: 'SUCCESS'}, function (resp) {
           $scope.chin = resp;
+          console.log($scope.chin);
           $scope.checkList = resp.rows;
         })
       }
     });
     //右滑返回
-    $scope.swipeRight=function () {
+    $scope.swipeRight = function () {
       $ionicHistory.goBack();
     };
-
+    $scope.ionicSpr=false;
     $timeout(function () {
       getUlr.recruitLoad({id: id}, function (resp) {
-        $scope.item = resp.result;
-        console.log($scope.item);
-        $scope.jobDate = {
-          startDate: $scope.item.jobStartTime.substring(0, 10),
-          endDate: $scope.item.jobEndTime.substring(0, 10)
-        };
+        if(resp.success){
+          $scope.item = resp.result;
+          console.log($scope.item);
+          $scope.jobDate = {
+            startDate: $scope.item.jobStartTime.substring(0, 10),
+            endDate: $scope.item.jobEndTime.substring(0, 10)
+          };
+          $scope.ionicSpr=true;
+        }
       });
-      $ionicLoading.hide()
-    }, 1500);
-
-    //岗位收藏
+    }, 500);
+    //岗位收藏----有问题
     $scope.iconIs = function (objId) {
       if ($rootScope.state) {
-        if ($scope.chin.total !== 0 && $scope.item.interviewApplyModel == null) {
-          $scope.apply.show();
-        } else {
-          if ($scope.item.fav===false) {
+        // if ($scope.chin.total !== 0 && $scope.item.interviewApplyModel == null) {
+          if ($scope.item.fav === false) {
             getUlr.addIconPost({recruitId: objId}, function (resp) {
               console.log(resp);
-              if(resp.success){
-                $scope.item.fav=true
+              if (resp.success) {
+                $scope.item.fav = true
               }
               PromptService.PromptMsg(resp.msg);
             })
           } else {
             getUlr.delIconPost({recruitId: objId}, function (resp) {
-              if(resp.success){
-                $scope.item.fav=false
+              if (resp.success) {
+                $scope.item.fav = false
               }
               PromptService.PromptMsg(resp.msg);
             })
           }
-        }
+        // }
       } else {
         $state.go("login")
       }

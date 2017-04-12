@@ -211,7 +211,7 @@ angular.module('starter',
       })
       //分类列表
       .state('tab.Classification', {
-        url: '/Classification/:id',
+        url: '/Classification/:id/:name',
         views: {
           'tab-category': {
             templateUrl: 'templates/public/Classification.html',

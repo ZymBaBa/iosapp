@@ -1,19 +1,19 @@
 <ion-view hide-tabs="true" class="Classification">
-  <ion-nav-title>
-    <form style="width:100%;height:44px;">
-      <div class="item-input-inset" style="border:0;height:100%;width:100%;">
-        <div class="item-input-wrapper" style="background-color:#fff;height:32px;border:solid 1px #E1E1E1;width:100%;">
-          <i class="icon ion-android-search placeholder-icon" style="color: #CCCCCC;font-size:20px;cursor:pointer;"></i>
-          <input type="search" placeholder="搜索职位信息" style="font-size:14px;color:#262626;height:22px;width:100%;"/>
-        </div>
-      </div>
-    </form>
+  <ion-nav-title ng-bind="title">
+    <!--<form style="width:100%;height:44px;">-->
+      <!--<div class="item-input-inset" style="border:0;height:100%;width:100%;">-->
+        <!--<div class="item-input-wrapper" style="background-color:#fff;height:32px;border:solid 1px #E1E1E1;width:100%;">-->
+          <!--<i class="icon ion-android-search placeholder-icon" style="color: #CCCCCC;font-size:20px;cursor:pointer;"></i>-->
+          <!--<input type="search" placeholder="搜索职位信息" style="font-size:14px;color:#262626;height:22px;width:100%;"/>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</form>-->
   </ion-nav-title>
   <ion-content class="Classification">
     <ion-refresher pulling-text="更新数据..." spinner="ripple" on-refresh="doRefresh();"></ion-refresher>
     <div class="NullInfo" ng-show="items.length==0" style="margin-top: 50%">
       <div class="tipImgF"></div>
-      <h6 class="tip text-center balanced" >该职位无兼职</h6>
+      <h6 class="tip text-center balanced" >{{title}}暂无兼职招聘</h6>
     </div>
     <div class="home-list" ng-show="items.length!==0">
       <ion-list>
@@ -22,7 +22,8 @@
             <div class="col col-80">
               <h2 class="title" ng-bind="item.title"></h2>
               <p ng-bind="item.jobAddress" style="padding: .1rem 0rem"></p>
-              <h3 class="balanced" ng-bind="item.positionModel.name+'&nbsp&nbsp&nbsp&nbsp'+item.salary+item.salaryTypeName+'&nbsp&nbsp&nbsp&nbsp'+item.settlementTypeName+'&nbsp&nbsp&nbsp&nbsp'+'招聘&nbsp'+item.count+'人'"></h3>
+              <!--<h3 class="balanced" ng-bind="item.positionModel.name+'&nbsp&nbsp&nbsp&nbsp'+item.salary+item.salaryTypeName+'&nbsp&nbsp&nbsp&nbsp'+item.settlementTypeName+'&nbsp&nbsp&nbsp&nbsp'+'招聘&nbsp'+item.count+'人'"></h3>-->
+              <h3 class="balanced" ng-bind="item.salary+item.salaryTypeName+'&nbsp&nbsp&nbsp&nbsp'+item.settlementTypeName+'&nbsp&nbsp&nbsp&nbsp'+'招聘&nbsp'+item.count+'人'"></h3>
             </div>
             <div class="col col-20">
               <h2><span ng-bind="(item.distance|number:1)+'Km'" class="balanced"></span></h2>
