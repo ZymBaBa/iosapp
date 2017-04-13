@@ -42,29 +42,21 @@ angular.module('starter.HomeCtrl', [])
         method: 'POST',
         isArray: false
       },
-      updateLocation:{
-        url:Url+'updateLocation',
-        method:'POST',
-        isArray:false
+      updateLocation: {
+        url: Url + 'updateLocation',
+        method: 'POST',
+        isArray: false
       }
     });
     //GoMesaage
     $scope.goMessage = function () {
       if ($rootScope.state) {
-        $state.go("tab.message")
-      }else{
+        $state.go("tab.message");
+      } else {
         $state.go("login")
       }
     };
-    //获取当前城市招聘信息及检查推送服务是否正常，如果不正常则重启服务
-    // $scope.getPushState=function(){
-    //   jpushService.isPushStopped(function(data){
-    //     if(data!==0){
-    //       jpushService.resumePush()
-    //     }
-    //   });
-    // };
-    $scope.items=null;
+    $scope.items = null;
     $scope.$on('$ionicView.beforeEnter', function () {
       GpsService.setGps();
       $rootScope.$on('getGps.update', function () {
@@ -73,6 +65,8 @@ angular.module('starter.HomeCtrl', [])
           locationLng: $rootScope.GpsPosition.lng,
           locationLat: $rootScope.GpsPosition.lat
         }, function (resp) {
+          console.info("城市信息：");
+          console.log(resp);
           if (resp.success) {
             $rootScope.cityName = resp.result;
             var getDataObj = {
@@ -80,15 +74,15 @@ angular.module('starter.HomeCtrl', [])
               locationLng: $rootScope.GpsPosition.lng,
               locationLat: $rootScope.GpsPosition.lat
             };
-            var postLocation={
-              lat:$rootScope.GpsPosition.lat,
-              lng:$rootScope.GpsPosition.lng
+            var postLocation = {
+              lat: $rootScope.GpsPosition.lat,
+              lng: $rootScope.GpsPosition.lng
             };
             getData.getCityObj(getDataObj, function (resp) {
               $scope.items = resp.rows;
             });
-            getData.updateLocation(postLocation,function (resp) {
-              if(resp.success){
+            getData.updateLocation(postLocation, function (resp) {
+              if (resp.success) {
                 console.log('更新坐标成功')
               }
             })
@@ -305,15 +299,61 @@ angular.module('starter.HomeCtrl', [])
     }
   }])
   .controller('message', ['$scope', '$resource', '$ionicLoading', '$timeout', 'homeFactory', '$ionicModal', '$rootScope', '$state', '$ionicHistory', '$sce', 'GpsService', 'CategoryFactory', 'PromptService', '$ionicPopup', 'YW', function ($scope, $resource, $ionicLoading, $timeout, homeFactory, $ionicModal, $rootScope, $state, $ionicHistory, $sce, GpsService, CategoryFactory, PromptService, $ionicPopup, YW) {
-    $scope.message = 'message';
     var Url = YW.api;
     var getMessage = $resource(Url, {}, {
       messageList: {
         url: Url + 'message/list',
         method: 'GET',
         isArray: false
-    }});
-    getMessage.messageList(function (resp) {
-      console.log(resp)
-    })
+      },
+      delMessage:{
+        url:Url+'message/del',
+        method:'POST',
+        isArray:false
+      }
+    });
+    $scope.tipShow=false;
+    $scope.messageGroups=null;
+    $scope.$on('$ionicView.beforeEnter', function () {
+      getMessage.messageList(function (resp) {
+        if(resp.success||resp.rows.length!==0){
+          $scope.messageGroups = resp.rows;
+          $scope.tipShow=true;
+          console.log(resp)
+        }
+        if(resp.rows.length==0){
+          $scope.tipShow=false;
+        }
+      })
+    });
+    $scope.msClick = function(id) {
+      var confirmPopup = $ionicPopup.confirm({
+        title: '删除消息',
+        template: '是否确认删除？',
+        okText: "删除",
+        okType: "button-light",
+        cancelText: '取消',
+        cancelType: "button-balanced"
+      });
+      confirmPopup.then(function(res) {
+        if(res) {
+          getMessage.delMessage({id:id},function (resp) {
+            console.log(resp);
+            if(resp.success){
+              $scope.messageGroups=null;
+              PromptService.PromptMsg(resp.msg);
+              getMessage.messageList(function (resp) {
+                if(resp.success||resp.rows.length!==0){
+                  $scope.messageGroups = resp.rows;
+                  $scope.tipShow=true;
+                }
+                if(resp.rows.length==0){
+                  $scope.tipShow=false;
+                }
+              })
+            }
+          })
+        }
+      });
+    };
   }]);

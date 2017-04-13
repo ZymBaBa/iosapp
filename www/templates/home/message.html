@@ -1,121 +1,156 @@
 <ion-view view-title="消息" hide-tabs="true">
   <ion-content class="message_content">
     <!--推荐-->
-    <!--RECOMMEND（招聘推荐）、APPLY（面试申请）、CHECKIN（邀请入职）、REVIEW（兼职评价）、INTERVIEW(拒绝入职)-->
-    <div class="card mRecommend">
-      <ion-list>
-        <ion-item class="head item-divider" >
-          <div class="row" style="padding: 0;">
-                <div class="col col-50 text-left">
-                  <h2 class="mRecommendSize">优职推荐</h2>
-                </div>
-                <div class="col col-40 text-right">
-                  <p style="color: #8f8f8f;font-size: .7rem">2017.4.1 16:58:54</p>
-                </div>
-            <div class="col col-10 text-center" ng-click="msClick();">
-              <i class="icon ion-ios-close-empty" style="font-size: 1.2rem"></i>
-            </div>
-          </div>
-        </ion-item>
-        <ion-item class="body">
-          <div class="row responsive-sm">
-              <h4 class="messageH4" style="white-space: initial">为您推荐 嘉兴禾码科技服务有限公司 招聘促销员(24元/小时 周结)，希望您喜欢，请至"职位"—"优推荐"中进行处理。</h4>
-          </div>
-        </ion-item>
-      </ion-list>
+    <!--'RECOMMEND' 优职推荐 -'ACCEPT'邀请入职 'CANCEL'取消面试邀请-->
+    <div class="NullInfo" ng-show="tipShow==false" style="margin-top: 50%">
+      <div class="tipImgF"></div>
+      <h6 class="tip text-center balanced" >暂无信息</h6>
     </div>
-    <!--面试-->
-    <div class="card mInterview">
+    <div class="NullInfo" ng-show="messageGroups===null" style="margin-top: 50%">
+      <p style="text-align: center;margin-bottom: 3rem">
+        <ion-spinner icon="lines" class="spinner-balanced"></ion-spinner>
+      </p>
+    </div>
+    <div ng-repeat="group in messageGroups"
+         ng-class="{'card mRecommend':group.type=='RECOMMEND','card mCancel':group.messageInterviewModel.type=='CANCEL','card mRefuse':group.messageInterviewModel.type=='REJECT','card mInvitation':group.messageInterviewModel.type=='ACCEPT','card mInterview':group.messageApplyModel.type=='ACCEPT','card mJancel':group.messageApplyModel.type=='REJECT','card mEvaluate':group.type=='REVIEW'}">
       <ion-list>
-        <ion-item class="head item-divider" >
+        <ion-item class="head item-divider">
           <div class="row" style="padding: 0;">
             <div class="col col-50 text-left">
-              <h2 class="mInterviewSize">面试邀请</h2>
+              <h2 ng-class="{'mRecommendSize':messageGroups.type='RECOMMEND'}" ng-bind="group.typeName"></h2>
             </div>
             <div class="col col-40 text-right">
-              <p style="color: #8f8f8f;font-size: .7rem">2017.4.1 15:21:54</p>
+              <p style="color: #8f8f8f;font-size: .7rem" ng-bind="group.cTime"></p>
             </div>
-            <div class="col col-10 text-center">
+            <div class="col col-10 text-center" ng-click="msClick(group.id);">
               <i class="icon ion-ios-close-empty" style="font-size: 1.2rem"></i>
             </div>
           </div>
         </ion-item>
         <ion-item class="body">
           <div class="row responsive-sm">
-            <h4 class="messageH4" style="white-space: initial">嘉兴禾码科技服务有限公司 邀请您面试促销员(23元/小时 月结)，请尽快联系面试人员。</h4>
+            <h4 class="messageH4" style="white-space: initial" ng-bind="group.content"></h4>
           </div>
         </ion-item>
       </ion-list>
     </div>
-    <!--拒绝-->
-    <div class="card mRefuse">
-      <ion-list>
-        <ion-item class="head item-divider" >
-          <div class="row" style="padding: 0;">
-            <div class="col col-50 text-left">
-              <h2 class="mRefuseSize">拒绝入职</h2>
-            </div>
-            <div class="col col-40 text-right">
-              <p style="color: #8f8f8f;font-size: .7rem">2017.4.1 11:06:12</p>
-            </div>
-            <div class="col col-10 text-center">
-              <i class="icon ion-ios-close-empty" style="font-size: 1.2rem"></i>
-            </div>
-          </div>
-        </ion-item>
-        <ion-item class="body">
-          <div class="row responsive-sm">
-            <h4 class="messageH4" style="white-space: initial">嘉兴禾码科技服务有限公司 拒绝您入职促销员(23元/小时 月结)，非常抱歉。</h4>
-          </div>
-        </ion-item>
-      </ion-list>
-    </div>
-    <!--邀请-->
-    <div class="card mInvitation">
-      <ion-list>
-        <ion-item class="head item-divider" >
-          <div class="row" style="padding: 0;">
-            <div class="col col-50 text-left">
-              <h2 class="mInvitationSize">入职邀请</h2>
-            </div>
-            <div class="col col-40 text-right">
-              <p style="color: #8f8f8f;font-size: .7rem">2017.4.1 09:11:54</p>
-            </div>
-            <div class="col col-10 text-center">
-              <i class="icon ion-ios-close-empty" style="font-size: 1.2rem"></i>
-            </div>
-          </div>
-        </ion-item>
-        <ion-item class="body">
-          <div class="row responsive-sm">
-            <h4 class="messageH4" style="white-space: initial">嘉兴禾码科技服务有限公司 邀请您入职促销员(23元/小时 月结),请至"职位"—"待入职"中进行处理。</h4>
-          </div>
-        </ion-item>
-      </ion-list>
-    </div>
-    <!--评价-->
-    <div class="card mEvaluate">
-      <ion-list>
-        <ion-item class="head item-divider" >
-          <div class="row" style="padding: 0;">
-            <div class="col col-50 text-left">
-              <h2 class="mEvaluateSize">兼职评价</h2>
-            </div>
-            <div class="col col-40 text-right">
-              <p style="color: #8f8f8f;font-size: .7rem">2017.3.31 08:21:54</p>
-            </div>
-            <div class="col col-10 text-center">
-              <i class="icon ion-ios-close-empty" style="font-size: 1.2rem"></i>
-            </div>
-          </div>
-        </ion-item>
-        <ion-item class="body">
-          <div class="row responsive-sm">
-            <h4 class="messageH4" style="white-space: initial">嘉兴禾码科技服务有限公司 已评价您兼职的促销员岗位,请至"我的"-"兼职历程"中查看。</h4>
-          </div>
-        </ion-item>
-      </ion-list>
-    </div>
+
+
+    <!--<div class="card mRecommend">-->
+      <!--<ion-list>-->
+        <!--<ion-item class="head item-divider">-->
+          <!--<div class="row" style="padding: 0;">-->
+            <!--<div class="col col-50 text-left">-->
+              <!--<h2 class="mRecommendSize">优职推荐</h2>-->
+            <!--</div>-->
+            <!--<div class="col col-40 text-right">-->
+              <!--<p style="color: #8f8f8f;font-size: .7rem">2017.4.1 16:58:54</p>-->
+            <!--</div>-->
+            <!--<div class="col col-10 text-center" ng-click="msClick();">-->
+              <!--<i class="icon ion-ios-close-empty" style="font-size: 1.2rem"></i>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</ion-item>-->
+        <!--<ion-item class="body">-->
+          <!--<div class="row responsive-sm">-->
+            <!--<h4 class="messageH4" style="white-space: initial">为您推荐 嘉兴禾码科技服务有限公司 招聘促销员(24元/小时-->
+              <!--周结)，希望您喜欢，请至"职位"—"优推荐"中进行处理。</h4>-->
+          <!--</div>-->
+        <!--</ion-item>-->
+      <!--</ion-list>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;面试&ndash;&gt;-->
+    <!--<div class="card mInterview">-->
+      <!--<ion-list>-->
+        <!--<ion-item class="head item-divider">-->
+          <!--<div class="row" style="padding: 0;">-->
+            <!--<div class="col col-50 text-left">-->
+              <!--<h2 class="mInterviewSize">面试邀请</h2>-->
+            <!--</div>-->
+            <!--<div class="col col-40 text-right">-->
+              <!--<p style="color: #8f8f8f;font-size: .7rem">2017.4.1 15:21:54</p>-->
+            <!--</div>-->
+            <!--<div class="col col-10 text-center">-->
+              <!--<i class="icon ion-ios-close-empty" style="font-size: 1.2rem"></i>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</ion-item>-->
+        <!--<ion-item class="body">-->
+          <!--<div class="row responsive-sm">-->
+            <!--<h4 class="messageH4" style="white-space: initial">嘉兴禾码科技服务有限公司 邀请您面试促销员(23元/小时 月结)，请尽快联系面试人员。</h4>-->
+          <!--</div>-->
+        <!--</ion-item>-->
+      <!--</ion-list>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;拒绝&ndash;&gt;-->
+    <!--<div class="card mRefuse">-->
+      <!--<ion-list>-->
+        <!--<ion-item class="head item-divider">-->
+          <!--<div class="row" style="padding: 0;">-->
+            <!--<div class="col col-50 text-left">-->
+              <!--<h2 class="mRefuseSize">拒绝入职</h2>-->
+            <!--</div>-->
+            <!--<div class="col col-40 text-right">-->
+              <!--<p style="color: #8f8f8f;font-size: .7rem">2017.4.1 11:06:12</p>-->
+            <!--</div>-->
+            <!--<div class="col col-10 text-center">-->
+              <!--<i class="icon ion-ios-close-empty" style="font-size: 1.2rem"></i>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</ion-item>-->
+        <!--<ion-item class="body">-->
+          <!--<div class="row responsive-sm">-->
+            <!--<h4 class="messageH4" style="white-space: initial">嘉兴禾码科技服务有限公司 拒绝您入职促销员(23元/小时 月结)，非常抱歉。</h4>-->
+          <!--</div>-->
+        <!--</ion-item>-->
+      <!--</ion-list>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;邀请&ndash;&gt;-->
+    <!--<div class="card mInvitation">-->
+      <!--<ion-list>-->
+        <!--<ion-item class="head item-divider">-->
+          <!--<div class="row" style="padding: 0;">-->
+            <!--<div class="col col-50 text-left">-->
+              <!--<h2 class="mInvitationSize">入职邀请</h2>-->
+            <!--</div>-->
+            <!--<div class="col col-40 text-right">-->
+              <!--<p style="color: #8f8f8f;font-size: .7rem">2017.4.1 09:11:54</p>-->
+            <!--</div>-->
+            <!--<div class="col col-10 text-center">-->
+              <!--<i class="icon ion-ios-close-empty" style="font-size: 1.2rem"></i>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</ion-item>-->
+        <!--<ion-item class="body">-->
+          <!--<div class="row responsive-sm">-->
+            <!--<h4 class="messageH4" style="white-space: initial">嘉兴禾码科技服务有限公司 邀请您入职促销员(23元/小时 月结),请至"职位"—"待入职"中进行处理。</h4>-->
+          <!--</div>-->
+        <!--</ion-item>-->
+      <!--</ion-list>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;评价&ndash;&gt;-->
+    <!--<div class="card mEvaluate">-->
+      <!--<ion-list>-->
+        <!--<ion-item class="head item-divider">-->
+          <!--<div class="row" style="padding: 0;">-->
+            <!--<div class="col col-50 text-left">-->
+              <!--<h2 class="mEvaluateSize">兼职评价</h2>-->
+            <!--</div>-->
+            <!--<div class="col col-40 text-right">-->
+              <!--<p style="color: #8f8f8f;font-size: .7rem">2017.3.31 08:21:54</p>-->
+            <!--</div>-->
+            <!--<div class="col col-10 text-center">-->
+              <!--<i class="icon ion-ios-close-empty" style="font-size: 1.2rem"></i>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</ion-item>-->
+        <!--<ion-item class="body">-->
+          <!--<div class="row responsive-sm">-->
+            <!--<h4 class="messageH4" style="white-space: initial">嘉兴禾码科技服务有限公司 已评价您兼职的促销员岗位,请至"我的"-"兼职历程"中查看。</h4>-->
+          <!--</div>-->
+        <!--</ion-item>-->
+      <!--</ion-list>-->
+    <!--</div>-->
   </ion-content>
 </ion-view>
 

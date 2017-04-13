@@ -15,11 +15,8 @@ angular.module('starter.PromptService', [])
             postGps.lng = postion.coords.longitude;
             $rootScope.$broadcast('getGps.update')
           },function (err) {
-            //拒绝定位后，默认的城市为嘉兴；
-            // postGps.lat = 30.744837;
-            // postGps.lng = 120.76092;
-            postGps.lat = "";
-            postGps.lng = "";
+            postGps.lat = 30.744837;
+            postGps.lng = 120.76092;
             $rootScope.$broadcast('getGps.update')
           })
       },

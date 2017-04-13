@@ -2,7 +2,6 @@ angular.module('starter.UserCtrl', [])
   .controller('UserCtrl', ['$scope', '$resource', '$state', '$ionicModal', '$cordovaCamera', '$rootScope', 'Storage', 'GpsService', 'YW', function ($scope, $resource, $state, $ionicModal, $cordovaCamera, $rootScope, Storage, GpsService, YW) {
     $scope.$on('$ionicView.beforeEnter', function () {
       $scope.user = Storage.get(YW.userKey);
-      console.log($scope.user);
       var newDate = new Date().getTime();
       $rootScope.userImg = YW.api + 'account/avatar?' + newDate;
       GpsService.setGps();
@@ -59,12 +58,10 @@ angular.module('starter.UserCtrl', [])
       //照片列表
       resumeUrl.imageGet(function (resp) {
         $scope.imageUser = resp.rows;
-        console.log($scope.imageUser)
       });
       //删除照片
       $scope.imgDelete = function (id) {
         resumeUrl.imageDel({ids:[id]},function (resp) {
-          console.log(resp);
           if(resp.success){
             resumeUrl.imageGet(function (resp) {
               $scope.imageUser = resp.rows;
@@ -162,7 +159,6 @@ angular.module('starter.UserCtrl', [])
       $scope.addDataImg={
         photos:[]
       };
-      console.log($scope.addDataImg.photos);
       var options = {
         maximumImagesCount:3-($scope.imageUser.length),
         width: 300,
@@ -178,8 +174,6 @@ angular.module('starter.UserCtrl', [])
                 upImage($scope.addDataImg.photos)
               });
             }
-          }, function (error) {
-            console.log('照片上传失败')
           });
     };
     var takePhoto = function () {
@@ -205,14 +199,11 @@ angular.module('starter.UserCtrl', [])
           $scope.addDataImg.photos.push(imageData);
           upImage($scope.addDataImg.photos)
         }
-      }, function (err) {
-        console.log('err')
       });
     };
 
     var upImage = function (imageData) {
       resumeUrl.imagePost({photos: imageData}, function (resp) {
-        console.log(resp);
         if(resp.success){
           resumeUrl.imageGet(function (resp) {
             $scope.imageUser = resp.rows;
@@ -238,7 +229,6 @@ angular.module('starter.UserCtrl', [])
       } else {
         //编辑简历API请求
         resumeUrl.resumeModify($scope.modifyData, function (resp) {
-          console.log($scope.modifyData);
           if (resp.success) {
             PromptService.PromptMsg(resp.msg);
             $timeout(function () {
@@ -279,7 +269,6 @@ angular.module('starter.UserCtrl', [])
     $scope.openPopover = function ($event, item) {
       $scope.popover.show($event);
       $scope.jobList = item;
-      console.log($scope.jobList)
     };
     //删除记录
     $scope.delConfirm = function () {
@@ -303,7 +292,6 @@ angular.module('starter.UserCtrl', [])
             $scope.items = applyService.set();
             ($scope.items.length !== 0) ? $scope.tipShow = true : $scope.tipShow = false;
           });
-          // $state.go("tab.coures",{},{reload:true})
         }
       })
     };

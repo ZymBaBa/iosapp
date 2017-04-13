@@ -24,7 +24,8 @@ angular.module('starter',
   ])
 
   .run(['$ionicPlatform', '$rootScope', '$ionicHistory', '$state', 'Storage', '$resource', '$timeout', 'GpsService','jpushService','YW', function ($ionicPlatform, $rootScope, $ionicHistory, $state, Storage, $resource, $timeout, GpsService,jpushService,YW) {
-    //配置城市的请求地址，获取坐标发送请求获取城市信息
+    //根据浏览器获取坐标
+
 
 
     //打开APP的时候把省、市的信息优先保存下来

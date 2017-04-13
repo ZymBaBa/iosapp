@@ -45,15 +45,15 @@ angular.module('starter.postDetailCtrl', [])
     //   delay: 500
     // });
     //页面加载的时候就去获取当前这个用户是否登录，如果登录了就去获取相应成功入职记录
-    $scope.$on('$ionicView.beforeEnter', function () {
-      if ($rootScope.state) {
-        getUlr.checkInIdsLoad({status: 'SUCCESS'}, function (resp) {
-          $scope.chin = resp;
-          console.log($scope.chin);
-          $scope.checkList = resp.rows;
-        })
-      }
-    });
+    // $scope.$on('$ionicView.beforeEnter', function () {
+    //   if ($rootScope.state) {
+    //     getUlr.checkInIdsLoad({status: 'SUCCESS'}, function (resp) {
+    //       $scope.chin = resp;
+    //       console.log($scope.chin);
+    //       $scope.checkList = resp.rows;
+    //     })
+    //   }
+    // });
     //右滑返回
     $scope.swipeRight = function () {
       $ionicHistory.goBack();
@@ -75,10 +75,8 @@ angular.module('starter.postDetailCtrl', [])
     //岗位收藏----有问题
     $scope.iconIs = function (objId) {
       if ($rootScope.state) {
-        // if ($scope.chin.total !== 0 && $scope.item.interviewApplyModel == null) {
           if ($scope.item.fav === false) {
             getUlr.addIconPost({recruitId: objId}, function (resp) {
-              console.log(resp);
               if (resp.success) {
                 $scope.item.fav = true
               }
@@ -92,7 +90,6 @@ angular.module('starter.postDetailCtrl', [])
               PromptService.PromptMsg(resp.msg);
             })
           }
-        // }
       } else {
         $state.go("login")
       }
@@ -114,17 +111,42 @@ angular.module('starter.postDetailCtrl', [])
     };
     $scope.openApply = function () {
       if ($rootScope.state) {
-        if ($scope.chin.total !== 0 && $scope.item.interviewApplyModel == null) {
-          $scope.apply.show();
-        } else {
-          getUlr.applyPost($scope.applyData, function (resp) {
-            PromptService.PromptMsg(resp.msg);
-          })
-        }
+        getUlr.checkInIdsLoad({status: 'SUCCESS'}, function (resp) {
+          $scope.chin = resp;
+          console.log($scope.chin);
+          $scope.checkList = resp.rows;
+          if(resp.success){
+            if ($scope.chin.total !== 0 && $scope.item.interviewApplyModel == null) {
+              $scope.apply.show();
+            } else {
+              getUlr.applyPost($scope.applyData, function (resp) {
+                PromptService.PromptMsg(resp.msg);
+              })
+            }
+          }
+        });
       } else {
         $state.go("login")
       }
     };
+    // $scope.openApply = function () {
+    //   if ($rootScope.state) {
+    //     getUlr.checkInIdsLoad({status: 'SUCCESS'}, function (resp) {
+    //       $scope.chin = resp;
+    //       console.log($scope.chin);
+    //       $scope.checkList = resp.rows;
+    //     });
+    //     if ($scope.chin.total !== 0 && $scope.item.interviewApplyModel == null) {
+    //       $scope.apply.show();
+    //     } else {
+    //       getUlr.applyPost($scope.applyData, function (resp) {
+    //         PromptService.PromptMsg(resp.msg);
+    //       })
+    //     }
+    //   } else {
+    //     $state.go("login")
+    //   }
+    // };
     //拨打电话
     $scope.telPhone = function ($event, mobilePhone) {
       window.open("tel:" + mobilePhone)

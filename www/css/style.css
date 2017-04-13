@@ -424,6 +424,12 @@ input:checked {
 .mRefuse {
   border-left: .4rem solid #999999;
 }
+.mCancel {
+  border-left: .4rem solid #999999;
+}
+.mJancel {
+  border-left: .4rem solid #999999;
+}
 
 .mRefuseSize {
   color: #999999;
