@@ -65,8 +65,6 @@ angular.module('starter.HomeCtrl', [])
           locationLng: $rootScope.GpsPosition.lng,
           locationLat: $rootScope.GpsPosition.lat
         }, function (resp) {
-          console.info("城市信息：");
-          console.log(resp);
           if (resp.success) {
             $rootScope.cityName = resp.result;
             var getDataObj = {

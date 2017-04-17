@@ -13,7 +13,7 @@ angular.module('starter.UserCtrl', [])
   //我的简历
   .controller('ResumeCtrl', ['$scope', '$state', '$ionicModal', '$cordovaCamera', '$resource', '$timeout', '$ionicActionSheet', '$cordovaImagePicker', '$cordovaFileTransfer', 'PromptService', 'Storage', 'YW', function ($scope, $state, $ionicModal, $cordovaCamera, $resource, $timeout, $ionicActionSheet, $cordovaImagePicker, $cordovaFileTransfer, PromptService, Storage, YW) {
     var url = YW.api;
-    $scope.imageUrl=YW.api+'resume/photo/img?id=';
+    $scope.imageUrl = YW.api + 'resume/photo/img?id=';
     var resumeUrl = $resource(url, {}, {
       //简历加载
       resumeLoad: {
@@ -40,16 +40,16 @@ angular.module('starter.UserCtrl', [])
         isArray: false
       },
       //新增照片
-      imagePost:{
-        url:url+'resume/photo/add',
-        method:'POST',
-        isArray:false
+      imagePost: {
+        url: url + 'resume/photo/add',
+        method: 'POST',
+        isArray: false
       },
       //删除照片
-      imageDel:{
-        url:url+'resume/photo/del',
-        method:'POST',
-        isArray:false
+      imageDel: {
+        url: url + 'resume/photo/del',
+        method: 'POST',
+        isArray: false
       }
     });
     $scope.resumeList = Storage.get(YW.userKey);
@@ -61,8 +61,8 @@ angular.module('starter.UserCtrl', [])
       });
       //删除照片
       $scope.imgDelete = function (id) {
-        resumeUrl.imageDel({ids:[id]},function (resp) {
-          if(resp.success){
+        resumeUrl.imageDel({ids: [id]}, function (resp) {
+          if (resp.success) {
             resumeUrl.imageGet(function (resp) {
               $scope.imageUser = resp.rows;
             })
@@ -108,8 +108,8 @@ angular.module('starter.UserCtrl', [])
       weight: '',
       description: ''
     };
-    $scope.addDataImg={
-      photos:[]
+    $scope.addDataImg = {
+      photos: []
     };
     //拍照
     $scope.picture = function () {
@@ -141,7 +141,7 @@ angular.module('starter.UserCtrl', [])
     function convertImgToBase64URL(url, callback, outputFormat) {
       var canvas = document.createElement('CANVAS'),
         ctx = canvas.getContext('2d'),
-      img = new Image();
+        img = new Image();
       img.crossOrigin = 'Anonymous';
       img.onload = function () {
         var dataURL;
@@ -156,29 +156,32 @@ angular.module('starter.UserCtrl', [])
     };
     //image picker
     var pickImage = function () {
-      $scope.addDataImg={
-        photos:[]
+      $scope.addDataImg = {
+        photos: []
       };
       var options = {
-        maximumImagesCount:3-($scope.imageUser.length),
+        maximumImagesCount: 3 - ($scope.imageUser.length),
         width: 300,
         height: 300,
         quality: 100
       };
       //这是选择照片插入
-        $cordovaImagePicker.getPictures(options)
-          .then(function (results) {
-            for (var i = 0; i < results.length; i++) {
-              convertImgToBase64URL(results[i], function (base64Img) {
-                $scope.addDataImg.photos.push(base64Img);
-                upImage($scope.addDataImg.photos)
-              });
-            }
-          });
+      $cordovaImagePicker.getPictures(options)
+        .then(function (results) {
+          for (var i = 0; i < results.length; i++) {
+            convertImgToBase64URL(results[i], function (base64Img) {
+              $scope.addDataImg.photos.push(base64Img);
+              upImage($scope.addDataImg.photos);
+              $scope.addDataImg = {
+                photos: []
+              };
+            });
+          }
+        });
     };
     var takePhoto = function () {
-      $scope.addDataImg={
-        photos:[]
+      $scope.addDataImg = {
+        photos: []
       };
       $scope.show_camera = true;
       var options = {
@@ -204,7 +207,7 @@ angular.module('starter.UserCtrl', [])
 
     var upImage = function (imageData) {
       resumeUrl.imagePost({photos: imageData}, function (resp) {
-        if(resp.success){
+        if (resp.success) {
           resumeUrl.imageGet(function (resp) {
             $scope.imageUser = resp.rows;
           })
@@ -246,7 +249,7 @@ angular.module('starter.UserCtrl', [])
   .controller('CouresCtrl', ['$scope', '$resource', '$ionicPopover', '$ionicLoading', '$timeout', '$ionicPopup', '$rootScope', 'applyService', 'postOperationService', '$state', 'YW', function ($scope, $resource, $ionicPopover, $ionicLoading, $timeout, $ionicPopup, $rootScope, applyService, postOperationService, $state, YW) {
 
 //页面加载时执行的代码-拉取待入职中的列表
-    $scope.items=null;
+    $scope.items = null;
     $scope.$on('$ionicView.beforeEnter', function () {
       applyService.get(YW.objList[2], YW.applyList[2]);
       $scope.$on('apply.list', function () {
@@ -325,7 +328,7 @@ angular.module('starter.UserCtrl', [])
         isArray: false
       }
     });
-    $scope.items=null;
+    $scope.items = null;
     getUlr.favList(function (resp) {
       $scope.items = resp.rows;
     });
@@ -341,13 +344,13 @@ angular.module('starter.UserCtrl', [])
     };
   }])
   //关于我们
-  .controller('AboutCtrl', ['$scope','$ionicModal', function ($scope,$ionicModal) {
+  .controller('AboutCtrl', ['$scope', '$ionicModal', function ($scope, $ionicModal) {
     $scope.tel = 15988368669;
     $scope.telPhone = function ($event, mobilePhone) {
       window.open("tel:" + mobilePhone);
     };
     //用户协议
-    $scope.userAgrTile='用户协议';
+    $scope.userAgrTile = '用户协议';
     $ionicModal.fromTemplateUrl("about-agreement.html", {
       scope: $scope,
       animation: "slide-in-up"

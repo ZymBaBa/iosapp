@@ -120,7 +120,11 @@ angular.module('starter.postDetailCtrl', [])
               $scope.apply.show();
             } else {
               getUlr.applyPost($scope.applyData, function (resp) {
-                PromptService.PromptMsg(resp.msg);
+                if(resp.result=='1002'){
+                  PromptService.PromptMsg('请至"我的"-"个人安全中心"进行实名认证');
+                }else if(resp.result=='1003'){
+                  PromptService.PromptMsg('请至"我的"-"个人简历"进行完善');
+                }
               })
             }
           }

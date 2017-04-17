@@ -36,7 +36,7 @@ angular.module('starter.PromptService', [])
         });
         $timeout(function () {
           $ionicLoading.hide()
-        }, 1500);
+        }, 3000);
       }
     }
   }])

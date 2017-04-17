@@ -1,14 +1,8 @@
 angular.module('starter.Classification', [])
 
   .controller('Classification', ['$scope', '$resource', '$ionicLoading', '$timeout', '$stateParams', 'homeFactory', '$ionicModal', '$rootScope', 'GpsService', 'YW', function ($scope, $resource, $ionicLoading, $timeout, $stateParams, homeFactory, $ionicModal, $rootScope, GpsService, YW) {
-    console.log($stateParams);
     //配置
     $scope.title=$stateParams.name;
-    $ionicLoading.show({
-      template: '数据载入中，请稍等......',
-      noBackdrop: true,
-      delay: 500
-    });
     var id = $stateParams.id;
     var Url = YW.api;
     var getData = $resource(Url, {}, {
@@ -33,6 +27,7 @@ angular.module('starter.Classification', [])
     });
 
 //当页面加载时
+    $scope.items=null;
     $scope.$on('$ionicView.beforeEnter',function () {
       GpsService.setGps();
       $rootScope.$on('getGps.update', function () {
@@ -51,10 +46,10 @@ angular.module('starter.Classification', [])
               status: 'NORMAL'
             };
             getData.getClassObj(getDataObjClass, function (resp) {
-              $scope.items = resp.rows;
-              console.log($scope.items);
+              if(resp.success){
+                $scope.items = resp.rows;
+              }
             });
-            $ionicLoading.hide()
           }
         });
       });
@@ -99,6 +94,4 @@ angular.module('starter.Classification', [])
       //这里放上拉更新请求的代码
       $scope.$broadcast("scroll.infiniteScrollComplete")
     };
-
-
   }]);
