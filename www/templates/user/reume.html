@@ -119,8 +119,9 @@
           </ion-item>
         </ion-list>
         <div class="row userClass">
-          <img att="img" ng-repeat="img in imageUser" ng-src="{{imageUrl+img.id}}" ng-click="imgDelete(img.id)">
-          <img att="upImg" ng-click="picture();" ng-hide="imageUser.length==3">
+          <!--<img att="img" ng-repeat="img in imageUser" ng-src="{{imageUrl+img.id}}" ng-click="imgDelete(img.id)">-->
+          <img att="img" ng-repeat="img in imageUser" ng-src="{{imageUrl+img.id}}"  on-hold="imgIdDelete(img.id);">
+          <img att="upImg" ng-click="picture();"  ng-hide="imageUser.length==3">
         </div>
       </ion-content>
     </ion-modal-view>

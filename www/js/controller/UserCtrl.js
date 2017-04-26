@@ -60,7 +60,30 @@ angular.module('starter.UserCtrl', [])
         $scope.imageUser = resp.rows;
       });
       //删除照片
-      $scope.imgDelete = function (id) {
+      $scope.imgIdDelete = function (id) {
+          $ionicActionSheet.show({
+            titleText: '照片删除',
+            buttons: [
+              {text: '删除照片'}
+            ],
+            destructiveText: '取消',
+            destructiveButtonClicked:function () {
+              return true;
+            },
+            buttonClicked: function (index) {
+              switch (index) {
+                case 0:
+                  imgDelete(id);
+                  break;
+                default:
+                  break;
+              }
+              return true;
+            }
+          });
+      };
+
+      var imgDelete = function (id) {
         resumeUrl.imageDel({ids: [id]}, function (resp) {
           if (resp.success) {
             resumeUrl.imageGet(function (resp) {
@@ -163,7 +186,9 @@ angular.module('starter.UserCtrl', [])
         maximumImagesCount: 3 - ($scope.imageUser.length),
         width: 300,
         height: 300,
-        quality: 100
+        quality: 100,
+        okText:'确认',
+        cancelText:'取消'
       };
       //这是选择照片插入
       $cordovaImagePicker.getPictures(options)
