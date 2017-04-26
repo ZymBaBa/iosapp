@@ -1,6 +1,6 @@
 angular.module('starter.login', [])
 
-  .controller('LoginCtrl', ['$scope', '$ionicModal', '$interval', '$ionicActionSheet', '$resource', '$state', '$timeout', '$rootScope', 'Storage', 'PromptService', 'GpsService', 'User','jpushService', 'YW', function ($scope, $ionicModal, $interval, $ionicActionSheet, $resource, $state, $timeout, $rootScope, Storage, PromptService, GpsService,User,jpushService,YW) {
+  .controller('LoginCtrl', ['$scope', '$ionicModal', '$interval', '$ionicActionSheet', '$resource', '$state', '$timeout', '$rootScope', 'Storage', 'PromptService', 'GpsService', 'User', 'jpushService', 'YW', function ($scope, $ionicModal, $interval, $ionicActionSheet, $resource, $state, $timeout, $rootScope, Storage, PromptService, GpsService, User, jpushService, YW) {
     var url = YW.api;
     var userUrl = $resource(
       url,
@@ -103,12 +103,13 @@ angular.module('starter.login', [])
     $scope.SubmitLogin = function () {
       userUrl.submitLogin($scope.loginData, function (resp) {
         PromptService.PromptMsg(resp.msg);
-        if (resp.success==true) {
+        if (resp.success == true) {
           $timeout(function () {
             $scope.closeRegister();
-            $scope.loginData="";
-            $scope.data.password="";
-          },2500)
+            $scope.loginData = "";
+            $scope.data.password = "";
+            $scope.loginData.password = "";
+          }, 2500)
         }
       })
     };
@@ -133,7 +134,7 @@ angular.module('starter.login', [])
       smsCode: ''
     };
     //用户协议
-    $scope.userAgrTile='用户协议';
+    $scope.userAgrTile = '用户协议';
     $ionicModal.fromTemplateUrl("user-agreement.html", {
       scope: $scope,
       animation: "slide-in-up"
@@ -174,14 +175,14 @@ angular.module('starter.login', [])
       locationLat: $rootScope.GpsPosition.lat
     };
     //极光推送设置tags和alias的值
-    var setTagsWithAlias=function(tags,alias){
-      jpushService.setTagsWithAlias(tags,alias);
+    var setTagsWithAlias = function (tags, alias) {
+      jpushService.setTagsWithAlias(tags, alias);
     };
     //key的名称
     var storageKey = 'user';
     $scope.signIn = function () {
       //把User传到服务中去，然后把中设置了监听回传事件
-      User.login($scope.user.username, $scope.user.password,$scope.user.locationLng,$scope.user.locationLat);
+      User.login($scope.user.username, $scope.user.password, $scope.user.locationLng, $scope.user.locationLat);
     };
     //接收服务中的监听回传事件
     $scope.$on('User.loginUpdated', function () {
@@ -199,15 +200,15 @@ angular.module('starter.login', [])
         };
         // var items = Storage.get('user');
         //设置推送Tags\Alias
-        var tagArr=userRel.result.userModel.userName.split(',');
-        if(tagArr.length==0){
-          tagArr=null;
+        var tagArr = userRel.result.userModel.userName.split(',');
+        if (tagArr.length == 0) {
+          tagArr = null;
         }
-        var alias=userRel.result.userModel.userName;
-        if(alias===''){
-          alias=null;
+        var alias = userRel.result.userModel.userName;
+        if (alias === '') {
+          alias = null;
         }
-        setTagsWithAlias(tagArr,alias);
+        setTagsWithAlias(tagArr, alias);
         $state.go("tab.home");  //路由跳转
       }
     });

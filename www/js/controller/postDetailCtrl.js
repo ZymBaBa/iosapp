@@ -124,6 +124,8 @@ angular.module('starter.postDetailCtrl', [])
                   PromptService.PromptMsg('请至"我的"-"个人安全中心"进行实名认证');
                 }else if(resp.result=='1003'){
                   PromptService.PromptMsg('请至"我的"-"个人简历"进行完善');
+                }else{
+                  PromptService.PromptMsg(resp.msg)
                 }
               })
             }

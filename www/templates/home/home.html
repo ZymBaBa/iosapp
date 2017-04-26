@@ -48,17 +48,16 @@
           <ion-spinner icon="lines" class="spinner-balanced"></ion-spinner>
         </p>
       </div>
-      <ion-list ng-show="items.length==0">
-        <ion-item class="item-divider">
-          暂无数据
-        </ion-item>
-      </ion-list>
+      <div class="NullInfo" ng-show="items.length==0" style="margin-top: 90%">
+        <div class="tipImgF"></div>
+        <h6 class="tip text-center balanced">本城市暂无兼职</h6>
+      </div>
       <ion-list ng-show="items.length!==0">
         <ion-item collection-repeat="item in items" href="#/tab/postDetail/{{item.id}}">
           <div class="row">
             <div class="col col-80">
               <h2 class="title" ng-bind="item.title"></h2>
-              <p ng-bind="item.jobAddress" style="padding: .1rem 0rem"></p>
+              <p ng-bind="item.jobAdd、ress" style="padding: .1rem 0rem"></p>
               <h3 class="balanced"
                   ng-bind="item.positionModel.name+'&nbsp&nbsp&nbsp&nbsp'+item.salary+item.salaryTypeName+'&nbsp&nbsp&nbsp&nbsp'+item.settlementTypeName+'&nbsp&nbsp&nbsp&nbsp'+'招聘&nbsp'+item.count+'人'"></h3>
             </div>

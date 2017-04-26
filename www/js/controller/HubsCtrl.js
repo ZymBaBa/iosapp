@@ -1,6 +1,6 @@
 angular.module('starter.hubs', [])
 
-  .controller('HubsCtrl', ['$scope', '$ionicModal', '$interval', '$ionicActionSheet', '$state', '$resource', '$timeout', '$cordovaCamera', '$rootScope', 'Storage', '$http', 'PromptService','jpushService','YW', function ($scope, $ionicModal, $interval, $ionicActionSheet, $state, $resource, $timeout, $cordovaCamera, $rootScope, Storage, $http, PromptService,jpushService,YW) {
+  .controller('HubsCtrl', ['$scope', '$ionicModal', '$interval', '$ionicActionSheet', '$state', '$resource', '$timeout', '$cordovaCamera', '$cordovaImagePicker', '$rootScope', 'Storage', '$http', 'PromptService', 'jpushService', 'YW', function ($scope, $ionicModal, $interval, $ionicActionSheet, $state, $resource, $timeout, $cordovaCamera, $cordovaImagePicker, $rootScope, Storage, $http, PromptService, jpushService, YW) {
     var url = YW.api;
     var userUrl = $resource(
       url,
@@ -39,30 +39,132 @@ angular.module('starter.hubs', [])
       }
     );
     //上传头像
-    $scope.goCamera = function () {
+    $scope.headUpLoad = function () {
+      $ionicActionSheet.show({
+        buttons: [
+          {text: '拍照'},
+          {text: '相册'}
+        ],
+        cancelText: '取消',
+        cancel: function () {
+          return true;
+        },
+        buttonClicked: function (index) {
+          switch (index) {
+            case 0:
+              takePhoto();
+              break;
+            case 1:
+              pickImage();
+              break;
+            default:
+              break;
+          }
+          return true;
+        }
+      });
+    };
+//照片上传
+    var upImage = function (imageData) {
+      userUrl.postImg({photos: imageData}, function (resp) {
+        if (resp.success) {
+          var newDate = new Date().getTime();
+          $rootScope.userImg = YW.api + 'account/avatar?' + newDate;
+        }
+      });
+    };
+    //图片格式转Base64
+    function convertImgToBase64URL(url, callback, outputFormat) {
+      var canvas = document.createElement('CANVAS'),
+        ctx = canvas.getContext('2d'),
+        img = new Image();
+      img.crossOrigin = 'Anonymous';
+      img.onload = function () {
+        var dataURL;
+        canvas.height = img.height;
+        canvas.width = img.width;
+        ctx.drawImage(img, 0, 0);
+        dataURL = canvas.toDataURL(outputFormat);
+        callback(dataURL);
+        canvas = null;
+      };
+      img.src = url;
+    };
+    //拍照上传照片
+    var takePhoto = function () {
+      $scope.addDataImg = {
+        photos: []
+      };
       $scope.show_camera = true;
       var options = {
-        quality: 100,
-        destinationType: Camera.DestinationType.DATA_URL,
-        sourceType: Camera.PictureSourceType.CAMERA,
-        allowEdit: true,
-        encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 100,
-        targetHeight: 100,
+        //这些参数可能要配合着使用，比如选择了sourcetype是0，destinationtype要相应的设置
+        quality: 100,                                            //相片质量0-100
+        destinationType: Camera.DestinationType.DATA_URL,        //返回类型：DATA_URL= 0，返回作为 base64 編碼字串。 FILE_URI=1，返回影像档的 URI。NATIVE_URI=2，返回图像本机URI (例如，資產庫)
+        sourceType: Camera.PictureSourceType.CAMERA,             //从哪里选择图片：PHOTOLIBRARY=0，相机拍照=1，SAVEDPHOTOALBUM=2。0和1其实都是本地图库
+        allowEdit: true,                                        //在选择之前允许修改截图
+        encodingType: Camera.EncodingType.JPEG,                   //保存的图片格式： JPEG = 0, PNG = 1
+        targetWidth: 100,                                        //照片宽度
+        targetHeight: 100,                                       //照片高度
         popoverOptions: CameraPopoverOptions,
-        saveToPhotoAlbum: true,
+        saveToPhotoAlbum: true,                                 //保存进手机相册
         correctOrientation: true
       };
       $cordovaCamera.getPicture(options).then(function (imageData) {
-        // $scope.imageSrc = "data:image/jpeg;base64," + imageData;
-        console.log(imageData);
         userUrl.postImg({avatar: imageData}, function (resp) {
           var newDate = new Date().getTime();
           $rootScope.userImg = YW.api + 'account/avatar?' + newDate;
         });
-        $scope.show_camera = false;
       });
     };
+    //从相册选择上传照片
+    var pickImage = function () {
+      $scope.addDataImg = {
+        photos: []
+      };
+      var options = {
+        maximumImagesCount: 1,
+        width: 100,
+        height: 100,
+        quality: 100
+      };
+      $cordovaImagePicker.getPictures(options)
+        .then(function (results) {
+          for (var i = 0; i < results.length; i++) {
+            convertImgToBase64URL(results[i], function (base64Img) {
+              userUrl.postImg({avatar: base64Img}, function (resp) {
+                var newDate = new Date().getTime();
+                $rootScope.userImg = YW.api + 'account/avatar?' + newDate;
+              });
+            });
+
+          }
+        });
+    };
+    //旧上传头像
+    // $scope.goCamera = function () {
+    //   $scope.show_camera = true;
+    //   var options = {
+    //     quality: 100,
+    //     destinationType: Camera.DestinationType.DATA_URL,
+    //     sourceType: Camera.PictureSourceType.CAMERA,
+    //     allowEdit: true,
+    //     encodingType: Camera.EncodingType.JPEG,
+    //     targetWidth: 100,
+    //     targetHeight: 100,
+    //     popoverOptions: CameraPopoverOptions,
+    //     saveToPhotoAlbum: true,
+    //     correctOrientation: true
+    //   };
+    //   $cordovaCamera.getPicture(options).then(function (imageData) {
+    //     // $scope.imageSrc = "data:image/jpeg;base64," + imageData;
+    //     console.log(imageData);
+    //     userUrl.postImg({avatar: imageData}, function (resp) {
+    //       var newDate = new Date().getTime();
+    //       $rootScope.userImg = YW.api + 'account/avatar?' + newDate;
+    //     });
+    //     $scope.show_camera = false;
+    //   });
+    // };
 
     //页面加载时执行的代码
     $scope.$on('$ionicView.beforeEnter', function () {
@@ -205,10 +307,10 @@ angular.module('starter.hubs', [])
       })
     };
     //退出登录
-    var setTagsWithAlias=function(tags,alias){
+    var setTagsWithAlias = function (tags, alias) {
       console.log(tags);
       console.log(alias);
-      jpushService.setTagsWithAlias(tags,alias);
+      jpushService.setTagsWithAlias(tags, alias);
     };
     $scope.loginOff = function () {
       var hideSheet = $ionicActionSheet.show({
@@ -223,16 +325,16 @@ angular.module('starter.hubs', [])
         destructiveText: "退出登录",
         destructiveButtonClicked: function () {
           //清空极光推送设置
-          $rootScope.isLogin=false;
-          var tagArr=[];
-          if(tagArr.length==0){
-            tagArr=null;
+          $rootScope.isLogin = false;
+          var tagArr = [];
+          if (tagArr.length == 0) {
+            tagArr = null;
           }
-          var alias="";
-          if(alias===''){
-            alias=null;
+          var alias = "";
+          if (alias === '') {
+            alias = null;
           }
-          setTagsWithAlias(tagArr,alias);
+          setTagsWithAlias(tagArr, alias);
           Storage.remove(YW.userKey);
           $state.go("tab.user");
           return true
