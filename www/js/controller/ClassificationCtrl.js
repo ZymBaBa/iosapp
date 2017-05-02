@@ -54,36 +54,6 @@ angular.module('starter.Classification', [])
         });
       });
     });
-    //获取用户当时的GPS地址，并且通过函数cityJobs函数获取招聘信息
-    // GpsService.setGps();
-    // $rootScope.$on('getGps.update', function () {
-    //   $rootScope.GpsPosition = GpsService.getGps();
-    //   getData.getCity({
-    //     locationLng: $rootScope.GpsPosition.lng,
-    //     locationLat: $rootScope.GpsPosition.lat
-    //   }, function (resp) {
-    //     $rootScope.cityName = resp.result;
-    //     cityJobs(resp.success);
-    //     $ionicLoading.hide()
-    //   });
-    // });
-    //获取当前分类和城市的相关招聘信息函数
-    // var cityJobs = function (success) {
-    //   var getDataObj = {
-    //     positionId: id,
-    //     city: $rootScope.cityName.code,
-    //     locationLng: $rootScope.GpsPosition.lng,
-    //     locationLat: $rootScope.GpsPosition.lat,
-    //     status: 'NORMAL'
-    //   };
-    //   if (success) {
-    //     getData.getCityObj(getDataObj, function (resp) {
-    //       console.log(resp);
-    //       $scope.items = resp.rows;
-    //     })
-    //   }
-    // };
-
     //下拉更新
     $scope.doRefresh = function () {
       GpsService.setGps();

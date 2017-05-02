@@ -80,9 +80,6 @@ angular.module('starter.HomeCtrl', [])
               $scope.items = resp.rows;
             });
             getData.updateLocation(postLocation, function (resp) {
-              if (resp.success) {
-                console.log('更新坐标成功')
-              }
             })
           }
         });
@@ -182,7 +179,6 @@ angular.module('starter.HomeCtrl', [])
         });
         $scope.$on('postGory.list', function () {
           $scope.PostLists = CategoryFactory.getPost();
-          console.log($scope.PostLists)
         });
         $scope.sorts.show();
       } else {
@@ -283,12 +279,24 @@ angular.module('starter.HomeCtrl', [])
         PromptService.PromptMsg('请选择您要兼职的岗位!')
       } else {
         getData.interviewApply(interviewApplyData, function (resp) {
-          PromptService.PromptMsg(resp.msg);
-          $timeout(function () {
-            $scope.closeJob();
-            $scope.applyJob.recruitIds.splice(0, $scope.applyJob.recruitIds.length);
-            $scope.applyJob.checkInIds.splice(0, $scope.applyJob.checkInIds.length);
-          }, 1500)
+          if (resp.result == '1002') {
+            PromptService.PromptMsg('请至"我的"-"个人安全中心"进行实名认证');
+          } else if (resp.result == '1003') {
+            PromptService.PromptMsg('请至"我的"-"个人简历"进行完善');
+          } else {
+            PromptService.PromptMsg(resp.msg);
+            $timeout(function () {
+              $scope.closeJob();
+              $scope.applyJob.recruitIds.splice(0, $scope.applyJob.recruitIds.length);
+              $scope.applyJob.checkInIds.splice(0, $scope.applyJob.checkInIds.length);
+            }, 1500)
+          }
+          // PromptService.PromptMsg(resp.msg);
+          // $timeout(function () {
+          //   $scope.closeJob();
+          //   $scope.applyJob.recruitIds.splice(0, $scope.applyJob.recruitIds.length);
+          //   $scope.applyJob.checkInIds.splice(0, $scope.applyJob.checkInIds.length);
+          // }, 1500)
         })
       }
     };
@@ -304,27 +312,29 @@ angular.module('starter.HomeCtrl', [])
         method: 'GET',
         isArray: false
       },
-      delMessage:{
-        url:Url+'message/del',
-        method:'POST',
-        isArray:false
+      delMessage: {
+        url: Url + 'message/del',
+        method: 'POST',
+        isArray: false
       }
     });
-    $scope.tipShow=false;
-    $scope.messageGroups=null;
+    $scope.tipShow = false;
+    $scope.messageGroups = null;
     $scope.$on('$ionicView.beforeEnter', function () {
       getMessage.messageList(function (resp) {
-        if(resp.success||resp.rows.length!==0){
+        console.log(resp);
+        if (resp.success || resp.rows.length !== 0) {
           $scope.messageGroups = resp.rows;
-          $scope.tipShow=true;
-          console.log(resp)
+          $scope.tipShow = true;
+        } else if (resp.code === 'E0002' || resp.code === 'E0001') {
+          $state.go("login")
         }
-        if(resp.rows.length==0){
-          $scope.tipShow=false;
+        if (resp.rows.length == 0) {
+          $scope.tipShow = false;
         }
       })
     });
-    $scope.msClick = function(id) {
+    $scope.msClick = function (id) {
       var confirmPopup = $ionicPopup.confirm({
         title: '删除消息',
         template: '是否确认删除？',
@@ -333,20 +343,20 @@ angular.module('starter.HomeCtrl', [])
         cancelText: '取消',
         cancelType: "button-balanced"
       });
-      confirmPopup.then(function(res) {
-        if(res) {
-          getMessage.delMessage({id:id},function (resp) {
+      confirmPopup.then(function (res) {
+        if (res) {
+          getMessage.delMessage({id: id}, function (resp) {
             console.log(resp);
-            if(resp.success){
-              $scope.messageGroups=null;
+            if (resp.success) {
+              $scope.messageGroups = null;
               PromptService.PromptMsg(resp.msg);
               getMessage.messageList(function (resp) {
-                if(resp.success||resp.rows.length!==0){
+                if (resp.success || resp.rows.length !== 0) {
                   $scope.messageGroups = resp.rows;
-                  $scope.tipShow=true;
+                  $scope.tipShow = true;
                 }
-                if(resp.rows.length==0){
-                  $scope.tipShow=false;
+                if (resp.rows.length == 0) {
+                  $scope.tipShow = false;
                 }
               })
             }

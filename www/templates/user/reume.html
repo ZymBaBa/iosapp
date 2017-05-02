@@ -1,12 +1,12 @@
 <ion-view title="我的简历" hide-tabs="true">
   <ion-nav-buttons side="right">
-    <a class="button" ng-click="openNr()"
-       ng-show="resumeModify.success===false && resumeList.certifyStatus==='SUCCESS'">新增</a>
-    <a class="button" ng-click="openNr()" ng-show="resumeModify.success===true">编辑</a>
+    <!--<a class="button" ng-click="openNr();" ng-show="resumeModify.success===false && resumeList.certifyStatus==='SUCCESS'">新增</a>-->
+    <a class="button" ng-click="openNr();" ng-show="modifyList.init===false">新增</a>
+    <a class="button" ng-click="openNr()" ng-show="resumeModify.success===true && modifyList.init===true">编辑</a>
   </ion-nav-buttons>
-  <ion-content class="reume_Countent" ng-hide="resumeModify.success===true && resumeList.certifyStatus==='SUCCESS'">
+  <ion-content class="reume_Countent" ng-hide="resumeModify.success===true && resumeList.certifyStatus==='SUCCESS' && modifyList.init===true">
     <div style="padding-top:250px" class="text-center" padding
-         ng-show="resumeModify.success===false && resumeList.certifyStatus==='SUCCESS'">
+         ng-show="modifyList.init===false">
       从"右上角"新增简历，每位求职者只允许有一份简历<br/>
       兼职经验可以在求职时选择性进行发送
     </div>
@@ -16,7 +16,7 @@
     </div>
   </ion-content>
   <!--<ion-content class="newReume" ng-show="resumeModify.success===true || resumeList.certifyStatus=='NOT'">-->
-  <ion-content class="newReume" ng-show="resumeModify.success===true">
+  <ion-content class="newReume" ng-show="modifyList.init!==false">
     <!--这里写用户的信息-->
     <ion-list>
       <ion-item class="item-divider"></ion-item>
@@ -47,12 +47,12 @@
       </ion-item>
       <ion-item class="item-divider">
         <p>个人介绍</p>
-        </ion-item>
+      </ion-item>
       <ion-item>
         <span ng-bind="modifyData.description"></span>
       </ion-item>
       <ion-item class="item-divider" ng-hide="imageUser.length==0">
-      <p>个人风采</p>
+        <p>个人风采</p>
       </ion-item>
     </ion-list>
     <div class="row userClass" ng-hide="imageUser.length==0">
@@ -111,7 +111,7 @@
           <ion-item class="item-input">
             <textarea ng-model="addData.description" placeholder="请简单的做下自我介绍，让用人单位能够了解下您。"
                       ng-show="resumeModify.success===false"></textarea>
-            <textarea ng-model="modifyData.description" placeholder="现在是编辑了"
+            <textarea ng-model="modifyData.description" placeholder="请简单的做下自我介绍，让用人单位能够了解下您。"
                       ng-show="resumeModify.success===true"></textarea>
           </ion-item>
           <ion-item class="item-divider">
@@ -120,8 +120,8 @@
         </ion-list>
         <div class="row userClass">
           <!--<img att="img" ng-repeat="img in imageUser" ng-src="{{imageUrl+img.id}}" ng-click="imgDelete(img.id)">-->
-          <img att="img" ng-repeat="img in imageUser" ng-src="{{imageUrl+img.id}}"  on-hold="imgIdDelete(img.id);">
-          <img att="upImg" ng-click="picture();"  ng-hide="imageUser.length==3">
+          <img att="img" ng-repeat="img in imageUser" ng-src="{{imageUrl+img.id}}" on-hold="imgIdDelete(img.id);">
+          <img att="upImg" ng-click="picture();" ng-hide="imageUser.length==3">
         </div>
       </ion-content>
     </ion-modal-view>

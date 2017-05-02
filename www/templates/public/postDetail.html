@@ -38,23 +38,23 @@
       </ion-item>
       <ion-item class="item-borderless">
         <span class="stable">招聘人数：</span>
-        <span class="dark" ng-bind="item.count"></span>
+        <p style="white-space: normal;font-weight: bold;"  class="dark" ng-bind="item.count"></p>
       </ion-item>
       <ion-item>
         <span class="stable">性别要求：</span>
-        <span class="dark" ng-bind="item.sexName"></span>
+        <p style="white-space: normal;font-weight: bold;"  class="dark" ng-bind="item.sexName"></p>
       </ion-item>
       <ion-item>
         <span class="stable">工作时间：</span>
-        <span class="dark" ng-bind="jobDate.startDate+' 至 '+jobDate.endDate"></span>
+        <p style="white-space: normal;font-weight: bold;"  class="dark" ng-bind="jobDate.startDate+' 至 '+jobDate.endDate"></p>
       </ion-item>
       <ion-item>
         <span class="stable">所在城市：</span>
-        <span class="dark" ng-bind="item.cityModel.name"></span>
+        <p style="white-space: normal;font-weight: bold;"  class="dark" ng-bind="item.cityModel.name"></p>
       </ion-item>
       <ion-item>
         <span class="stable">工作地点：</span>
-        <span class="dark" ng-bind="item.jobAddress"></span>
+        <p class="dark"  style="white-space: normal;font-weight: bold;" ng-bind="item.jobAddress"></p>
       </ion-item>
     </ion-list>
     <ion-list class="jobcount">
@@ -64,8 +64,7 @@
         <span class="dark">岗位描述</span>
       </ion-item>
       <ion-item class="item-borderless">
-        <div class="contentText">
-          <h3 ng-bind-html="item.description"></h3>
+        <div class="contentText" ng-bind-html="item.description">
         </div>
       </ion-item>
     </ion-list>
@@ -87,7 +86,8 @@
       <ion-item class="item-divider item-borderless"></ion-item>
     </ion-list>
   </ion-content>
-  <ion-footer-bar style="padding: 0;border-top: 1px solid #10ac86;box-shadow: -2px -1px 0 rgba(16,172,134,.1)" ng-show="ionicSpr==true;">
+  <ion-footer-bar style="padding: 0;border-top: 1px solid #10ac86;box-shadow: -2px -1px 0 rgba(16,172,134,.1)"
+                  ng-show="ionicSpr==true;">
     <div class="col col-33 light-bg" style="padding: 0px" ng-click="telPhone($event,item.contactPhone)">
       <div class="col" style="padding: 5px 0 0 6px;"><h2 ng-bind="item.contactPerson"
                                                          style="font-size: 0.8rem;margin-bottom: 0px;padding-left: 4px;color: #10ac86;"></h2>

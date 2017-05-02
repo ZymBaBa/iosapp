@@ -72,7 +72,7 @@ angular.module('starter.postDetailCtrl', [])
         }
       });
     }, 500);
-    //岗位收藏----有问题
+    //岗位收藏
     $scope.iconIs = function (objId) {
       if ($rootScope.state) {
           if ($scope.item.fav === false) {

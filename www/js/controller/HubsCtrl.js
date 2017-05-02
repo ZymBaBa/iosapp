@@ -180,7 +180,7 @@ angular.module('starter.hubs', [])
       telName: '获取验证码',
       isDisable: false
     };
-    var time = 10;
+    var time = 60;
     var stop;
     //实名认证发送验证码
     $scope.minute = function (phone) {

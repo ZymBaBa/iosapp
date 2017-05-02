@@ -1,4 +1,12 @@
 angular.module('starter.PromptService', [])
+  //弹回去
+  // .factory('setGoLogin',['$state',function ($state) {
+  //   return {
+  //     goLogin:function () {
+  //       $state.go("login")
+  //     }
+  //   }
+  // }])
 //GPS服务
   .factory('GpsService', ['$cordovaGeolocation', '$rootScope', function ($cordovaGeolocation, $rootScope) {
     var postGps = {

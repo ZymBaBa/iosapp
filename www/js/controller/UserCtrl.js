@@ -95,6 +95,7 @@ angular.module('starter.UserCtrl', [])
 
       //简历信息
       resumeUrl.resumeLoad(function (resp) {
+        console.log(resp);
         $scope.resumeModify = resp;
         $scope.modifyList = resp.result;
         $scope.modifyData = {
@@ -247,7 +248,7 @@ angular.module('starter.UserCtrl', [])
           if (resp.success) {
             PromptService.PromptMsg(resp.msg);
             $timeout(function () {
-              $scope.closeNr();
+              // $scope.closeNr();
               $state.go("tab.user");
             }, 1500);
           } else {

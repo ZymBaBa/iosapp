@@ -12,7 +12,7 @@
       </p>
     </div>
     <div ng-repeat="group in messageGroups"
-         ng-class="{'card mRecommend':group.type=='RECOMMEND','card mCancel':group.messageInterviewModel.type=='CANCEL','card mRefuse':group.messageInterviewModel.type=='REJECT','card mInvitation':group.messageInterviewModel.type=='ACCEPT','card mInterview':group.messageApplyModel.type=='ACCEPT','card mJancel':group.messageApplyModel.type=='REJECT','card mEvaluate':group.type=='REVIEW'}">
+         ng-class="{'card mRecommend':group.type=='RECOMMEND','card mCancel':group.messageInterviewModel.type=='CANCEL','card mCancel':group.messageCheckInModel.type=='CANCEL','card mRefuse':group.messageInterviewModel.type=='REJECT','card mInvitation':group.messageInterviewModel.type=='ACCEPT','card mInterview':group.messageApplyModel.type=='ACCEPT','card mJancel':group.messageApplyModel.type=='REJECT','card mEvaluate':group.type=='REVIEW'}">
       <ion-list>
         <ion-item class="head item-divider">
           <div class="row" style="padding: 0;">

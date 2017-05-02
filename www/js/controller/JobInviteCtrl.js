@@ -56,9 +56,9 @@ angular.module('starter.JobInvite', [])
         title: "拒绝面试",
         template: "<p class='text-center'>拒绝" + "<span class='assertive'>" + "</span>面试邀请</p>",
         okText: "确认",
-        okType: "button-balanced",
+        okType: "button-light",
         cancelText: '取消',
-        cancelType: "button-light"
+        cancelType: "button-balanced"
       });
       acceptJob.then(function (resp) {
         if (resp) {

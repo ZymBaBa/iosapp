@@ -152,6 +152,7 @@ angular.module('starter',
     //cookie请求头配置
     // $httpProvider.defaults.withCredentials = true;
     $httpProvider.defaults.headers.common['Authorization'] = "89757";
+    $httpProvider.defaults.headers.common['HM-Requested-With'] = "www.icewnet.com";
     //系统配置
     $ionicConfigProvider.views.transition('ios');
     $ionicConfigProvider.views.maxCache(10);

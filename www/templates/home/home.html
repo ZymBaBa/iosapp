@@ -14,13 +14,13 @@
         <div class="row text-center">
           <div class="col col-50 ch-h-right">
             <div class="dark">
-              <h2 class="title balanced" ng-bind="cityName.applyCount"></h2>
+              <h2 class="title balanced" ng-bind="cityName.applyCount" style="margin-top: 0.5rem"></h2>
               <p>兼职求职次数</p>
             </div>
           </div>
           <div class="col col-50">
             <div class="dark">
-              <h2 class="title balanced" ng-bind="cityName.publishCount"></h2>
+              <h2 class="title balanced" ng-bind="cityName.publishCount" style="margin-top: 0.5rem"></h2>
               <p>企业招聘岗位数</p>
             </div>
           </div>
@@ -57,7 +57,7 @@
           <div class="row">
             <div class="col col-80">
               <h2 class="title" ng-bind="item.title"></h2>
-              <p ng-bind="item.jobAdd、ress" style="padding: .1rem 0rem"></p>
+              <p ng-bind="item.jobAddress" style="padding: .1rem 0rem"></p>
               <h3 class="balanced"
                   ng-bind="item.positionModel.name+'&nbsp&nbsp&nbsp&nbsp'+item.salary+item.salaryTypeName+'&nbsp&nbsp&nbsp&nbsp'+item.settlementTypeName+'&nbsp&nbsp&nbsp&nbsp'+'招聘&nbsp'+item.count+'人'"></h3>
             </div>
