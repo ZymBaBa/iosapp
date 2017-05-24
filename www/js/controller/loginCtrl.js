@@ -41,7 +41,6 @@ angular.module('starter.login', [])
         cellPhone: phone
       };
       userUrl.phoneDate(data, function (resp) {
-        console.log(resp);
         if (resp.success) {
           userUrl.sendDate({type: type, cellPhone: data.cellPhone}, function (resp) {
             //手机号码格式通过验证并且返回值是true的情况下发送短信

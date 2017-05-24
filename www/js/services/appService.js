@@ -1,38 +1,104 @@
 angular.module('starter.PromptService', [])
-  //弹回去
-  // .factory('setGoLogin',['$state',function ($state) {
-  //   return {
-  //     goLogin:function () {
-  //       $state.go("login")
-  //     }
-  //   }
-  // }])
 //GPS服务
-  .factory('GpsService', ['$cordovaGeolocation', '$rootScope', function ($cordovaGeolocation, $rootScope) {
+  .factory('GpsService', ['$ionicPlatform', '$cordovaGeolocation', '$rootScope', function ($ionicPlatform,$cordovaGeolocation, $rootScope) {
     var postGps = {
       lat: '',
       lng: ''
     };
     return {
       setGps: function () {
-        var posOptions = {timeout: 10000, enableHighAccuracy: false};
-        $cordovaGeolocation
-          .getCurrentPosition(posOptions)
-          .then(function (postion) {
-            postGps.lat = postion.coords.latitude;
-            postGps.lng = postion.coords.longitude;
-            $rootScope.$broadcast('getGps.update')
-          },function (err) {
-            postGps.lat = 30.744837;
-            postGps.lng = 120.76092;
-            $rootScope.$broadcast('getGps.update')
-          })
+          var posOptions = {timeout: 10000, enableHighAccuracy: false};
+          $cordovaGeolocation
+            .getCurrentPosition(posOptions)
+            .then(function (postion) {
+              if('coords' in postion){
+                postGps.lat = postion.coords.latitude;
+                postGps.lng = postion.coords.longitude;
+                $rootScope.$broadcast('getGps.update')
+              }
+            }, function (err) {
+              postGps.lat = 30.744837;
+              postGps.lng = 120.76092;
+              $rootScope.$broadcast('getGps.update')
+            })
       },
       getGps: function () {
         return postGps;
       }
     }
   }])
+
+
+
+  //   .factory('GpsService', ['$cordovaGeolocation', '$rootScope', function ($cordovaGeolocation, $rootScope) {
+  //     var postGps = {
+  //       lat: '',
+  //       lng: ''
+  //     };
+  //     return {
+  //       setGps: function () {
+  //         var posOptions = {timeout: 10000, enableHighAccuracy: false};
+  //         $cordovaGeolocation
+  //           .getCurrentPosition(posOptions)
+  //           .then(function (postion) {
+  //             postGps.lat = postion.coords.latitude;
+  //             postGps.lng = postion.coords.longitude;
+  //             $rootScope.$broadcast('getGps.update')
+  //           }, function (err) {
+  //             postGps.lat = 30.744837;
+  //             postGps.lng = 120.76092;
+  //             $rootScope.$broadcast('getGps.update')
+  //           })
+  //       },
+  //       getGps: function () {
+  //         return postGps;
+  //       }
+  //     }
+  //   }])
+  //   .factory('GpsService', ['$rootScope', function ($rootScope) {
+  //     var postGps = {
+  //       lat: '',
+  //       lng: ''
+  //     };
+  //     return {
+  //       setGps: function () {
+  //         var map, geolocation;
+  //         //加载地图，调用浏览器定位服务
+  //         map = new AMap.Map('container', {
+  //           resizeEnable: true
+  //         });
+  //         map.plugin('AMap.Geolocation', function () {
+  //           geolocation = new AMap.Geolocation({
+  //             enableHighAccuracy: true,//是否使用高精度定位，默认:true
+  //             timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+  //             buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+  //             zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+  //             buttonPosition: 'RB'
+  //           });
+  //           map.addControl(geolocation);
+  //           geolocation.getCurrentPosition();
+  //           AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+  //           AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+  //         });
+  //         //解析定位结果
+  //         function onComplete(data) {
+  //           postGps.lat = data.position.getLat();
+  //           postGps.lng = data.position.getLng();
+  //           console.log(data);
+  //           $rootScope.$broadcast('getGps.update')
+  //         }
+  //         //解析定位错误信息
+  //         function onError(data) {
+  //           // postGps.lat = 30.744837;
+  //           // postGps.lng = 120.76092;
+  //           // $rootScope.$broadcast('getGps.update')
+  //         }
+  //       },
+  //       getGps: function () {
+  //         return postGps;
+  //       }
+  //     }
+  //   }])
   //用户弹框提示
   .factory('PromptService', ['$ionicLoading', '$timeout', function ($ionicLoading, $timeout) {
     return {
@@ -42,10 +108,16 @@ angular.module('starter.PromptService', [])
           noBackdrop: true,
           delay: 500
         });
+        // $rootScope.$broadcast('prompt:show')
         $timeout(function () {
-          $ionicLoading.hide()
+          $ionicLoading.hide();
         }, 3000);
       }
+      // PromptStrop:function () {
+      // return  $timeout(function () {
+      //     $ionicLoading.hide();
+      //   }, 3000);
+      // }
     }
   }])
   //将信息存入localStorage,key为名称，data为相应缓存的值
@@ -70,7 +142,7 @@ angular.module('starter.PromptService', [])
     var apiUrl = YW.api;
     $rootScope.placeItem = [];
     return {
-      get: function (reAddress,reParameter) {
+      get: function (reAddress, reParameter) {
         var getList = $resource(apiUrl + reAddress, {}, {
           getApply: {
             url: apiUrl + reAddress,
@@ -92,10 +164,10 @@ angular.module('starter.PromptService', [])
   //申请中、待面试、被拒绝根据ID和地址封装服务，只传ID的服务
   .factory('postOperationService', ['YW', '$resource', '$rootScope', function (YW, $resource, $rootScope) {
     var apiUrl = YW.api;
-    $rootScope.postJudge =[];
+    $rootScope.postJudge = [];
     return {
       postOperation: function (address, recruitId) {
-        var postOperationUrl = $resource(apiUrl+address, {}, {
+        var postOperationUrl = $resource(apiUrl + address, {}, {
           postApply: {
             url: apiUrl + address,
             method: 'POST',
@@ -116,10 +188,10 @@ angular.module('starter.PromptService', [])
   //信息处理（信息删除）
   .factory('messageOperationService', ['YW', '$resource', '$rootScope', function (YW, $resource, $rootScope) {
     var apiUrl = YW.api;
-    $rootScope.messageJudge =[];
+    $rootScope.messageJudge = [];
     return {
       postOperation: function (address, messageId) {
-        var messageOperationUrl = $resource(apiUrl+address, {}, {
+        var messageOperationUrl = $resource(apiUrl + address, {}, {
           postApply: {
             url: apiUrl + address,
             method: 'POST',
@@ -145,7 +217,7 @@ angular.module('starter.PromptService', [])
     var user = Storage.get(storageKey) || {};
     // var user ='';
     return {
-      login: function (username, password,locationLng,locationLat) {
+      login: function (username, password, locationLng, locationLat) {
         return resource.save({}, {
           userName: username,
           password: password,
@@ -236,57 +308,57 @@ angular.module('starter.PromptService', [])
       }
     }
   }])
-//极光推送服务
-.factory('jpushService',['$http','$window','$document',function($http,$window,$document){
-  var jpushServiceFactory={};
-  // var jpushapi=$window.plugins.jPushPlugin;
-  //启动极光推送
-  var _init=function(config){
-    $window.plugins.jPushPlugin.init();
-    //设置tag和Alias触发事件处理
-    document.addEventListener('jpush.setTagsWithAlias',config.stac,false);
-    //打开推送消息事件处理
-    $window.plugins.jPushPlugin.openNotificationInAndroidCallback=config.oniac;
-    $window.plugins.jPushPlugin.setDebugMode(true);
-  };
-  //获取状态
-  var _isPushStopped=function(fun){
-    $window.plugins.jPushPlugin.isPushStopped(fun)
-  };
+  //极光推送服务
+  .factory('jpushService', ['$http', '$window', '$document', function ($http, $window, $document) {
+    var jpushServiceFactory = {};
+    // var jpushapi=$window.plugins.jPushPlugin;
+    //启动极光推送
+    var _init = function (config) {
+      $window.plugins.jPushPlugin.init();
+      //设置tag和Alias触发事件处理
+      document.addEventListener('jpush.setTagsWithAlias', config.stac, false);
+      //打开推送消息事件处理
+      $window.plugins.jPushPlugin.openNotificationInAndroidCallback = config.oniac;
+      $window.plugins.jPushPlugin.setDebugMode(true);
+    };
+    //获取状态
+    var _isPushStopped = function (fun) {
+      $window.plugins.jPushPlugin.isPushStopped(fun)
+    };
 
-  //停止极光推送
-  var _stopPush=function(){
-    $window.plugins.jPushPlugin.stopPush();
-  };
+    //停止极光推送
+    var _stopPush = function () {
+      $window.plugins.jPushPlugin.stopPush();
+    };
 
-  //重启极光推送
-  var _resumePush=function(){
-    $window.plugins.jPushPlugin.resumePush();
-  };
+    //重启极光推送
+    var _resumePush = function () {
+      $window.plugins.jPushPlugin.resumePush();
+    };
 
-  //设置标签和别名
-  var _setTagsWithAlias=function(tags,alias){
-    $window.plugins.jPushPlugin.setTagsWithAlias(tags,alias);
-  };
+    //设置标签和别名
+    var _setTagsWithAlias = function (tags, alias) {
+      $window.plugins.jPushPlugin.setTagsWithAlias(tags, alias);
+    };
 
-  //设置标签
-  var _setTags=function(tags){
-    $window.plugins.jPushPlugin.setTags(tags);
-  };
+    //设置标签
+    var _setTags = function (tags) {
+      $window.plugins.jPushPlugin.setTags(tags);
+    };
 
-  //设置别名
-  var _setAlias=function(alias){
-    $window.plugins.jPushPlugin.setAlias(alias);
-  };
+    //设置别名
+    var _setAlias = function (alias) {
+      $window.plugins.jPushPlugin.setAlias(alias);
+    };
 
-  jpushServiceFactory.init=_init;
-  jpushServiceFactory.isPushStopped=_isPushStopped;
-  jpushServiceFactory.stopPush=_stopPush;
-  jpushServiceFactory.resumePush=_resumePush;
+    jpushServiceFactory.init = _init;
+    jpushServiceFactory.isPushStopped = _isPushStopped;
+    jpushServiceFactory.stopPush = _stopPush;
+    jpushServiceFactory.resumePush = _resumePush;
 
-  jpushServiceFactory.setTagsWithAlias=_setTagsWithAlias;
-  jpushServiceFactory.setTags=_setTags;
-  jpushServiceFactory.setAlias=_setAlias;
+    jpushServiceFactory.setTagsWithAlias = _setTagsWithAlias;
+    jpushServiceFactory.setTags = _setTags;
+    jpushServiceFactory.setAlias = _setAlias;
 
-  return jpushServiceFactory;
-}]);
+    return jpushServiceFactory;
+  }]);

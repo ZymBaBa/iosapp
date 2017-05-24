@@ -89,10 +89,12 @@
   <ion-footer-bar style="padding: 0;border-top: 1px solid #10ac86;box-shadow: -2px -1px 0 rgba(16,172,134,.1)"
                   ng-show="ionicSpr==true;">
     <div class="col col-33 light-bg" style="padding: 0px" ng-click="telPhone($event,item.contactPhone)">
+    <!--<div class="col col-33 light-bg" style="padding: 0px">-->
       <div class="col" style="padding: 5px 0 0 6px;"><h2 ng-bind="item.contactPerson"
                                                          style="font-size: 0.8rem;margin-bottom: 0px;padding-left: 4px;color: #10ac86;"></h2>
       </div>
       <div class="col" style="padding: 0 0 0 8px;"><p style="color: #10ac86;" ng-bind="item.contactPhone"></p></div>
+      <!--<div class="col" style="padding: 0 0 0 8px;"><a style="color: #10ac86;" href="tel:110"></a></div>-->
     </div>
     <div class="col text-center light balanced-bg" style="font-size: 1.2rem;line-height: 2.2rem"
          ng-click="openApply();">

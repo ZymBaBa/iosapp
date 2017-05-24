@@ -1,6 +1,6 @@
 angular.module('starter.HomeCtrl', [])
 
-  .controller('HomeCtrl', ['$scope', '$resource', '$ionicLoading', '$timeout', 'homeFactory', '$ionicModal', '$rootScope', '$state', '$sce', 'GpsService', 'CategoryFactory', 'PromptService', '$ionicPopup', 'jpushService', 'YW', function ($scope, $resource, $ionicLoading, $timeout, homeFactory, $ionicModal, $rootScope, $state, $sce, GpsService, CategoryFactory, PromptService, $ionicPopup, jpushService, YW) {
+  .controller('HomeCtrl', ['$ionicPlatform', '$scope', '$resource', '$ionicLoading', '$timeout', 'homeFactory', '$ionicModal', '$rootScope', '$state', '$sce', 'GpsService', 'CategoryFactory', 'PromptService', '$ionicPopup', 'jpushService', 'YW', function ($ionicPlatform, $scope, $resource, $ionicLoading, $timeout, homeFactory, $ionicModal, $rootScope, $state, $sce, GpsService, CategoryFactory, PromptService, $ionicPopup, jpushService, YW) {
     /*
      * 1、getCity 根据坐标请求城市信息
      * 2、getCityObj 根据城市+坐标请求招聘信息
@@ -56,9 +56,43 @@ angular.module('starter.HomeCtrl', [])
         $state.go("login")
       }
     };
+
     $scope.items = null;
+    // document.addEventListener("deviceready", onDeviceReady, false);
+    // function  onDeviceReady() {
+    //   GpsService.setGps();
+    //   $rootScope.$on('getGps.update', function () {
+    //     $rootScope.GpsPosition = GpsService.getGps();
+    //     getData.getCity({
+    //       locationLng: $rootScope.GpsPosition.lng,
+    //       locationLat: $rootScope.GpsPosition.lat
+    //     }, function (resp) {
+    //       if (resp.success) {
+    //         $rootScope.cityName = resp.result;
+    //         var getDataObj = {
+    //           city: $rootScope.cityName.code,
+    //           locationLng: $rootScope.GpsPosition.lng,
+    //           locationLat: $rootScope.GpsPosition.lat
+    //         };
+    //         var postLocation = {
+    //           lat: $rootScope.GpsPosition.lat,
+    //           lng: $rootScope.GpsPosition.lng
+    //         };
+    //         getData.getCityObj(getDataObj, function (resp) {
+    //           $scope.items = resp.rows;
+    //         });
+    //         getData.updateLocation(postLocation, function (resp) {
+    //         })
+    //       }
+    //     });
+    //   };
+    // var isIos=$ionicPlatform.isIOS();
+    // var isAndroid =$ionicPlatform.isAndroid();
+
     $scope.$on('$ionicView.beforeEnter', function () {
-      GpsService.setGps();
+      $timeout(function () {
+        GpsService.setGps();
+      },1300);
       $rootScope.$on('getGps.update', function () {
         $rootScope.GpsPosition = GpsService.getGps();
         getData.getCity({

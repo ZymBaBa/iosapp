@@ -340,7 +340,7 @@ angular.module('starter.UserCtrl', [])
     });
   }])
   //兼职收藏
-  .controller('CollectionCtrl', ['$scope', '$resource', '$ionicLoading', 'PromptService', 'YW', function ($scope, $resource, $ionicLoading, PromptService, YW) {
+  .controller('CollectionCtrl', ['$scope', '$resource', '$ionicLoading', 'PromptService','$ionicHistory', 'YW', function ($scope, $resource, $ionicLoading, PromptService,$ionicHistory, YW) {
     var Url = YW.api;
     var getUlr = $resource(Url, {}, {
       favList: {
@@ -354,9 +354,14 @@ angular.module('starter.UserCtrl', [])
         isArray: false
       }
     });
+    // $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    //   viewData.enableBack = true;
+    //   // $ionicHistory.goBack(-1);
+    // });
     $scope.items = null;
     getUlr.favList(function (resp) {
       $scope.items = resp.rows;
+      console.log($scope.items);
     });
     $scope.delFav = function (id) {
       getUlr.notIconPost({recruitId: id}, function (resp) {

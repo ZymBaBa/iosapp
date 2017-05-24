@@ -155,7 +155,7 @@ angular.module('starter.postDetailCtrl', [])
     // };
     //拨打电话
     $scope.telPhone = function ($event, mobilePhone) {
-      window.open("tel:" + mobilePhone)
+      window.open("tel:" + mobilePhone,'_system')
     };
     //用户发送兼职申请请求
     var sendApply = function () {

@@ -23,36 +23,34 @@ angular.module('starter',
     'ngResource'
   ])
 
-  .run(['$ionicPlatform', '$rootScope', '$ionicHistory', '$state', 'Storage', '$resource', '$timeout', 'GpsService','jpushService','YW', function ($ionicPlatform, $rootScope, $ionicHistory, $state, Storage, $resource, $timeout, GpsService,jpushService,YW) {
-    //根据浏览器获取坐标
-
-
+  .run(['$ionicPlatform', '$rootScope', '$ionicHistory', '$state', 'Storage', '$resource', '$timeout', 'jpushService', 'GpsService', 'YW', function ($ionicPlatform, $rootScope, $ionicHistory, $state, Storage, $resource, $timeout, jpushService, GpsService, YW) {
+    //解决地址位置弹出框的问题
 
     //打开APP的时候把省、市的信息优先保存下来
-    $rootScope.cities = [];
-    $rootScope.provinces = [];
-    var url = YW.api + 'district/list';
-    $rootScope.cities = Storage.get(YW.cityKey);
-    $rootScope.provinces = Storage.get(YW.provinceKey);
-    var runObj = $resource(url, {}, {
-        getObj: {
-          url: url,
-          method: 'GET',
-          params: {type: '@type'},
-          isArray: false
-        }
-      }
-    );
-    if ($rootScope.provinces == null) {
-      runObj.getObj({type: 'PROVINCE'}, function (resp) {
-        Storage.set(YW.provinceKey, resp.rows)
-      })
-    }
-    if ($rootScope.cities == null) {
-      runObj.getObj({type: 'CITY'}, function (resp) {
-        Storage.set(YW.cityKey, resp.rows)
-      })
-    }
+    // $rootScope.cities = [];
+    // $rootScope.provinces = [];
+    // var url = YW.api + 'district/list';
+    // $rootScope.cities = Storage.get(YW.cityKey);
+    // $rootScope.provinces = Storage.get(YW.provinceKey);
+    // var runObj = $resource(url, {}, {
+    //     getObj: {
+    //       url: url,
+    //       method: 'GET',
+    //       params: {type: '@type'},
+    //       isArray: false
+    //     }
+    //   }
+    // );
+    // if ($rootScope.provinces == null) {
+    //   runObj.getObj({type: 'PROVINCE'}, function (resp) {
+    //     Storage.set(YW.provinceKey, resp.rows)
+    //   })
+    // }
+    // if ($rootScope.cities == null) {
+    //   runObj.getObj({type: 'CITY'}, function (resp) {
+    //     Storage.set(YW.cityKey, resp.rows)
+    //   })
+    // }
 
     //用于判断是否需要跳转登录页面
     var needLoginView = ["tab.user", "tab.position", "tab.hubs"];//需要登录的页面state
@@ -76,13 +74,13 @@ angular.module('starter',
       //设置成功之后弹出的
       var setTagsWithAliasCallback = function (event) {
         // console.log(event)
-      //   window.alert('result code:' + event.resultCode + ' tags:' + event.tags + ' alias:' + event.alias);
+        //   window.alert('result code:' + event.resultCode + ' tags:' + event.tags + ' alias:' + event.alias);
       };
       //界面跳转
       var openNotificationInAndroidCallback = function (data) {
-        if($rootScope.isLogin){
+        if ($rootScope.isLogin) {
           $state.go("tab.message");
-        }else{
+        } else {
           $state.go("tab.home");
         }
         // console.log(JSON.stringify(data));
@@ -134,17 +132,17 @@ angular.module('starter',
     };
   })
   //小红点
-  .directive('headRedPoint', function($compile, $timeout){
+  .directive('headRedPoint', function ($compile, $timeout) {
     return {
       restrict: 'A',
       replace: false,
-      link: function(scope, element, attrs, controller) {
+      link: function (scope, element, attrs, controller) {
         var key = attrs.headRedPoint || false;
-        var template ="<span ng-class={true:'tabs-red-point',false:''}["+key+"]></span>";
+        var template = "<span ng-class={true:'tabs-red-point',false:''}[" + key + "]></span>";
         var html = $compile(template)(scope);
-        $timeout(function() {
+        $timeout(function () {
           var test = angular.element(element).parent().append(html)
-        },100)
+        }, 100)
       }
     };
   })
@@ -154,8 +152,9 @@ angular.module('starter',
     $httpProvider.defaults.headers.common['Authorization'] = "89757";
     $httpProvider.defaults.headers.common['HM-Requested-With'] = "www.icewnet.com";
     //系统配置
-    $ionicConfigProvider.views.transition('ios');
+    $ionicConfigProvider.views.transition('platform');
     $ionicConfigProvider.views.maxCache(10);
+    $ionicConfigProvider.views.forwardCache(true);
     $ionicConfigProvider.backButton.previousTitleText(true);
     $ionicConfigProvider.tabs.position('bottom');
     $ionicConfigProvider.navBar.alignTitle('center');
@@ -224,7 +223,7 @@ angular.module('starter',
       //岗位详细页-列表
       .state('tab.postlist', {
         url: '/postlist/:id',
-        cache:'false',
+        cache: 'false',
         views: {
           'tab-category': {
             templateUrl: 'templates/public/postDetail.html',
@@ -247,7 +246,7 @@ angular.module('starter',
       //position
       .state('tab.position', {
         url: '/position',
-        cache:'false',
+        cache: 'false',
         views: {
           'tab-position': {
             templateUrl: 'templates/position/position.html',
@@ -264,7 +263,7 @@ angular.module('starter',
       .state('job-apply', {
         url: '/job-apply',
         parent: 'tab.position',
-        cache:'false',
+        cache: 'false',
         views: {
           'job-apply': {
             templateUrl: 'templates/position/job-apply.html',
@@ -274,7 +273,7 @@ angular.module('starter',
       })
       .state('job-invite', {
         url: '/job-invite',
-        cache:'false',
+        cache: 'false',
         parent: 'tab.position',
         views: {
           'job-invite': {
@@ -285,7 +284,7 @@ angular.module('starter',
       })
       .state('job-entry', {
         url: '/job-entry',
-        cache:'false',
+        cache: 'false',
         parent: 'tab.position',
         views: {
           'job-entry': {
@@ -296,7 +295,7 @@ angular.module('starter',
       })
       .state('job-refuse', {
         url: '/job-refuse',
-        cache:'false',
+        cache: 'false',
         parent: 'tab.position',
         views: {
           'job-refuse': {
@@ -312,6 +311,16 @@ angular.module('starter',
           'tab-user': {
             templateUrl: 'templates/user/user.html',
             controller: 'UserCtrl'
+          }
+        }
+      })
+      //collection 兼职收藏
+      .state('tab.collection', {
+        url: '/collection',
+        views: {
+          'tab-user': {
+            templateUrl: 'templates/user/collection.html',
+            controller: 'CollectionCtrl'
           }
         }
       })
@@ -342,16 +351,6 @@ angular.module('starter',
           'tab-user': {
             templateUrl: 'templates/user/coures.html',
             controller: 'CouresCtrl'
-          }
-        }
-      })
-      //collection 兼职收藏
-      .state('tab.collection', {
-        url: '/collection',
-        views: {
-          'tab-user': {
-            templateUrl: 'templates/user/collection.html',
-            controller: 'CollectionCtrl'
           }
         }
       })

@@ -189,9 +189,15 @@ angular.module('starter.hubs', [])
         cellPhone: phone
       };
       userUrl.sendDate(postData, function (res) {
+        // if(res.success===true){
+        //   PromptService.PromptMsg(res.msg);
+        // }else{
+         PromptService.PromptMsg(res.msg);
+        // }
         //手机号码格式通过验证并且返回值是true的情况下发送短信
+        $interval.cancel(stop);
         if (res.success) {
-          $interval.cancel(stop);
+          // $interval.cancel(stop);
           stop = $interval(
             function () {
               if (time > 0) {
@@ -199,21 +205,13 @@ angular.module('starter.hubs', [])
                 $scope.data.telName = time + "秒后重新发送";
                 $scope.data.isDisable = true;
               } else {
-                $scope.data.telName = '重新发送';
                 time = 60;
+                $scope.data.telName = '重新发送';
                 $scope.data.isDisable = false;
                 $interval.cancel(stop);
               }
-              //短信发送成功给出提示
-              PromptService.PromptMsg(res.msg);
             }, 1000);
-        } else {
-          //手机号码格式通过验证并且返回值是false的情况下给出提示
-          PromptService.PromptMsg(res.msg);
         }
-      }, function (error) {
-        //如何报错，给出报错的提示
-        PromptService.PromptMsg(error.msg);
       });
     };
 
